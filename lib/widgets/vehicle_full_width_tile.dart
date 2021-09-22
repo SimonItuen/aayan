@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class VehicleFullWidthTile extends StatelessWidget {
   final String name;
@@ -35,7 +37,17 @@ class VehicleFullWidthTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(child: Container( color: Colors.white, padding: EdgeInsets.only(top: 16),child: Image.asset('$imageUrl'))),
+                  Expanded(child: Container( color: Colors.white, padding: EdgeInsets.only(top: 16),child: imageUrl.startsWith('http')?CachedNetworkImage(
+                    progressIndicatorBuilder: (context, url, downloadProgress) {
+                      return SpinKitDoubleBounce(
+                        size: 16,
+                        color: Theme.of(context).primaryColor.withOpacity(0.6),
+                      );
+                    },
+                    imageUrl: '$imageUrl',
+                    fit: BoxFit.contain,
+                    alignment: Alignment.center,
+                  ):Image.asset('assets/images/default_car_image.png'))),
                   Padding(
                     padding: const EdgeInsets.only(left:8.0, right: 8, bottom: 16),
                     child: Column(

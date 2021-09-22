@@ -1,7 +1,15 @@
-import 'package:Aayan/screens/compare/CompareScreen.dart';
+import 'package:Aayan/models/BrandModel.dart';
+import 'package:Aayan/models/FilterVehicleModel.dart';
+import 'package:Aayan/models/VehicleDetailModel.dart';
+import 'package:Aayan/models/VehicleModel.dart';
+import 'package:Aayan/providers/app_provider.dart';
+import 'package:Aayan/screens/compare/CompareLeaseScreen.dart';
+import 'package:Aayan/screens/filter/FilterLeaseVehicleScreen.dart';
 import 'package:Aayan/screens/lease_vehicle/LeaseVehicleDetailsScreen.dart';
 import 'package:Aayan/screens/lease_vehicle/LeaseVehicleSearchScreen.dart';
 import 'package:Aayan/screens/login/LoginScreen.dart';
+import 'package:Aayan/services/HttpService.dart';
+import 'package:Aayan/util/aayan_icons.dart';
 import 'package:Aayan/widgets/app_filled_button.dart';
 import 'package:Aayan/widgets/app_transparent_button.dart';
 import 'package:Aayan/widgets/filter_brand_tile.dart';
@@ -9,6 +17,9 @@ import 'package:Aayan/widgets/vehicle_full_width_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LeaseVehicleScreen extends StatefulWidget {
   static final String routeName = '/lease-vehicle';
@@ -18,103 +29,285 @@ class LeaseVehicleScreen extends StatefulWidget {
 }
 
 class _LeaseVehicleScreenState extends State<LeaseVehicleScreen> {
-  List<int> selectedCars = [];
+  List<String> selectedIds = [];
+  bool isLoading = true;
+  bool isFetching = false;
+  bool searchMode = false;
+  ScrollController scrollController = ScrollController();
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    scrollController.addListener(() async{
+      if(scrollController.position.pixels >= scrollController.position.maxScrollExtent){
+        if (Provider
+            .of<AppProvider>(context, listen: false)
+            .getLeasePageInfoModel
+            .currentPage < Provider
+            .of<AppProvider>(context, listen: false)
+            .getLeasePageInfoModel
+            .lastPage){
+          Provider
+              .of<AppProvider>(context, listen: false)
+              .getLeasePageInfoModel
+              .incrementPageNumber();
+          if (selectedIds.isNotEmpty) {
+            setState(() {
+              isFetching = true;
+            });
+            isFetching = await HttpService.getLeaseVehiclesByFilter(context,
+                ids: selectedIds);
+          } else if (searchMode) {
+            setState(() {
+              isFetching = true;
+            });
+            isFetching = await HttpService.getLeaseVehiclesBySearch(context,
+                key: searchController.text);
+          } else if (Provider
+              .of<AppProvider>(context, listen: false)
+              .getLeaseFilterVehicleModel
+              .brand != null) {
+            setState(() {
+              isFetching = true;
+            });
+            isFetching = await HttpService.getLeaseVehiclesWithFilter(context,
+                Provider
+                    .of<AppProvider>(context, listen: false)
+                    .getLeaseFilterVehicleModel);
+          } else {
+            setState(() {
+              isFetching = true;
+            });
+            isFetching = await HttpService.getLeaseVehiclesByFilter(context,
+                ids: []);
+          }
+          setState(() {
+
+          });
+        }
+      }
+    });
+    Future.delayed(Duration.zero, () async {
+      Provider.of<AppProvider>(context, listen: false).getLeasePageInfoModel.currentPage=1;
+      isLoading = await HttpService.getLeaseVehiclesByFilter(context,
+          ids: Provider.of<AppProvider>(context, listen: false)
+              .getLeaseVehicleSelectedIds());
+      selectedIds = Provider.of<AppProvider>(context, listen: false)
+          .getLeaseVehicleSelectedIds();
+
+      setState(() {
+        isLoading = false;
+      });
+    });
+
+    if (Provider.of<AppProvider>(context, listen: false)
+        .getBrandList()
+        .isEmpty) {
+      HttpService.getBrands(context);
+    }
+  }
+
+  Future<bool> _willPopCallback() async {
+    // await showDialog or Show add banners or whatever
+    // then
+    if (searchMode) {
+      selectedIds.clear();
+      _filter();
+      setState(() {
+        searchMode = false;
+      });
+      return false;
+    } else {
+      return true;
+    }
+    // return
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        iconTheme: IconThemeData(color: Colors.black),
-        title: Text(
-          'Lease Vehicle',
-          style: TextStyle(color: Colors.black),
-        ),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.compare_arrows_rounded, size: 28,),
-              onPressed: () {
-                Navigator.of(context).pushNamed(CompareScreen.routeName);
-              }),
-          IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(LeaseVehicleSearchScreen.routeName);
-              }),
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              physics: AlwaysScrollableScrollPhysics(),
-              padding:
-                  EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 64),
+    AppProvider _appProvider = Provider.of<AppProvider>(context, listen: true);
+    return WillPopScope(
+      onWillPop: _willPopCallback,
+      child: Scaffold(
+        appBar: !searchMode
+            ? AppBar(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                iconTheme: IconThemeData(color: Colors.black),
+                title: Text(
+                  '${AppLocalizations.of(context).leaseVehicle}',
+                  style: TextStyle(color: Colors.black),
+                ),
+                actions: [
+                  IconButton(
+                      icon: Icon(
+                        AayanIcons.filter,
+                        color: _appProvider.getLeaseFilterVehicleModel.brand==null?null:Theme.of(context).primaryColor,
+                        size: 20,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(FilterLeaseVehicleScreen.routeName);
+                      }),
+                  IconButton(
+                      icon: Icon(
+                        Icons.compare_arrows_rounded,
+                        size: 28,
+                      ),
+                      onPressed: () {
+                        Provider.of<AppProvider>(context, listen: false)
+                            .getAddLeaseVehicleList()
+                            .clear();
+                        Navigator.of(context)
+                            .pushNamed(CompareLeaseVehicleScreen.routeName);
+                      }),
+                  IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        setState(() {
+                          searchMode = true;
+                        });
+                      }),
+                ],
+              )
+            : AppBar(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                iconTheme: IconThemeData(color: Colors.black),
+                title: Center(
+                  child: Container(
+                    child: TextFormField(
+                      style: TextStyle(color: Color(0xFF212121), fontSize: 14),
+                      keyboardType: TextInputType.visiblePassword,
+                      controller: searchController,
+                      textInputAction: TextInputAction.search,
+                      autofocus: true,
+                      onFieldSubmitted: (val) {
+                        _search();
+                      },
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                        hintText:
+                            '${AppLocalizations.of(context).search} ${AppLocalizations.of(context).leaseVehicle}',
+                        hintStyle: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400),
+                        filled: true,
+                        prefixIcon: Icon(
+                          Icons.search_rounded,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                                width: 1)),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                                width: 1)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                                width: 1)),
+                        fillColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+        body: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                VehicleFullWidthTile(
-                  imageUrl: 'assets/images/dummy/car-3.png',
-                  name: 'Mercedes-Benz A-Class',
-                  year: '2021',
-                  brand: 'Mercedes',
-                  model: 'Benz A-Class',
-                  price: 'KD 5000',
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(LeaseVehicleDetailsScreen.routeName);
-                  },
-                ),
-                VehicleFullWidthTile(
-                  imageUrl: 'assets/images/dummy/car-1.png',
-                  name: 'Mercedes-Benz A-Class',
-                  year: '2021',
-                  brand: 'Mercedes',
-                  model: 'Benz A-Class',
-                  price: 'KD 5000',
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(LeaseVehicleDetailsScreen.routeName);
-                  },
-                ),
-                VehicleFullWidthTile(
-                  imageUrl: 'assets/images/dummy/car-2.png',
-                  name: 'Mercedes-Benz A-Class',
-                  year: '2021',
-                  brand: 'Mercedes',
-                  model: 'Benz A-Class',
-                  price: 'KD 5000',
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(LeaseVehicleDetailsScreen.routeName);
-                  },
-                ),
-                VehicleFullWidthTile(
-                  imageUrl: 'assets/images/dummy/car-4.png',
-                  name: 'Mercedes-Benz A-Class',
-                  year: '2021',
-                  brand: 'Mercedes',
-                  model: 'Benz A-Class',
-                  price: 'KD 5000',
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(LeaseVehicleDetailsScreen.routeName);
-                  },
-                ),
+                _appProvider.getLeaseVehicleList().isNotEmpty
+                    ? Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          controller: scrollController,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          padding: EdgeInsets.only(
+                              left: 16, right: 16, top: 16, bottom: 64),
+                          itemCount: isFetching?_appProvider.getLeaseVehicleList().length+1: _appProvider.getLeaseVehicleList().length,
+                          itemBuilder: (context, index) {
+                            if(index>=_appProvider.getLeaseVehicleList().length){
+                              print('${_appProvider.getLeasePageInfoModel.currentPage}!=${_appProvider.getLeasePageInfoModel.lastPage}');
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Center(child: SizedBox(height: 25,
+                                    width: 25,
+                                    child: CircularProgressIndicator())),
+                              );
+                            }
+                            VehicleModel vehicle =
+                                _appProvider.getLeaseVehicleList()[index];
+                            return VehicleFullWidthTile(
+                              imageUrl: vehicle.imageName,
+                              name: vehicle.carName,
+                              year: vehicle.year,
+                              brand: vehicle.brand,
+                              model: vehicle.model,
+                              price: 'KD ${vehicle.price}',
+                              onPressed: () {
+                                Provider.of<AppProvider>(context, listen: false)
+                                    .setTempLeaseVehicle(vehicle);
+                                Provider.of<AppProvider>(context, listen: false)
+                                    .setTempLeaseVehicleDetail(
+                                        VehicleDetailModel(
+                                  id: vehicle.id,
+                                  brand: vehicle.brand,
+                                  model: vehicle.model,
+                                  imageName: vehicle.imageName,
+                                  carName: vehicle.carName,
+                                  price: vehicle.price,
+                                  year: vehicle.year,
+                                  feature: vehicle.feature,
+                                  createdAt: vehicle.createdAt,
+                                  deletedAt: vehicle.deletedAt,
+                                  updatedAt: vehicle.updatedAt,
+                                  status: vehicle.status,
+                                  mileage: vehicle.mileage,
+                                ));
+                                Navigator.of(context).pushNamed(
+                                    LeaseVehicleDetailsScreen.routeName);
+                              },
+                            );
+                          },
+                        ),
+                      )
+                    : Expanded(
+                        child: Center(
+                            child: Text(
+                                '${AppLocalizations.of(context).noResults}')))
               ],
             ),
-          )
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          _showFilterSheet();
-        },
-        label: Text('Filter'),
-        icon: Icon(Icons.filter_list),
+            Visibility(
+                visible: isLoading,
+                child: Container(
+                  color: Theme.of(context).colorScheme.surface,
+                  child: Center(child: CircularProgressIndicator()),
+                )),
+          ],
+        ),
+        /*floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Visibility(
+          visible: !searchMode,
+          child: FloatingActionButton.extended(
+            onPressed: () {
+              _showFilterSheet();
+            },
+            label: Text('${AppLocalizations.of(context).filter}'),
+            icon: Icon(Icons.filter_list),
+          ),
+        ),*/
       ),
     );
   }
@@ -129,6 +322,8 @@ class _LeaseVehicleScreenState extends State<LeaseVehicleScreen> {
         builder: (context) {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
+              List<BrandModel> brandList =
+                  Provider.of<AppProvider>(context, listen: true).brandList;
               return Container(
                 padding: EdgeInsets.only(
                     top: 24,
@@ -152,90 +347,22 @@ class _LeaseVehicleScreenState extends State<LeaseVehicleScreen> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            FilterBrandTile(
-                              imageUrl: 'assets/images/dummy/toyota.png',
-                              name: 'Toyota',
-                              isChecked: selectedCars.contains(0),
-                              onPressed: selectedCars.contains(0)
-                                  ? () {
-                                      selectedCars.remove(0);
-                                      setState(() {});
-                                    }
-                                  : () {
-                                      selectedCars.add(0);
-                                      setState(() {});
-                                    },
-                            ),
-                            FilterBrandTile(
-                              imageUrl: 'assets/images/dummy/jeep.png',
-                              name: 'Jeep',
-                              isChecked: selectedCars.contains(1),
-                              onPressed: selectedCars.contains(1)
-                                  ? () {
-                                      selectedCars.remove(1);
-                                      setState(() {});
-                                    }
-                                  : () {
-                                      selectedCars.add(1);
-                                      setState(() {});
-                                    },
-                            ),
-                            FilterBrandTile(
-                              imageUrl: 'assets/images/dummy/gmc.png',
-                              name: 'GMC',
-                              isChecked: selectedCars.contains(2),
-                              onPressed: selectedCars.contains(2)
-                                  ? () {
-                                      selectedCars.remove(2);
-                                      setState(() {});
-                                    }
-                                  : () {
-                                      selectedCars.add(2);
-                                      setState(() {});
-                                    },
-                            ),
-                            FilterBrandTile(
-                              imageUrl: 'assets/images/dummy/dodge.png',
-                              name: "Dodge",
-                              isChecked: selectedCars.contains(3),
-                              onPressed: selectedCars.contains(3)
-                                  ? () {
-                                      selectedCars.remove(3);
-                                      setState(() {});
-                                    }
-                                  : () {
-                                      selectedCars.add(3);
-                                      setState(() {});
-                                    },
-                            ),
-                            FilterBrandTile(
-                              imageUrl: 'assets/images/dummy/chevrolet.png',
-                              name: 'Chevrolet',
-                              isChecked: selectedCars.contains(4),
-                              onPressed: selectedCars.contains(4)
-                                  ? () {
-                                      selectedCars.remove(4);
-                                      setState(() {});
-                                    }
-                                  : () {
-                                      selectedCars.add(4);
-                                      setState(() {});
-                                    },
-                            ),
-                            FilterBrandTile(
-                              imageUrl: 'assets/images/dummy/ford.png',
-                              name: 'Ford',
-                              isChecked: selectedCars.contains(5),
-                              onPressed: selectedCars.contains(5)
-                                  ? () {
-                                      selectedCars.remove(5);
-                                      setState(() {});
-                                    }
-                                  : () {
-                                      selectedCars.add(5);
-                                      setState(() {});
-                                    },
-                            ),
+                            for (int j = 0; j < brandList.length; j++)
+                              FilterBrandTile(
+                                imageUrl: brandList[j].image,
+                                name: brandList[j].title,
+                                isChecked:
+                                    selectedIds.contains(brandList[j].id),
+                                onPressed: selectedIds.contains(brandList[j].id)
+                                    ? () {
+                                        selectedIds.remove(brandList[j].id);
+                                        setState(() {});
+                                      }
+                                    : () {
+                                        selectedIds.add(brandList[j].id);
+                                        setState(() {});
+                                      },
+                              ),
                           ],
                         ),
                       ),
@@ -248,11 +375,13 @@ class _LeaseVehicleScreenState extends State<LeaseVehicleScreen> {
                           Expanded(
                             child: AppTransparentButton(
                               onPressed: () {
-                                selectedCars.clear();
+                                selectedIds.clear();
+                                _filter();
                                 setState(() {});
+                                Navigator.of(context).pop();
                               },
                               child: Text(
-                                'Reset',
+                                '${AppLocalizations.of(context).reset}',
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.black),
                               ),
@@ -262,10 +391,11 @@ class _LeaseVehicleScreenState extends State<LeaseVehicleScreen> {
                             child: AppFilledButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
+                                _filter();
                               },
                               fillColor: Theme.of(context).primaryColor,
                               child: Text(
-                                'Filter',
+                                '${AppLocalizations.of(context).filter}',
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.white),
                               ),
@@ -280,5 +410,24 @@ class _LeaseVehicleScreenState extends State<LeaseVehicleScreen> {
             },
           );
         });
+  }
+
+  void _filter() async {
+    setState(() {
+      isLoading = true;
+    });
+    isLoading =
+        await HttpService.getLeaseVehiclesByFilter(context, ids: selectedIds);
+    setState(() {});
+  }
+
+  void _search() async {
+    Provider.of<AppProvider>(context, listen: false).getLeasePageInfoModel.currentPage=1;
+    setState(() {
+      isLoading = true;
+    });
+    isLoading = await HttpService.getLeaseVehiclesBySearch(context,
+        key: searchController.text);
+    setState(() {});
   }
 }

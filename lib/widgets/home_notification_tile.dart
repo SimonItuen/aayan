@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class HomeNotificationTile extends StatelessWidget {
   final String title;
@@ -23,7 +25,20 @@ class HomeNotificationTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Visibility(visible:imageUrl!=null,child: Image.asset('$imageUrl', fit: BoxFit.fitWidth,)),
+                  Visibility(visible:imageUrl.toString().startsWith('http'),child: CachedNetworkImage(
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) {
+                      return SpinKitDoubleBounce(
+                        size: 16,
+                        color: Theme.of(context)
+                            .primaryColor
+                            .withOpacity(0.6),
+                      );
+                    },
+                    imageUrl: '$imageUrl',
+                    fit: BoxFit.contain,
+                    alignment: Alignment.center,
+                  )),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                     child: Column(

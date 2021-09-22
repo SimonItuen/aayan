@@ -8,8 +8,11 @@ import 'package:Aayan/services/HttpService.dart';
 import 'package:Aayan/widgets/app_filled_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
+import 'package:Aayan/extensions/app_extensions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OTPScreen extends StatefulWidget {
   static final String routeName = '/otp';
@@ -26,6 +29,13 @@ class _OTPScreenState extends State<OTPScreen> {
       TextEditingController(text: '----');
   StreamController<ErrorAnimationType> errorController =
       StreamController<ErrorAnimationType>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
 
   @override
   void dispose() {
@@ -82,7 +92,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     padding: const EdgeInsets.only(
                         top: 28, bottom: 32, left: 8.0, right: 8.0),
                     child: Text(
-                      'OTP',
+                      '${AppLocalizations.of(context).oTP}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -97,7 +107,7 @@ class _OTPScreenState extends State<OTPScreen> {
                       child: Column(
                         children: [
                           Text(
-                            'Enter the 4 digit code you have received via SMS on your mobile number',
+                            '${AppLocalizations.of(context).enterTheDigitCodeYouHaveReceivedViaSMSOnYourMobileNumber}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -109,8 +119,8 @@ class _OTPScreenState extends State<OTPScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             length: 4,
                             textCapitalization: TextCapitalization.characters,
-                            textInputType: TextInputType.number,
-                            obsecureText: false,
+                            /*textInputType: TextInputType.number,
+                            obsecureText: false,*/
                             textStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
@@ -136,9 +146,9 @@ class _OTPScreenState extends State<OTPScreen> {
                             errorTextSpace: 24,
                             validator: (val) {
                               if (val.isEmpty) {
-                                return 'Code Cannot be empty';
+                                return '${AppLocalizations.of(context).code} ${AppLocalizations.of(context).cannotBeEmpty}';
                               }else if(val.length !=4){
-                                return 'Incomplete code';
+                                return '${AppLocalizations.of(context).incompleteCode.capitalize()}';
                               }
                               return null;
                             },
@@ -156,7 +166,7 @@ class _OTPScreenState extends State<OTPScreen> {
                               print(value);
                             },
                             beforeTextPaste: (text) {
-                              print("Allowing to paste $text");
+                              print("${AppLocalizations.of(context).allowingToPaste} $text");
                               //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
                               //but you can show anything you want here, like your pop up saying wrong paste format or etc
                               return true;
@@ -164,7 +174,7 @@ class _OTPScreenState extends State<OTPScreen> {
                           ),
                           Padding(padding: EdgeInsets.all(8)),
                           Text(
-                            'We sent a code on ${_appProvider.getTempMobileNumber()}',
+                            '${AppLocalizations.of(context).weSentACodeOn} ${_appProvider.getTempMobileNumber()}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -198,7 +208,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         }
                       },
                       child: Text(
-                        'Next',
+                        '${AppLocalizations.of(context).next}',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,

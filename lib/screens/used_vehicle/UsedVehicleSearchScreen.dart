@@ -3,6 +3,7 @@ import 'package:Aayan/widgets/app_filled_button.dart';
 import 'package:Aayan/widgets/vehicle_full_width_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class UsedVehicleSearchScreen extends StatefulWidget {
   static final String routeName = '/used-search-vehicle';
@@ -13,6 +14,13 @@ class UsedVehicleSearchScreen extends StatefulWidget {
 }
 
 class _UsedVehicleSearchScreenState extends State<UsedVehicleSearchScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

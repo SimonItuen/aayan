@@ -9,7 +9,9 @@ import 'package:Aayan/widgets/app_filled_button.dart';
 import 'package:Aayan/widgets/app_transparent_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   static final String routeName = '/login';
@@ -24,6 +26,13 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isLoading = false;
   TextEditingController mobileController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,11 +81,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           Provider.of<AppProvider>(context, listen: false)
                               .setIsLoggedIn(false);
-                          Navigator.of(context)
-                              .pushNamed(ParentScreen.routeName);
+                          Navigator.of(context).pushNamedAndRemoveUntil(ParentScreen.routeName, (Route<dynamic> route) => false);
                         },
                         child: Text(
-                          'Skip',
+                          '${AppLocalizations.of(context).skip}',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white,
@@ -90,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.only(
                         top: 28, bottom: 32, left: 8.0, right: 8.0),
                     child: Text(
-                      'Login',
+                      '${AppLocalizations.of(context).login}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -111,18 +119,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontWeight: FontWeight.w400),
                             keyboardType: TextInputType.phone,
                             controller: mobileController,
-                            maxLength: 8,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(8),
+                            ],
                             validator: (val) {
                               if (val.isEmpty) {
-                                return 'Mobile Number cannot be empty';
-                              }
-                              else if(val.length !=8){
-                                return 'Mobile Number is invalid';
+                                return '${AppLocalizations.of(context).mobileNumber} ${AppLocalizations.of(context).cannotBeEmpty}';
+                              } else if (val.length != 8) {
+                                return '${AppLocalizations.of(context).mobileNumber} ${AppLocalizations.of(context).isInvalid}';
                               }
                               return null;
                             },
                             decoration: InputDecoration(
-                                hintText: 'Mobile Number',
+                                hintText: '${AppLocalizations.of(context).mobileNumber}',
                                 hintStyle: TextStyle(
                                     color: Colors.white, fontSize: 14),
                                 filled: true,
@@ -152,12 +161,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             obscureText: !visibility,
                             validator: (val) {
                               if (val.isEmpty) {
-                                return 'Password cannot be empty';
+                                return '${AppLocalizations.of(context).password} cannot be empty';
                               }
                               return null;
                             },
                             decoration: InputDecoration(
-                                hintText: 'Password',
+                                hintText: '${AppLocalizations.of(context).password}',
                                 hintStyle: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
@@ -203,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .pushNamed(ForgotPasswordScreen.routeName);
                               },
                               child: Text(
-                                'Forgot Password?',
+                                '${AppLocalizations.of(context).forgotPasswordMark}',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.white,
@@ -228,7 +237,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                             },
                             child: Text(
-                              'Login',
+                              '${AppLocalizations.of(context).login}',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -239,7 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              'Or',
+                              '${AppLocalizations.of(context).or}',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: Colors.white,
@@ -250,12 +259,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           Padding(padding: EdgeInsets.all(16)),
                           AppFilledButton(
                             onPressed: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed(RegisterScreen.routeName);
+                              Navigator.of(context).pushReplacementNamed(
+                                  RegisterScreen.routeName);
                             },
                             fillColor: Color(0xFFB21F28),
                             child: Text(
-                              'Register',
+                              '${AppLocalizations.of(context).register}',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,

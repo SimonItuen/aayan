@@ -3,6 +3,8 @@ import 'package:Aayan/widgets/app_filled_button.dart';
 import 'package:Aayan/widgets/vehicle_full_width_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LeaseVehicleSearchScreen extends StatefulWidget {
   static final String routeName = '/lease-search-vehicle';
@@ -13,6 +15,14 @@ class LeaseVehicleSearchScreen extends StatefulWidget {
 }
 
 class _LeaseVehicleSearchScreenState extends State<LeaseVehicleSearchScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +38,7 @@ class _LeaseVehicleSearchScreenState extends State<LeaseVehicleSearchScreen> {
               decoration: InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                hintText: 'Search Lease Vehicles',
+                hintText: 'Search ${AppLocalizations.of(context).leaseVehicle}',
                 hintStyle: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 14,

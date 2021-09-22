@@ -9,7 +9,9 @@ import 'package:Aayan/widgets/app_filled_button.dart';
 import 'package:Aayan/widgets/app_transparent_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterScreen extends StatefulWidget {
   static final String routeName = '/register';
@@ -26,6 +28,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +83,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onPressed: () {
                           Provider.of<AppProvider>(context, listen: false)
                               .setIsLoggedIn(false);
-                          Navigator.of(context)
-                              .pushNamed(ParentScreen.routeName);
+                          Navigator.of(context).pushNamedAndRemoveUntil(ParentScreen.routeName, (Route<dynamic> route) => false);
                         },
                         child: Text(
-                          'Skip',
+                          '${AppLocalizations.of(context).skip}',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white,
@@ -92,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     padding: const EdgeInsets.only(
                         top: 28, bottom: 32, left: 8.0, right: 8.0),
                     child: Text(
-                      'Register',
+                      '${AppLocalizations.of(context).register}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -115,12 +123,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             controller: fullNameController,
                             validator: (val) {
                               if (val.isEmpty) {
-                                return 'Full Name Cannot be empty';
+                                return '${AppLocalizations.of(context).fullName} Cannot be empty';
                               }
                               return null;
                             },
                             decoration: InputDecoration(
-                                hintText: 'Full Name',
+                                hintText: '${AppLocalizations.of(context).fullName}',
                                 hintStyle: TextStyle(
                                     color: Colors.white, fontSize: 14),
                                 filled: true,
@@ -150,21 +158,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.w400),
                             keyboardType: TextInputType.phone,
                             controller: mobileController,
-                            maxLength: 8,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(8),
+                            ],
                             validator: (val) {
                               if (val.isEmpty) {
-                                return 'Mobile Number Cannot be empty';
+                                return '${AppLocalizations.of(context).mobileNumber} Cannot be empty';
                               }
                               else if (!(val.startsWith('5')||val.startsWith('6')||val.startsWith('9'))) {
-                                return 'Mobile Number is invalid';
+                                return '${AppLocalizations.of(context).mobileNumber} is invalid';
                               }
                               else if(val.length !=8){
-                                return 'Mobile Number is invalid';
+                                return '${AppLocalizations.of(context).mobileNumber} is invalid';
                               }
                               return null;
                             },
                             decoration: InputDecoration(
-                                hintText: 'Mobile Number',
+                                hintText: '${AppLocalizations.of(context).mobileNumber}',
                                 hintStyle: TextStyle(
                                     color: Colors.white, fontSize: 14),
                                 filled: true,
@@ -196,13 +206,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             controller: emailController,
                             validator: (val) {
                               if (val.isEmpty) {
-                                return 'Email Cannot be empty';
+                                return '${AppLocalizations.of(context).email} Cannot be empty';
                               }
 
                               return null;
                             },
                             decoration: InputDecoration(
-                                hintText: 'Email',
+                                hintText: '${AppLocalizations.of(context).email}',
                                 hintStyle: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
@@ -238,12 +248,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             controller: passwordController,
                             validator: (val) {
                               if (val.isEmpty) {
-                                return 'Password Cannot be empty';
+                                return '${AppLocalizations.of(context).password} Cannot be empty';
                               }
                               return null;
                             },
                             decoration: InputDecoration(
-                                hintText: 'Password',
+                                hintText: '${AppLocalizations.of(context).password}',
                                 hintStyle: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
@@ -299,7 +309,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                             fillColor: Color(0xFFB21F28),
                             child: Text(
-                              'Register',
+                              '${AppLocalizations.of(context).register}',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -310,7 +320,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              'Or',
+                              '${AppLocalizations.of(context).or}',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: Colors.white,
@@ -325,7 +335,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .pushReplacementNamed(LoginScreen.routeName);
                             },
                             child: Text(
-                              'Login',
+                              '${AppLocalizations.of(context).login}',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,

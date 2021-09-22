@@ -38,4 +38,5 @@ class AayanIcons {
   static const IconData servicing = IconData(0xe86c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData purchase = IconData(0xe86e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData mail = IconData(0xe86f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData filter = IconData(0xe926, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

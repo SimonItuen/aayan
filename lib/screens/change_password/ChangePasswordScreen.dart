@@ -4,7 +4,9 @@ import 'package:Aayan/services/HttpService.dart';
 import 'package:Aayan/widgets/app_filled_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   static final String routeName = '/change-password';
@@ -23,6 +25,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       TextEditingController();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
+
+  @override
   Widget build(BuildContext context) {
     AppProvider _appProvider = Provider.of<AppProvider>(context, listen: false);
     return Scaffold(
@@ -31,7 +40,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         foregroundColor: Colors.black,
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(
-          'Change Password',
+          '${AppLocalizations.of(context).changePassword}',
           style: TextStyle(color: Colors.black),
         ),
       ),
@@ -53,19 +62,19 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       controller: newPasswordEditingController,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return 'New Password Cannot be empty';
+                          return '${AppLocalizations.of(context).newPassword} ${AppLocalizations.of(context).cannotBeEmpty}';
                         }
                         return null;
                       },
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                        labelText: 'New Password',
+                        labelText: '${AppLocalizations.of(context).newPassword}',
                         labelStyle: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w400),
-                        hintText: '********',
+                        hintText: '',
                         hintStyle: TextStyle(
                             color: Color(0xFF212121),
                             fontSize: 14,
@@ -109,21 +118,21 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       controller: confirmPasswordEditingController,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return 'Confirm Password Cannot be empty';
+                          return '${AppLocalizations.of(context).confirmPassword} ${AppLocalizations.of(context).cannotBeEmpty}';
                         } else if (val != newPasswordEditingController.text) {
-                          return 'Password does not match';
+                          return '${AppLocalizations.of(context).password} ${AppLocalizations.of(context).doesNotMatch}';
                         }
                         return null;
                       },
                       decoration: InputDecoration(
-                        labelText: 'Confirm Password',
+                        labelText: '${AppLocalizations.of(context).confirmPassword}',
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 0, horizontal: 15),
                         labelStyle: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w400),
-                        hintText: '********',
+                        hintText: '',
                         hintStyle: TextStyle(
                             color: Color(0xFF212121),
                             fontSize: 14,
@@ -178,7 +187,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           }
                         },
                         child: Text(
-                          'Change',
+                          '${AppLocalizations.of(context).change}',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,

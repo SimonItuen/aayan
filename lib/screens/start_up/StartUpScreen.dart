@@ -1,9 +1,12 @@
+import 'package:Aayan/providers/app_provider.dart';
 import 'package:Aayan/screens/on_boarding/OnBoardingScreen.dart';
 import 'package:Aayan/screens/parent/ParentScreen.dart';
 import 'package:Aayan/util/session_manager_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:provider/provider.dart';
 
 class StartUpScreen extends StatefulWidget {
   @override
@@ -16,6 +19,7 @@ class _StartUpScreenState extends State<StartUpScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     Future.delayed(Duration.zero, () {
       _checkToken();
     });
@@ -31,15 +35,25 @@ class _StartUpScreenState extends State<StartUpScreen> {
     await SessionManagerUtil.getInstance();
     if (SessionManagerUtil.getString('accessToken') == null ||
         SessionManagerUtil.getString('accessToken').trim().isEmpty) {
-      Navigator.of(context).pushReplacementNamed(OnBoardingScreen.routeName);
+      if (SessionManagerUtil.getBoolean('firstTime') == false) {
+        SessionManagerUtil.putBoolean('firstTime', true);
+        Provider.of<AppProvider>(context, listen: false).setIsLoggedIn(false);
+        Navigator.of(context).pushReplacementNamed(OnBoardingScreen.routeName);
+      }else{
+        Provider.of<AppProvider>(context, listen: false).setIsLoggedIn(false);
+        Navigator.of(context).pushReplacementNamed(ParentScreen.routeName);
+      }
+
     } else
       receiverProcessesJwt(SessionManagerUtil.getString('accessToken'));
   }
 
   void receiverProcessesJwt(String token) {
     if (JwtDecoder.isExpired(token)) {
-      Navigator.of(context).pushReplacementNamed(OnBoardingScreen.routeName);
+      Provider.of<AppProvider>(context, listen: false).setIsLoggedIn(false);
+      Navigator.of(context).pushReplacementNamed(ParentScreen.routeName);
     }  else {
+      Provider.of<AppProvider>(context, listen: false).setIsLoggedIn(true);
       Navigator.of(context).pushReplacementNamed(ParentScreen.routeName);
     }
   }

@@ -7,6 +7,8 @@ import 'package:Aayan/util/aayan_icons.dart';
 import 'package:Aayan/widgets/app_filled_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   static final String routeName = '/forgot-password';
@@ -20,6 +22,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   bool visibility = false;
   bool isLoading = false;
   TextEditingController mobileController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +78,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     padding: const EdgeInsets.only(
                         top: 28, bottom: 32, left: 8.0, right: 8.0),
                     child: Text(
-                      'Forgot Password',
+                      '${AppLocalizations.of(context).forgotPassword}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -84,7 +93,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       child: Column(
                         children: [
                           Text(
-                            'Enter your mobile number to reset your password, you will receive a code on this number.',
+                            '${AppLocalizations.of(context).enterYourMobileNumberToResetYourPasswordYouWillReceiveACodeOnThisNumber}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -99,17 +108,19 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 fontWeight: FontWeight.w400),
                             keyboardType: TextInputType.phone,
                             controller: mobileController,
-                            maxLength: 8,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(8),
+                            ],
                             validator: (val){
                               if(val.isEmpty){
-                                return 'Mobile Number cannot be empty';
+                                return '${AppLocalizations.of(context).mobileNumber} cannot be empty';
                               }else if(val.length !=8){
-                                return 'Mobile Number is invalid';
+                                return '${AppLocalizations.of(context).mobileNumber} is invalid';
                               }
                               return null;
                             },
                             decoration: InputDecoration(
-                                hintText: 'Mobile Number',
+                                hintText: '${AppLocalizations.of(context).mobileNumber}',
                                 hintStyle: TextStyle(
                                     color: Colors.white, fontSize: 14),
                                 filled: true,
@@ -147,7 +158,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               }
                             },
                             child: Text(
-                              'Next',
+                              '${AppLocalizations.of(context).next}',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,

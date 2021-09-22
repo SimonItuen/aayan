@@ -47,6 +47,7 @@ class AppDrawerTile extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                     fontSize: 14,
+                    fontFamily: text=='Translate'?'Poppins':'Almarai',
                     fontWeight: FontWeight.w400,
                     color: isSelected ? Colors.white : Color(0xFF212121)),
               ),
