@@ -114,9 +114,15 @@ class _CompareUsedDetailsScreenState extends State<CompareUsedDetailsScreen> {
                                 children: [
                                   Container(
                                       margin: EdgeInsets.only(right: 16),
-                                      child: CachedNetworkImage(
+                                      child: _appProvider
+                                          .getCompareUsedVehicleList()[i]
+                                          .imageName
+                                          .toString()
+                                          .startsWith('http')
+                                          ? CachedNetworkImage(
                                         progressIndicatorBuilder:
-                                            (context, url, downloadProgress) {
+                                            (context, url,
+                                            downloadProgress) {
                                           return SpinKitDoubleBounce(
                                             size: 16,
                                             color: Theme.of(context)
@@ -125,10 +131,12 @@ class _CompareUsedDetailsScreenState extends State<CompareUsedDetailsScreen> {
                                           );
                                         },
                                         imageUrl:
-                                            '${_appProvider.getCompareUsedVehicleList()[i].imageName}',
+                                        '${_appProvider.getCompareUsedVehicleList()[i].imageName}',
                                         fit: BoxFit.contain,
                                         alignment: Alignment.center,
-                                      )),
+                                      )
+                                          : Image.asset(
+                                          'assets/images/default_car_image.png')),
                                   Spacer(),
                                   Padding(
                                     padding: EdgeInsets.only(

@@ -41,7 +41,7 @@ class _YearUsedVehicleScreenState extends State<YearUsedVehicleScreen> {
     super.initState();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     Future.delayed(Duration.zero, () async {
-      isLoading = await HttpService.getYear(
+      isLoading = await HttpService.getUsedYear(
           context: context,
           brandName: Provider.of<AppProvider>(context, listen: false)
               .getUsedFilterVehicleModel
@@ -60,7 +60,7 @@ class _YearUsedVehicleScreenState extends State<YearUsedVehicleScreen> {
   @override
   Widget build(BuildContext context) {
     AppProvider _appProvider = Provider.of<AppProvider>(context, listen: true);
-    List<String> yearList = _appProvider.getTempYearList();
+    List<String> yearList = _appProvider.getTempUsedYearList();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFFAFAFA),
@@ -78,8 +78,8 @@ class _YearUsedVehicleScreenState extends State<YearUsedVehicleScreen> {
             )
           : yearList.isEmpty
               ? Center(
-                child: Text('${AppLocalizations.of(context).noResults}'),
-              )
+                  child: Text('${AppLocalizations.of(context).noResults}'),
+                )
               : SingleChildScrollView(
                   padding:
                       EdgeInsets.only(bottom: 16, left: 16, right: 16, top: 16),

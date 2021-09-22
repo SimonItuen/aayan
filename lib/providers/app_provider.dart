@@ -43,6 +43,7 @@ class AppProvider with ChangeNotifier {
   List<BrandModel> topBrandList = [];
   List<BrandModel> topUsedBrandList = [];
   List<ModelModel> _tempModelList = [];
+  List<ModelModel> _tempUsedModelList = [];
 
   List<ModelModel> get tempModelList => _tempModelList;
 
@@ -50,9 +51,17 @@ class AppProvider with ChangeNotifier {
     _tempModelList = value;
   }
 
+  List<ModelModel> get tempUsedModelList => _tempUsedModelList;
+
+  set tempUsedModelList(List<ModelModel> value) {
+    _tempUsedModelList = value;
+  }
+
   List<SubModelModel> _tempSubModelList = [];
   List<String> _tempYearList = [];
   List<String> _tempLeasePeriodList = [];
+  List<SubModelModel> _tempUsedSubModelList = [];
+  List<String> _tempUsedYearList = [];
   List<FeaturedVehicleModel> leaseFeaturedVehicleList = [];
   List<FeaturedVehicleModel> usedFeaturedVehicleList = [];
   List<VehicleModel> addLeaseVehicleList = [];
@@ -579,5 +588,29 @@ class AppProvider with ChangeNotifier {
 
   void setTempLeasePeriodList(List<String> value) {
     _tempLeasePeriodList = value;
+  }
+
+  List<ModelModel> getTempUsedModelList() {
+    return _tempUsedModelList;
+  }
+
+  void setTempUsedModelList(List<ModelModel> value) {
+    _tempUsedModelList = value;
+  }
+
+  List<SubModelModel> getTempUsedSubModelList() {
+    return _tempUsedSubModelList;
+  }
+
+  void setTempUsedSubModelList(List<SubModelModel> value) {
+    _tempUsedSubModelList = value;
+  }
+
+  List<String> getTempUsedYearList() {
+    return _tempUsedYearList;
+  }
+
+  void setTempUsedYearList(List<String> value) {
+    _tempUsedYearList = value;
   }
 }

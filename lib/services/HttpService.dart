@@ -3287,6 +3287,217 @@ class HttpService {
     return false;
   }
 
+  static Future<bool> getUsedBrandModels(BuildContext context,
+      String brandName) async {
+    String url = baseUrl + '/used-filter-model?brand_name=$brandName';
+    AppProvider _accountProvider =
+    Provider.of<AppProvider>(context, listen: false);
+    print(url);
+    try {
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: null,
+      );
+      print(response.statusCode.toString());
+      print(response.body.toString());
+      var jsonResponse = convert.jsonDecode(response.body);
+      if (jsonResponse['success'].toString() == 'true') {
+        List<ModelModel> modelList = [];
+        for (Map i in jsonResponse['data']) {
+          modelList.add(ModelModel.fromJson(i));
+        }
+
+        Provider.of<AppProvider>(context, listen: false)
+            .setTempUsedModelList(modelList);
+        /*UserModel model = UserModel.fromJson(jsonResponse);*/
+        /*
+        SessionManagerUtil.putString('username', model.username);
+        SessionManagerUtil.putString('email', model.email);
+        SessionManagerUtil.putString('token', model.token);
+        SessionManagerUtil.putString('id', model.id);
+        _navigateRoute(context, RegisterScreen.routeName);*/
+      } else {
+        var jsonResponse = convert.jsonDecode(response.body);
+        if (jsonResponse
+            .toString()
+            .isNotEmpty) {
+          _showResponseSnackBar(
+              context,
+              jsonResponse['message']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''));
+        } else {
+          _showResponseSnackBar(context,
+              '${AppLocalizations
+                  .of(context)
+                  .couldntConnectPleaseTryAgain}');
+        }
+      }
+    } on TimeoutException catch (e) {
+      _showResponseSnackBar(
+          context, '${AppLocalizations
+          .of(context)
+          .noInternetConnection}');
+    } on SocketException catch (e) {
+      _showResponseSnackBar(
+          context, '${AppLocalizations
+          .of(context)
+          .noConnectionWithServer}');
+    } on Error catch (e) {
+      print(e);
+      _showResponseSnackBar(
+          context, '${AppLocalizations
+          .of(context)
+          .somethingWentWrong}');
+    }
+
+    return false;
+  }
+
+  static Future<bool> getUsedSubModels(BuildContext context, String modelId) async {
+    String url = baseUrl + '/used-filter-sub-model?model_id=$modelId';
+    AppProvider _accountProvider =
+    Provider.of<AppProvider>(context, listen: false);
+    print(url);
+    try {
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: null,
+      );
+      print(response.statusCode.toString());
+      print(response.body.toString());
+      var jsonResponse = convert.jsonDecode(response.body);
+      if (jsonResponse['success'].toString() == 'true') {
+        List<SubModelModel> subModelList = [];
+        for (Map i in jsonResponse['data']) {
+          subModelList.add(SubModelModel.fromJson(i));
+        }
+
+        Provider.of<AppProvider>(context, listen: false)
+            .setTempUsedSubModelList(subModelList);
+        /*UserModel model = UserModel.fromJson(jsonResponse);*/
+        /*
+        SessionManagerUtil.putString('username', model.username);
+        SessionManagerUtil.putString('email', model.email);
+        SessionManagerUtil.putString('token', model.token);
+        SessionManagerUtil.putString('id', model.id);
+        _navigateRoute(context, RegisterScreen.routeName);*/
+      } else {
+        var jsonResponse = convert.jsonDecode(response.body);
+        if (jsonResponse
+            .toString()
+            .isNotEmpty) {
+          _showResponseSnackBar(
+              context,
+              jsonResponse['message']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''));
+        } else {
+          _showResponseSnackBar(context,
+              '${AppLocalizations
+                  .of(context)
+                  .couldntConnectPleaseTryAgain}');
+        }
+      }
+    } on TimeoutException catch (e) {
+      _showResponseSnackBar(
+          context, '${AppLocalizations
+          .of(context)
+          .noInternetConnection}');
+    } on SocketException catch (e) {
+      _showResponseSnackBar(
+          context, '${AppLocalizations
+          .of(context)
+          .noConnectionWithServer}');
+    } on Error catch (e) {
+      print(e);
+      _showResponseSnackBar(
+          context, '${AppLocalizations
+          .of(context)
+          .somethingWentWrong}');
+    }
+
+    return false;
+  }
+
+  static Future<bool> getUsedYear({BuildContext context,
+    String brandName,
+    String modelName,
+    String subModel}) async {
+    String url = baseUrl +
+        '/used-filter-year?brand_name=$brandName&model_name=$modelName&sub_model=$subModel';
+    AppProvider _accountProvider =
+    Provider.of<AppProvider>(context, listen: false);
+    print(url);
+    try {
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: null,
+      );
+      print(response.statusCode.toString());
+      print(response.body.toString());
+      var jsonResponse = convert.jsonDecode(response.body);
+      if (jsonResponse['success'].toString() == 'true') {
+        List<String> yearList = [];
+        for (Map i in jsonResponse['data']) {
+          yearList.add(i['year'].toString());
+        }
+        Provider.of<AppProvider>(context, listen: false)
+            .setTempUsedYearList(yearList);
+        /*UserModel model = UserModel.fromJson(jsonResponse);*/
+        /*
+        SessionManagerUtil.putString('username', model.username);
+        SessionManagerUtil.putString('email', model.email);
+        SessionManagerUtil.putString('token', model.token);
+        SessionManagerUtil.putString('id', model.id);
+        _navigateRoute(context, RegisterScreen.routeName);*/
+      } else {
+        var jsonResponse = convert.jsonDecode(response.body);
+        if (jsonResponse
+            .toString()
+            .isNotEmpty) {
+          _showResponseSnackBar(
+              context,
+              jsonResponse['message']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''));
+        } else {
+          _showResponseSnackBar(context,
+              '${AppLocalizations
+                  .of(context)
+                  .couldntConnectPleaseTryAgain}');
+        }
+      }
+    } on TimeoutException catch (e) {
+      _showResponseSnackBar(
+          context, '${AppLocalizations
+          .of(context)
+          .noInternetConnection}');
+    } on SocketException catch (e) {
+      _showResponseSnackBar(
+          context, '${AppLocalizations
+          .of(context)
+          .noConnectionWithServer}');
+    } on Error catch (e) {
+      print(e);
+      _showResponseSnackBar(
+          context, '${AppLocalizations
+          .of(context)
+          .somethingWentWrong}');
+    }
+
+    return false;
+  }
+
   static Future<bool> getSingleLeaseVehicles(BuildContext context,
       {String id}) async {
     String url = baseUrl + '/lease-vehicle/$id';

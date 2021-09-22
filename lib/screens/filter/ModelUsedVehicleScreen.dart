@@ -42,7 +42,7 @@ class _ModelUsedVehicleScreenState extends State<ModelUsedVehicleScreen> {
     super.initState();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     Future.delayed(Duration.zero, () async {
-      isLoading = await HttpService.getBrandModels(
+      isLoading = await HttpService.getUsedBrandModels(
           context,
           Provider.of<AppProvider>(context, listen: false)
               .getUsedFilterVehicleModel
@@ -54,7 +54,7 @@ class _ModelUsedVehicleScreenState extends State<ModelUsedVehicleScreen> {
   @override
   Widget build(BuildContext context) {
     AppProvider _appProvider = Provider.of<AppProvider>(context, listen: true);
-    List<ModelModel> modelList = _appProvider.getTempModelList();
+    List<ModelModel> modelList = _appProvider.getTempUsedModelList();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFFAFAFA),

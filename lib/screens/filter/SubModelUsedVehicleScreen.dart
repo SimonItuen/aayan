@@ -44,7 +44,7 @@ class _SubModelUsedVehicleScreenState
     super.initState();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     Future.delayed(Duration.zero, () async {
-      isLoading = await HttpService.getSubModels(
+      isLoading = await HttpService.getUsedSubModels(
           context,
           Provider.of<AppProvider>(context, listen: false)
               .getUsedFilterVehicleModel
@@ -57,7 +57,7 @@ class _SubModelUsedVehicleScreenState
   @override
   Widget build(BuildContext context) {
     AppProvider _appProvider = Provider.of<AppProvider>(context, listen: true);
-    List<SubModelModel> subModelList = _appProvider.getTempSubModelList();
+    List<SubModelModel> subModelList = _appProvider.getTempUsedSubModelList();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFFAFAFA),
