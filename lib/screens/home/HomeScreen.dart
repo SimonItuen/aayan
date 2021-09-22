@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     Future.delayed(Duration.zero, () async {
-     timer= Timer.periodic(Duration(minutes: 1), (Timer timer) async {
+      timer = Timer.periodic(Duration(minutes: 1), (Timer timer) async {
         await HttpService.getHomeNotifications(context);
       });
       Provider.of<AppProvider>(context, listen: false).getBoolIsLoggedIn
@@ -117,6 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
     timer.cancel();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     AppProvider _appProvider = Provider.of<AppProvider>(context, listen: true);
@@ -858,14 +859,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Container(
                               child: Wrap(
                                 direction: Axis.horizontal,
-                                alignment: WrapAlignment.start,
-                                spacing: ((MediaQuery.of(context).size.width -
-                                            16) -
-                                        (((MediaQuery.of(context).size.width *
-                                                    0.205556) +
-                                                8) *
-                                            4)) /
-                                    3,
+                                alignment: WrapAlignment.spaceBetween,
                                 children: [
                                   if (currentCarsPage == 0)
                                     for (BrandModel brand
