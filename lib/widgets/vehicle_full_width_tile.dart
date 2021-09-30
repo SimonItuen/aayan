@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:Aayan/extensions/app_extensions.dart';
 
 class VehicleFullWidthTile extends StatelessWidget {
   final String name;
@@ -37,19 +39,30 @@ class VehicleFullWidthTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(child: Container( color: Colors.white, padding: EdgeInsets.only(top: 16),child: imageUrl.startsWith('http')?CachedNetworkImage(
-                    progressIndicatorBuilder: (context, url, downloadProgress) {
-                      return SpinKitDoubleBounce(
-                        size: 16,
-                        color: Theme.of(context).primaryColor.withOpacity(0.6),
-                      );
-                    },
-                    imageUrl: '$imageUrl',
-                    fit: BoxFit.contain,
-                    alignment: Alignment.center,
-                  ):Image.asset('assets/images/default_car_image.png'))),
+                  Expanded(
+                      child: Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.only(top: 16),
+                          child: imageUrl.startsWith('http')
+                              ? CachedNetworkImage(
+                                  progressIndicatorBuilder:
+                                      (context, url, downloadProgress) {
+                                    return SpinKitDoubleBounce(
+                                      size: 16,
+                                      color: Theme.of(context)
+                                          .primaryColor
+                                          .withOpacity(0.6),
+                                    );
+                                  },
+                                  imageUrl: '$imageUrl',
+                                  fit: BoxFit.contain,
+                                  alignment: Alignment.center,
+                                )
+                              : Image.asset(
+                                  'assets/images/default_car_image.png'))),
                   Padding(
-                    padding: const EdgeInsets.only(left:8.0, right: 8, bottom: 16),
+                    padding:
+                        const EdgeInsets.only(left: 8.0, right: 8, bottom: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -86,38 +99,38 @@ class VehicleFullWidthTile extends StatelessWidget {
                             ),
                             isUsed
                                 ? Text(
-                              '$price',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 18,
-                                  color: Theme.of(context).primaryColor),
-                            )
+                                    '$price',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 18,
+                                        color: Theme.of(context).primaryColor),
+                                  )
                                 : Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '$price',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 18,
-                                      color: Theme.of(context).primaryColor),
-                                ),
-                                Text(
-                                  'per month',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      color: Color(0xFF9E9E9E)),
-                                ),
-                              ],
-                            ),
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '$price',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 18,
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ),
+                                      Text(
+                                        '${AppLocalizations.of(context).perMonth.capitalize()}',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 12,
+                                            color: Color(0xFF9E9E9E)),
+                                      ),
+                                    ],
+                                  ),
                           ],
                         ),
                       ],
                     ),
                   )
-
                 ],
               ),
             )),

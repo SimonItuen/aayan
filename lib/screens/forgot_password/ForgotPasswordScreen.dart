@@ -22,6 +22,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   bool visibility = false;
   bool isLoading = false;
   TextEditingController mobileController = TextEditingController();
+  bool isError = false;
+  bool isButtonPressed = false;
 
   @override
   void initState() {
@@ -111,12 +113,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(8),
                             ],
+                            onChanged: (val){
+                              isButtonPressed = false;
+                              if (isError) {
+                                formKey.currentState.validate();
+                              }
+                            },
                             validator: (val){
+                              if (!isButtonPressed) {
+                                return null;
+                              }
+                              isError = true;
                               if(val.isEmpty){
                                 return '${AppLocalizations.of(context).mobileNumber} cannot be empty';
                               }else if(val.length !=8){
                                 return '${AppLocalizations.of(context).mobileNumber} is invalid';
                               }
+                              isError = false;
                               return null;
                             },
                             decoration: InputDecoration(
@@ -145,6 +158,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           Padding(padding: EdgeInsets.all(16)),
                           AppFilledButton(
                             onPressed: () async {
+                              isButtonPressed = true;
                               if (formKey.currentState.validate()) {
                                 setState(() {
                                   isLoading = true;

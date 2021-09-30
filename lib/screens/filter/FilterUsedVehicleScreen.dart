@@ -39,6 +39,8 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
   TextEditingController subModelEditingController = TextEditingController();
   TextEditingController yearEditingController = TextEditingController();
   RangeValues _currentRangeValues;
+  bool isError = false;
+  bool isButtonPressed = false;
 
   @override
   void initState() {
@@ -153,16 +155,27 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                       yearEditingController.text = '';
                       setState(() {});
                     },
+                    onChanged: (val){
+                      isButtonPressed = false;
+                      if (isError) {
+                        formKey.currentState.validate();
+                      }
+                    },
                     validator: (val) {
+                      if (!isButtonPressed) {
+                        return null;
+                      }
+                      isError = true;
                       if (val.isEmpty) {
                         return '${AppLocalizations.of(context).brand.capitalize()} ${AppLocalizations.of(context).cannotBeEmpty}';
                       }
+                      isError = false;
                       return null;
                     },
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      hintText: 'Select',
+                      hintText: '${AppLocalizations.of(context).select.capitalize()}',
                       hintStyle: TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 14,
@@ -215,17 +228,27 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                       subModelEditingController.text = '';
                       yearEditingController.text = '';
                       setState(() {});
-                    },
+                    },onChanged: (val){
+                    isButtonPressed = false;
+                    if (isError) {
+                      formKey.currentState.validate();
+                    }
+                  },
                     validator: (val) {
+                      if (!isButtonPressed) {
+                        return null;
+                      }
+                      isError = true;
                       if (val.isEmpty) {
                         return '${AppLocalizations.of(context).model.capitalize()} ${AppLocalizations.of(context).cannotBeEmpty}';
                       }
+                      isError = false;
                       return null;
                     },
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      hintText: 'Select',
+                      hintText: '${AppLocalizations.of(context).select.capitalize()}',
                       hintStyle: TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 14,
@@ -254,7 +277,7 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
                     child: Text(
-                      'Sub ${AppLocalizations.of(context).model}',
+                      '${AppLocalizations.of(context).subCategory.capitalize()}',
                       style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                   ),
@@ -277,16 +300,27 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                       yearEditingController.text = '';
                       setState(() {});
                     },
+                    onChanged: (val){
+                      isButtonPressed = false;
+                      if (isError) {
+                        formKey.currentState.validate();
+                      }
+                    },
                     validator: (val) {
+                      if (!isButtonPressed) {
+                        return null;
+                      }
+                      isError = true;
                       if (val.isEmpty) {
                         return '${AppLocalizations.of(context).model.capitalize()} ${AppLocalizations.of(context).cannotBeEmpty}';
                       }
+                      isError = false;
                       return null;
                     },
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      hintText: 'Select',
+                      hintText: '${AppLocalizations.of(context).select.capitalize()}',
                       hintStyle: TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 14,
@@ -336,16 +370,27 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                           _appProvider.getUsedFilterVehicleModel.year;
                       setState(() {});
                     },
+                    onChanged: (val){
+                      isButtonPressed = false;
+                      if (isError) {
+                        formKey.currentState.validate();
+                      }
+                    },
                     validator: (val) {
+                      if (!isButtonPressed) {
+                        return null;
+                      }
+                      isError = true;
                       if (val.isEmpty) {
                         return '${AppLocalizations.of(context).year.capitalize()} ${AppLocalizations.of(context).cannotBeEmpty}';
                       }
+                      isError = false;
                       return null;
                     },
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      hintText: 'Select',
+                      hintText: '${AppLocalizations.of(context).select.capitalize()}',
                       hintStyle: TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 14,
@@ -375,7 +420,7 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
                     child: Text(
-                      'Price',
+                      '${AppLocalizations.of(context).price.capitalize()}',
                       style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                   ),
@@ -441,6 +486,7 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                   Spacer(),
                   AppFilledButton(
                     onPressed: () async {
+                      isButtonPressed = true;
                       Provider.of<AppProvider>(context, listen: false)
                           .getUsedPageInfoModel
                           .currentPage = 1;

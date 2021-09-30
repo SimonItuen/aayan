@@ -28,6 +28,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
+  bool isError = false;
+  bool isButtonPressed = false;
 
   @override
   void initState() {
@@ -123,7 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             controller: fullNameController,
                             validator: (val) {
                               if (val.isEmpty) {
-                                return '${AppLocalizations.of(context).fullName} Cannot be empty';
+                                return '${AppLocalizations.of(context).fullName} ${AppLocalizations.of(context).cannotBeEmpty}';
                               }
                               return null;
                             },
@@ -161,16 +163,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(8),
                             ],
+                            onChanged: (val){
+                              isButtonPressed = false;
+                              if (isError) {
+                                formKey.currentState.validate();
+                              }
+                            },
                             validator: (val) {
+                              if (!isButtonPressed) {
+                                return null;
+                              }
+                              isError = true;
                               if (val.isEmpty) {
-                                return '${AppLocalizations.of(context).mobileNumber} Cannot be empty';
+                                return '${AppLocalizations.of(context).mobileNumber} ${AppLocalizations.of(context).cannotBeEmpty}';
                               }
                               else if (!(val.startsWith('5')||val.startsWith('6')||val.startsWith('9'))) {
-                                return '${AppLocalizations.of(context).mobileNumber} is invalid';
+                                return '${AppLocalizations.of(context).mobileNumber} ${AppLocalizations.of(context).isInvalid}';
                               }
                               else if(val.length !=8){
-                                return '${AppLocalizations.of(context).mobileNumber} is invalid';
+                                return '${AppLocalizations.of(context).mobileNumber} ${AppLocalizations.of(context).isInvalid}';
                               }
+                              isError = false;
                               return null;
                             },
                             decoration: InputDecoration(
@@ -204,11 +217,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.w400),
                             keyboardType: TextInputType.emailAddress,
                             controller: emailController,
-                            validator: (val) {
-                              if (val.isEmpty) {
-                                return '${AppLocalizations.of(context).email} Cannot be empty';
+                            onChanged: (val){
+                              isButtonPressed = false;
+                              if (isError) {
+                                formKey.currentState.validate();
                               }
-
+                            },
+                            validator: (val) {
+                              if (!isButtonPressed) {
+                                return null;
+                              }
+                              isError = true;
+                              if (val.isEmpty) {
+                                return '${AppLocalizations.of(context).email} ${AppLocalizations.of(context).cannotBeEmpty}';
+                              }
+                              isError = false;
                               return null;
                             },
                             decoration: InputDecoration(
@@ -246,10 +269,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             keyboardType: TextInputType.visiblePassword,
                             obscureText: !visibility,
                             controller: passwordController,
-                            validator: (val) {
-                              if (val.isEmpty) {
-                                return '${AppLocalizations.of(context).password} Cannot be empty';
+                            onChanged: (val){
+                              isButtonPressed = false;
+                              if (isError) {
+                                formKey.currentState.validate();
                               }
+                            },
+                            validator: (val) {
+                              if (!isButtonPressed) {
+                                return null;
+                              }
+                              isError = true;
+                              if (val.isEmpty) {
+                                return '${AppLocalizations.of(context).password} ${AppLocalizations.of(context).cannotBeEmpty}';
+                              }
+                              isError = false;
                               return null;
                             },
                             decoration: InputDecoration(

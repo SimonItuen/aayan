@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:Aayan/extensions/app_extensions.dart';
+
 class VehiclePackageModelTile extends StatelessWidget {
   final String duration;
   final String mileage;
@@ -54,14 +57,14 @@ class VehiclePackageModelTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Duration',
+                  '${AppLocalizations.of(context).duration.capitalize()}',
                   style: TextStyle(
                       color: Color(0xFF9E9E9E),
                       fontWeight: FontWeight.w400,
                       fontSize: 14),
                 ),
                 Text(
-                  '$duration months',
+                  '$duration ${AppLocalizations.of(context).months}',
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
@@ -75,14 +78,14 @@ class VehiclePackageModelTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Mileage',
+                  '${AppLocalizations.of(context).mileage.capitalize()}',
                   style: TextStyle(
                       color: Color(0xFF9E9E9E),
                       fontWeight: FontWeight.w400,
                       fontSize: 14),
                 ),
                 Text(
-                  '$mileage km',
+                  '$mileage ${AppLocalizations.of(context).km}',
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
@@ -96,7 +99,7 @@ class VehiclePackageModelTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Installment',
+                  '${AppLocalizations.of(context).installment.capitalize()}',
                   style: TextStyle(
                       color: Color(0xFF9E9E9E),
                       fontWeight: FontWeight.w400,

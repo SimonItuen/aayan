@@ -122,6 +122,7 @@ class _ModelUsedVehicleScreenState extends State<ModelUsedVehicleScreen> {
                       if (modelList.isNotEmpty)
                         for (int j = 0; j < modelList.length; j++)
                           FilterBrandTile(
+                            noImage: true,
                             imageUrl: modelList[j].image,
                             name: modelList[j].model,
                             isChecked: false,

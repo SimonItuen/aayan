@@ -179,6 +179,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     /*Navigator.of(context).pushNamedAndRemoveUntil(
                         OnBoardingScreen.routeName, ModalRoute.withName('/'));*/
                     SessionManagerUtil.clearAll();
+                    SessionManagerUtil.putBoolean('firstTime', true);
                   },
                 ),
               ),

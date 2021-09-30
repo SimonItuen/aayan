@@ -85,5 +85,18 @@
   "compareVehicle":"قارن السيارة",
   "aDDCAR":"إضافة سيارة",
   "request":"طلب",
-  "usedVehicle":"مركبة مستعملة"
+  "usedVehicle":"مركبة مستعملة",
+  "value": "القيمة",
+  "valuePlus": "قيمة زائد",
+  "notificationDetails": "تفاصيل الإخطارات",
+  "select": "اختر",
+  "price": "سعر",
+  "subCategory": "تصنيف فرعي",
+  "leasePeriod": "فترة الإيجار",
+  "perMonth": "كل شهر",
+  "installment": "تقسيط",
+  "mileage": "عدد الأميال",
+  "duration": "مدة",
+  "months": "الشهور",
+  "km":"كم"
 }

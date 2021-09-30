@@ -119,8 +119,8 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             length: 4,
                             textCapitalization: TextCapitalization.characters,
-                            /*textInputType: TextInputType.number,
-                            obsecureText: false,*/
+                            textInputType: TextInputType.number,
+                            obsecureText: false,
                             textStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,

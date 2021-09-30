@@ -91,14 +91,23 @@ class HttpService {
           Provider.of<AppProvider>(context, listen: false).setIsLoggedIn(false);
           /*Provider.of<AppProvider>(context, listen: false).setAccessToken('');*/
         }
-        _showResponseSnackBar(
-            context,
-            jsonResponse['message']
-                .toString()
-                .replaceAll('{', '')
-                .replaceAll('}', '')
-                .replaceAll('[', '')
-                .replaceAll(']', ''));
+        Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
+              context,
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''));
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /* Provider.of<AppProvider>(context, listen: false)
             .setUserModel(model);
@@ -112,9 +121,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -198,9 +216,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -278,9 +305,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -358,9 +394,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -438,9 +483,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -510,14 +564,23 @@ class HttpService {
         } else {
           Navigator.of(context).pop();
         }
-        _showResponseSnackBar(
-            context,
-            jsonResponse['message']
-                .toString()
-                .replaceAll('{', '')
-                .replaceAll('}', '')
-                .replaceAll('[', '')
-                .replaceAll(']', ''));
+        Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
+              context,
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''));
         print(jsonResponse);
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /* Provider.of<AppProvider>(context, listen: false)
@@ -532,9 +595,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -598,9 +670,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -679,9 +760,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -744,14 +834,23 @@ class HttpService {
               'token', jsonResponse['token'].toString());
           await getProfile(context);*/
 
-        _showResponseSnackBar(
-            context,
-            jsonResponse['message']
-                .toString()
-                .replaceAll('{', '')
-                .replaceAll('}', '')
-                .replaceAll('[', '')
-                .replaceAll(']', ''));
+        Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
+              context,
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''));
         print(jsonResponse);
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /* Provider.of<AppProvider>(context, listen: false)
@@ -766,9 +865,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -835,9 +943,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -904,9 +1021,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -973,9 +1099,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -1042,9 +1177,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -1134,9 +1278,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -1224,9 +1377,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -1312,9 +1474,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -1377,9 +1548,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -1444,9 +1624,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -1517,9 +1706,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -1587,9 +1785,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -1656,9 +1863,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -1728,9 +1944,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -1797,9 +2022,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -1886,9 +2120,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -1975,9 +2218,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2061,9 +2313,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2134,9 +2395,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2204,9 +2474,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2273,9 +2552,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2345,9 +2633,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2414,9 +2711,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2483,9 +2789,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2548,9 +2863,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2617,9 +2941,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2686,9 +3019,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2755,9 +3097,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2824,9 +3175,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2897,9 +3257,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -2966,9 +3335,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -3036,9 +3414,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -3105,9 +3492,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -3177,9 +3573,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -3251,9 +3656,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -3321,9 +3735,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -3390,9 +3813,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -3462,9 +3894,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -3528,9 +3969,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -3594,9 +4044,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -3678,9 +4137,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -3738,14 +4206,23 @@ class HttpService {
       if (jsonResponse['success'].toString() == 'true') {
         Navigator.of(context)
             .popUntil(ModalRoute.withName(ParentScreen.routeName));
-        _showResponseSnackBar(
-            context,
-            jsonResponse['message']
-                .toString()
-                .replaceAll('{', '')
-                .replaceAll('}', '')
-                .replaceAll('[', '')
-                .replaceAll(']', ''));
+        Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
+              context,
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''));
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /*
         SessionManagerUtil.putString('username', model.username);
@@ -3758,9 +4235,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')
@@ -3816,14 +4302,23 @@ class HttpService {
       if (jsonResponse['success'].toString() == 'true') {
         Navigator.of(context)
             .popUntil(ModalRoute.withName(ParentScreen.routeName));
-        _showResponseSnackBar(
-            context,
-            jsonResponse['message']
-                .toString()
-                .replaceAll('{', '')
-                .replaceAll('}', '')
-                .replaceAll('[', '')
-                .replaceAll(']', ''));
+        Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
+              context,
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''));
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /*
         SessionManagerUtil.putString('username', model.username);
@@ -3836,9 +4331,18 @@ class HttpService {
         if (jsonResponse
             .toString()
             .isNotEmpty) {
-          _showResponseSnackBar(
+          Provider
+              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
               context,
-              jsonResponse['message']
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+          :_showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
                   .toString()
                   .replaceAll('{', '')
                   .replaceAll('}', '')

@@ -41,19 +41,19 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
   TextEditingController yearEditingController = TextEditingController();
   TextEditingController leasePeriodEditingController = TextEditingController();
   RangeValues _currentRangeValues = const RangeValues(100, 9000);
+  bool isError = false;
+  bool isButtonPressed = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _currentRangeValues = Provider.of<AppProvider>(context, listen: false).getLeaseCarPriceRange;
+    _currentRangeValues =
+        Provider.of<AppProvider>(context, listen: false).getLeaseCarPriceRange;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     Future.delayed(Duration.zero, () async {
-      print('Kalyn ${Provider.of<AppProvider>(context, listen: false)
-          .getLeaseFilterVehicleModel
-          .minPrice}-${Provider.of<AppProvider>(context, listen: false)
-          .getLeaseFilterVehicleModel
-          .maxPrice}');
+      print(
+          'Kalyn ${Provider.of<AppProvider>(context, listen: false).getLeaseFilterVehicleModel.minPrice}-${Provider.of<AppProvider>(context, listen: false).getLeaseFilterVehicleModel.maxPrice}');
       if (Provider.of<AppProvider>(context, listen: false)
               .getLeaseFilterVehicleModel
               .minPrice !=
@@ -62,16 +62,27 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
             double.tryParse(Provider.of<AppProvider>(context, listen: false)
                     .getLeaseFilterVehicleModel
                     .minPrice) ??
-                 Provider.of<AppProvider>(context, listen: false).getLeaseCarPriceRange.start,
+                Provider.of<AppProvider>(context, listen: false)
+                    .getLeaseCarPriceRange
+                    .start,
             double.tryParse(Provider.of<AppProvider>(context, listen: false)
                     .getLeaseFilterVehicleModel
-                    .maxPrice) ??Provider.of<AppProvider>(context, listen: false).getLeaseCarPriceRange.end);
-      }else{
-        _currentRangeValues = RangeValues(int.tryParse('${Provider.of<AppProvider>(context, listen: false)
-            .getLeaseFilterVehicleModel
-            .minPrice}')??Provider.of<AppProvider>(context, listen: false).getLeaseCarPriceRange.start, int.tryParse('${Provider.of<AppProvider>(context, listen: false)
-            .getLeaseFilterVehicleModel
-            .maxPrice}')??Provider.of<AppProvider>(context, listen: false).getLeaseCarPriceRange.end);
+                    .maxPrice) ??
+                Provider.of<AppProvider>(context, listen: false)
+                    .getLeaseCarPriceRange
+                    .end);
+      } else {
+        _currentRangeValues = RangeValues(
+            int.tryParse(
+                    '${Provider.of<AppProvider>(context, listen: false).getLeaseFilterVehicleModel.minPrice}') ??
+                Provider.of<AppProvider>(context, listen: false)
+                    .getLeaseCarPriceRange
+                    .start,
+            int.tryParse(
+                    '${Provider.of<AppProvider>(context, listen: false).getLeaseFilterVehicleModel.maxPrice}') ??
+                Provider.of<AppProvider>(context, listen: false)
+                    .getLeaseCarPriceRange
+                    .end);
       }
       Provider.of<AppProvider>(context, listen: false)
           .getLeaseFilterVehicleModel
@@ -100,11 +111,8 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
           Provider.of<AppProvider>(context, listen: false)
               .getLeaseFilterVehicleModel
               .leasePeriod;
-      setState(() {
-
-      });
+      setState(() {});
     });
-
   }
 
   @override
@@ -155,16 +163,28 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
                       leasePeriodEditingController.text = '';
                       setState(() {});
                     },
+                    onChanged: (val) {
+                      isButtonPressed = false;
+                      if (isError) {
+                        formKey.currentState.validate();
+                      }
+                    },
                     validator: (val) {
+                      if (!isButtonPressed) {
+                        return null;
+                      }
+                      isError = true;
                       if (val.isEmpty) {
                         return '${AppLocalizations.of(context).brand.capitalize()} ${AppLocalizations.of(context).cannotBeEmpty}';
                       }
+
                       return null;
                     },
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      hintText: 'Select',
+                      hintText:
+                          '${AppLocalizations.of(context).select.capitalize()}',
                       hintStyle: TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 14,
@@ -221,16 +241,28 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
                       leasePeriodEditingController.text = '';
                       setState(() {});
                     },
+                    onChanged: (val) {
+                      isButtonPressed = false;
+                      if (isError) {
+                        formKey.currentState.validate();
+                      }
+                    },
                     validator: (val) {
+                      if (!isButtonPressed) {
+                        return null;
+                      }
+                      isError = true;
                       if (val.isEmpty) {
                         return '${AppLocalizations.of(context).model.capitalize()} ${AppLocalizations.of(context).cannotBeEmpty}';
                       }
+                      isError = false;
                       return null;
                     },
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      hintText: 'Select',
+                      hintText:
+                          '${AppLocalizations.of(context).select.capitalize()}',
                       hintStyle: TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 14,
@@ -259,7 +291,7 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
                     child: Text(
-                      'Sub ${AppLocalizations.of(context).model}',
+                      '${AppLocalizations.of(context).subCategory.capitalize()}',
                       style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                   ),
@@ -285,16 +317,28 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
                       leasePeriodEditingController.text = '';
                       setState(() {});
                     },
+                    onChanged: (val) {
+                      isButtonPressed = false;
+                      if (isError) {
+                        formKey.currentState.validate();
+                      }
+                    },
                     validator: (val) {
+                      if (!isButtonPressed) {
+                        return null;
+                      }
+                      isError = true;
                       if (val.isEmpty) {
                         return '${AppLocalizations.of(context).model.capitalize()} ${AppLocalizations.of(context).cannotBeEmpty}';
                       }
+                      isError = false;
                       return null;
                     },
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      hintText: 'Select',
+                      hintText:
+                          '${AppLocalizations.of(context).select.capitalize()}',
                       hintStyle: TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 14,
@@ -347,16 +391,28 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
                       leasePeriodEditingController.text = '';
                       setState(() {});
                     },
+                    onChanged: (val) {
+                      isButtonPressed = false;
+                      if (isError) {
+                        formKey.currentState.validate();
+                      }
+                    },
                     validator: (val) {
+                      if (!isButtonPressed) {
+                        return null;
+                      }
+                      isError = true;
                       if (val.isEmpty) {
                         return '${AppLocalizations.of(context).year.capitalize()} ${AppLocalizations.of(context).cannotBeEmpty}';
                       }
+                      isError = false;
                       return null;
                     },
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      hintText: 'Select',
+                      hintText:
+                          '${AppLocalizations.of(context).select.capitalize()}',
                       hintStyle: TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 14,
@@ -385,7 +441,7 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
                     child: Text(
-                      'Lease Period',
+                      '${AppLocalizations.of(context).leasePeriod.capitalize()}',
                       style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                   ),
@@ -406,16 +462,28 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
                           _appProvider.getLeaseFilterVehicleModel.leasePeriod;
                       setState(() {});
                     },
-                    validator: (val) {
-                      if (val.isEmpty) {
-                        return 'Lease Period ${AppLocalizations.of(context).cannotBeEmpty}';
+                    onChanged: (val) {
+                      isButtonPressed = false;
+                      if (isError) {
+                        formKey.currentState.validate();
                       }
+                    },
+                    validator: (val) {
+                      if (!isButtonPressed) {
+                        return null;
+                      }
+                      isError = true;
+                      if (val.isEmpty) {
+                        return '${AppLocalizations.of(context).leasePeriod.capitalize()} ${AppLocalizations.of(context).cannotBeEmpty}';
+                      }
+                      isError = false;
                       return null;
                     },
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      hintText: 'Select',
+                      hintText:
+                          '${AppLocalizations.of(context).select.capitalize()}',
                       hintStyle: TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 14,
@@ -445,7 +513,7 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
                     child: Text(
-                      'Price',
+                      '${AppLocalizations.of(context).price.capitalize()}',
                       style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                   ),
@@ -459,9 +527,22 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
                     ),
                     child: RangeSlider(
                       values: _currentRangeValues,
-                      min: Provider.of<AppProvider>(context, listen: false).getLeaseCarPriceRange.start,
-                      max: Provider.of<AppProvider>(context, listen: false).getLeaseCarPriceRange.end,
-                      divisions: (Provider.of<AppProvider>(context, listen: false).getLeaseCarPriceRange.end.round()-Provider.of<AppProvider>(context, listen: false).getLeaseCarPriceRange.start.round())~/10,
+                      min: Provider.of<AppProvider>(context, listen: false)
+                          .getLeaseCarPriceRange
+                          .start,
+                      max: Provider.of<AppProvider>(context, listen: false)
+                          .getLeaseCarPriceRange
+                          .end,
+                      divisions: (Provider.of<AppProvider>(context,
+                                      listen: false)
+                                  .getLeaseCarPriceRange
+                                  .end
+                                  .round() -
+                              Provider.of<AppProvider>(context, listen: false)
+                                  .getLeaseCarPriceRange
+                                  .start
+                                  .round()) ~/
+                          10,
                       labels: RangeLabels(
                         '${_currentRangeValues.start.round().toString()} KD',
                         '${_currentRangeValues.end.round().toString()} KD',
@@ -498,7 +579,10 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
                   Spacer(),
                   AppFilledButton(
                     onPressed: () async {
-                      Provider.of<AppProvider>(context, listen: false).getLeasePageInfoModel.currentPage=1;
+                      isButtonPressed = true;
+                      Provider.of<AppProvider>(context, listen: false)
+                          .getLeasePageInfoModel
+                          .currentPage = 1;
                       setState(() {
                         isLoading = true;
                       });

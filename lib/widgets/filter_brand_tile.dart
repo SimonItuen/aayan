@@ -8,8 +8,9 @@ class FilterBrandTile extends StatelessWidget {
   final String imageUrl;
   final bool isChecked;
   final Function() onPressed;
+  final bool noImage;
 
-  FilterBrandTile({this.onPressed, this.name, this.imageUrl, this.isChecked});
+  FilterBrandTile({this.onPressed, this.name, this.imageUrl, this.isChecked, this.noImage=false});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class FilterBrandTile extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
+              if(!noImage)Container(
                 width: MediaQuery.of(context).size.width * 0.13611,
                 height: MediaQuery.of(context).size.width * 0.13611,
                 padding: EdgeInsets.all(4),
@@ -41,6 +42,7 @@ class FilterBrandTile extends StatelessWidget {
                           )
                         : Image.asset('assets/images/icon.png',color: Colors.grey,)),
               ),
+              if(noImage)Container(height: MediaQuery.of(context).size.width * 0.13611,),
               Expanded(
                   child: Text(
                 '$name',

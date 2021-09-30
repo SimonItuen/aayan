@@ -23,6 +23,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   TextEditingController nameEditingController = TextEditingController();
   TextEditingController mobileEditingController = TextEditingController();
   TextEditingController emailEditingController = TextEditingController();
+  bool isError = false;
+  bool isButtonPressed = false;
 
 
   @override
@@ -68,10 +70,21 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       style: TextStyle(color: Color(0xFF212121), fontSize: 14),
                       keyboardType: TextInputType.name,
                       controller: nameEditingController,
+                      onChanged: (val){
+                        isButtonPressed = false;
+                        if (isError) {
+                          formKey.currentState.validate();
+                        }
+                      },
                       validator: (val) {
+                        if (!isButtonPressed) {
+                          return null;
+                        }
+                        isError = true;
                         if (val.isEmpty) {
                           return '${AppLocalizations.of(context).name.capitalize()} ${AppLocalizations.of(context).cannotBeEmpty}';
                         }
+                        isError = false;
                         return null;
                       },
                       decoration: InputDecoration(
@@ -111,7 +124,17 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(8),
                       ],
+                      onChanged: (val){
+                        isButtonPressed = false;
+                        if (isError) {
+                          formKey.currentState.validate();
+                        }
+                      },
                       validator: (val) {
+                        if (!isButtonPressed) {
+                          return null;
+                        }
+                        isError = true;
                         if (val.isEmpty) {
                           return '${AppLocalizations.of(context).mobileNumber.capitalize()} ${AppLocalizations.of(context).cannotBeEmpty}';
                         } else if (!(val.startsWith('5') ||
@@ -121,6 +144,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         } else if (val.length != 8) {
                           return '${AppLocalizations.of(context).mobileNumber.capitalize()} ${AppLocalizations.of(context).isInvalid}';
                         }
+                        isError = false;
                         return null;
                       },
                       decoration: InputDecoration(
@@ -157,10 +181,21 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       style: TextStyle(color: Color(0xFF212121), fontSize: 14),
                       keyboardType: TextInputType.emailAddress,
                       controller: emailEditingController,
+                      onChanged: (val){
+                        isButtonPressed = false;
+                        if (isError) {
+                          formKey.currentState.validate();
+                        }
+                      },
                       validator: (val) {
+                        if (!isButtonPressed) {
+                          return null;
+                        }
+                        isError = true;
                         if (val.isEmpty) {
                           return '${AppLocalizations.of(context).email.capitalize()} ${AppLocalizations.of(context).cannotBeEmpty}';
                         }
+                        isError = false;
                         return null;
                       },
                       decoration: InputDecoration(
@@ -198,6 +233,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       padding: EdgeInsets.only(top: 0, right: 8, left: 8),
                       child: AppFilledButton(
                         onPressed: () async {
+                          isButtonPressed = true;
                           if (formKey.currentState.validate()) {
 
                             setState(() {

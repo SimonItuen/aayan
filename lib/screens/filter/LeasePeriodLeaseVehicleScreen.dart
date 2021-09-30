@@ -134,6 +134,7 @@ class _LeasePeriodLeaseVehicleScreenState
                       if (periodLeaseList.isNotEmpty)
                         for (int j = 0; j < periodLeaseList.length; j++)
                           FilterBrandTile(
+                            noImage: true,
                             imageUrl: '',
                             name: periodLeaseList[j],
                             isChecked: false,

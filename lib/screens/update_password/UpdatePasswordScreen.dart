@@ -20,6 +20,8 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   bool oldPasswordVisibility = false;
   bool newPasswordVisibility = false;
   bool isLoading = false;
+  bool isError = false;
+  bool isButtonPressed = false;
   TextEditingController oldPasswordEditingController = TextEditingController();
   TextEditingController newPasswordEditingController =
   TextEditingController();
@@ -60,10 +62,21 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: !oldPasswordVisibility,
                       controller: oldPasswordEditingController,
+                      onChanged: (val){
+                        isButtonPressed = false;
+                        if (isError) {
+                          formKey.currentState.validate();
+                        }
+                      },
                       validator: (val) {
+                        if (!isButtonPressed) {
+                          return null;
+                        }
+                        isError = true;
                         if (val.isEmpty) {
                           return '${AppLocalizations.of(context).password} ${AppLocalizations.of(context).cannotBeEmpty}';
                         }
+                        isError = false;
                         return null;
                       },
                       decoration: InputDecoration(
@@ -116,10 +129,21 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: !newPasswordVisibility,
                       controller: newPasswordEditingController,
+                      onChanged: (val){
+                        isButtonPressed = false;
+                        if (isError) {
+                          formKey.currentState.validate();
+                        }
+                      },
                       validator: (val) {
+                        if (!isButtonPressed) {
+                          return null;
+                        }
+                        isError = true;
                         if (val.isEmpty) {
                           return '${AppLocalizations.of(context).newPassword} ${AppLocalizations.of(context).cannotBeEmpty}';
                         }
+                        isError = false;
                         return null;
                       },
                       decoration: InputDecoration(
@@ -173,6 +197,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                       padding: EdgeInsets.only(top: 0, right: 8, left: 8),
                       child: AppFilledButton(
                         onPressed: () async {
+                          isButtonPressed = true;
                           if (formKey.currentState.validate()) {
                             setState(() {
                               isLoading = true;

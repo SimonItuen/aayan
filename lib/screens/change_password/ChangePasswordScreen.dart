@@ -23,6 +23,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   TextEditingController newPasswordEditingController = TextEditingController();
   TextEditingController confirmPasswordEditingController =
       TextEditingController();
+  bool isError = false;
+  bool isButtonPressed = false;
 
   @override
   void initState() {
@@ -60,10 +62,21 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: !newPasswordVisibility,
                       controller: newPasswordEditingController,
+                      onChanged: (val){
+                        isButtonPressed = false;
+                        if (isError) {
+                          formKey.currentState.validate();
+                        }
+                      },
                       validator: (val) {
+                        if (!isButtonPressed) {
+                          return null;
+                        }
+                        isError = true;
                         if (val.isEmpty) {
                           return '${AppLocalizations.of(context).newPassword} ${AppLocalizations.of(context).cannotBeEmpty}';
                         }
+                        isError= false;
                         return null;
                       },
                       decoration: InputDecoration(
@@ -116,12 +129,23 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: !confirmPasswordVisibility,
                       controller: confirmPasswordEditingController,
+                      onChanged: (val){
+                        isButtonPressed = false;
+                        if (isError) {
+                          formKey.currentState.validate();
+                        }
+                      },
                       validator: (val) {
+                        if (!isButtonPressed) {
+                          return null;
+                        }
+                        isError = true;
                         if (val.isEmpty) {
                           return '${AppLocalizations.of(context).confirmPassword} ${AppLocalizations.of(context).cannotBeEmpty}';
                         } else if (val != newPasswordEditingController.text) {
                           return '${AppLocalizations.of(context).password} ${AppLocalizations.of(context).doesNotMatch}';
                         }
+                        isError = false;
                         return null;
                       },
                       decoration: InputDecoration(
@@ -175,6 +199,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       padding: EdgeInsets.only(top: 0, right: 8, left: 8),
                       child: AppFilledButton(
                         onPressed: () async {
+                          isButtonPressed = true;
                           if (formKey.currentState.validate()) {
                             setState(() {
                               isLoading = true;

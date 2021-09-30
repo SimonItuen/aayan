@@ -129,6 +129,7 @@ class _YearLeaseVehicleScreenState extends State<YearLeaseVehicleScreen> {
                       if (yearList.isNotEmpty)
                         for (int j = 0; j < yearList.length; j++)
                           FilterBrandTile(
+                            noImage: true,
                             imageUrl: '',
                             name: yearList[j],
                             isChecked: false,

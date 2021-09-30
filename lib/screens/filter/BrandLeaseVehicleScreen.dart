@@ -105,12 +105,12 @@ class _BrandLeaseVehicleScreenState extends State<BrandLeaseVehicleScreen> {
                     for (int j = 0; j < brandList.length; j++)
                       FilterBrandTile(
                         imageUrl: brandList[j].image,
-                        name: brandList[j].title,
+                        name: _appProvider.getIsEnglish?brandList[j].title:brandList[j].arTitle,
                         isChecked: false,
                         onPressed: () {
                           Provider.of<AppProvider>(context, listen: false)
                               .setLeaseFilterVehicleModel(FilterVehicleModel(
-                                  brand: brandList[j].title));
+                                  brand:  _appProvider.getIsEnglish?brandList[j].title:brandList[j].arTitle));
                           Navigator.of(context).pop();
                         },
                       ),

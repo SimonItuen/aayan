@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:Aayan/extensions/app_extensions.dart';
 
 class CompareVehicleTile extends StatelessWidget {
   final String name;
@@ -125,7 +127,7 @@ class CompareVehicleTile extends StatelessWidget {
                                 Visibility(
                                   visible: !isUsed,
                                   child: Text(
-                                    'per month',
+                                    '${AppLocalizations.of(context).perMonth.capitalize()}',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 12,

@@ -1,6 +1,7 @@
 class BrandModel {
   final String id;
   final String title;
+  final String arTitle;
   final String status;
   final String deletedAt;
   final String createdAt;
@@ -11,6 +12,7 @@ class BrandModel {
   BrandModel({
     this.id,
     this.title,
+    this.arTitle,
     this.createdAt,
     this.updatedAt,this.deletedAt,
     this.status,
@@ -21,6 +23,7 @@ class BrandModel {
     return BrandModel(
       id: json['id'].toString(),
       title: json['title'].toString(),
+      arTitle: json['ar_title'].toString(),
       status: json['status'].toString(),
       deletedAt: json['deleted_at'].toString(),
       createdAt: json['created_at'].toString(),

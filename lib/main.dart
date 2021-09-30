@@ -76,6 +76,7 @@ Future<void> getLanguage(BuildContext context) async {
     ///SI:If there is a theme in the local storage we use that.
     currentLanguage = SessionManagerUtil.getString('language');
   }
+  currentLanguage=='en'?Provider.of<AppProvider>(context, listen: false).setIsEnglish(true):Provider.of<AppProvider>(context, listen: false).setIsEnglish(false);
 
   ///SI:Initialize this theme as the current theme
 

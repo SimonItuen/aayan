@@ -26,6 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isLoading = false;
   TextEditingController mobileController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool isError = false;
+  bool isButtonPressed = false;
 
   @override
   void initState() {
@@ -122,12 +124,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(8),
                             ],
+                            onChanged: (val){
+                              isButtonPressed = false;
+                              if (isError) {
+                                formKey.currentState.validate();
+                              }
+                            },
                             validator: (val) {
+                              if (!isButtonPressed) {
+                                return null;
+                              }
+                              isError = true;
                               if (val.isEmpty) {
                                 return '${AppLocalizations.of(context).mobileNumber} ${AppLocalizations.of(context).cannotBeEmpty}';
                               } else if (val.length != 8) {
                                 return '${AppLocalizations.of(context).mobileNumber} ${AppLocalizations.of(context).isInvalid}';
                               }
+                              isError = false;
                               return null;
                             },
                             decoration: InputDecoration(
@@ -159,10 +172,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             keyboardType: TextInputType.visiblePassword,
                             controller: passwordController,
                             obscureText: !visibility,
-                            validator: (val) {
-                              if (val.isEmpty) {
-                                return '${AppLocalizations.of(context).password} cannot be empty';
+                            onChanged: (val){
+                              isButtonPressed = false;
+                              if (isError) {
+                                formKey.currentState.validate();
                               }
+                            },
+                            validator: (val) {
+                              if (!isButtonPressed) {
+                                return null;
+                              }
+                              isError = true;
+                              if (val.isEmpty) {
+                                return '${AppLocalizations.of(context).password} ${AppLocalizations.of(context).cannotBeEmpty}';
+                              }
+                              isError = false;
                               return null;
                             },
                             decoration: InputDecoration(
@@ -224,7 +248,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           Padding(padding: EdgeInsets.all(8)),
                           AppFilledButton(
                             onPressed: () async {
+                              isButtonPressed = true;
                               if (formKey.currentState.validate()) {
+
                                 setState(() {
                                   isLoading = true;
                                 });
@@ -235,6 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     password: passwordController.text);
                                 setState(() {});
                               }
+
                             },
                             child: Text(
                               '${AppLocalizations.of(context).login}',

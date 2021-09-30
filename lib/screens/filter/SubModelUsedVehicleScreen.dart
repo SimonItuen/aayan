@@ -121,6 +121,7 @@ class _SubModelUsedVehicleScreenState
                   if (subModelList.isNotEmpty)
                     for (int j = 0; j < subModelList.length; j++)
                       FilterBrandTile(
+                        noImage: true,
                         imageUrl: subModelList[j].image,
                         name: subModelList[j].subModel,
                         isChecked: false,

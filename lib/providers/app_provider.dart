@@ -209,6 +209,10 @@ class AppProvider with ChangeNotifier {
     isEnglish = !isEnglish;
     notifyListeners();
   }
+  void setIsEnglish(bool value) {
+    isEnglish = value;
+    notifyListeners();
+  }
 
   void setLanguage(bool isEnglish) {
     this.isEnglish = isEnglish;

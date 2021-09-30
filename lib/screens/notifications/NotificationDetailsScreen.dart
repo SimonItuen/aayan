@@ -67,7 +67,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
         foregroundColor: Colors.black,
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(
-          '${AppLocalizations.of(context).notifications.capitalize()} Details',
+          '${AppLocalizations.of(context).notifications.capitalize()} ${AppLocalizations.of(context).details.capitalize()}',
           style: TextStyle(color: Colors.black),
         ),
       ),
