@@ -46,14 +46,15 @@ class HttpService {
 
   HttpService._();
 
-  static Future<bool> login(BuildContext context, {
+  static Future<bool> login(
+    BuildContext context, {
     String mobile,
     String password,
   }) async {
     await SessionManagerUtil.getInstance();
     String url = baseUrl + '/login';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     var map = Map<String, dynamic>();
     map['mobile'] = mobile;
@@ -61,7 +62,7 @@ class HttpService {
     print(map);
     try {
       http.Response response =
-      await http.post(Uri.parse(url), headers: null, body: map);
+          await http.post(Uri.parse(url), headers: null, body: map);
       print(response.statusCode.toString());
       print(response.body.toString());
       var jsonResponse = convert.jsonDecode(response.body);
@@ -79,8 +80,7 @@ class HttpService {
           await getProfile(context);*/
           Provider.of<AppProvider>(context, listen: false).setIsLoggedIn(true);
           await myDetails(context);
-          if (Provider
-              .of<AppProvider>(context, listen: false)
+          if (Provider.of<AppProvider>(context, listen: false)
               .getIsFreshLoggingIn) {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 ParentScreen.routeName, (Route<dynamic> route) => false);
@@ -91,23 +91,23 @@ class HttpService {
           Provider.of<AppProvider>(context, listen: false).setIsLoggedIn(false);
           /*Provider.of<AppProvider>(context, listen: false).setAccessToken('');*/
         }
-        Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        Provider.of<AppProvider>(context, listen: false).getIsEnglish
+            ? _showResponseSnackBar(
+                context,
+                jsonResponse['message']['en']
+                    .toString()
+                    .replaceAll('{', '')
+                    .replaceAll('}', '')
+                    .replaceAll('[', '')
+                    .replaceAll(']', ''))
+            : _showResponseSnackBar(
+                context,
+                jsonResponse['message']['ar']
+                    .toString()
+                    .replaceAll('{', '')
+                    .replaceAll('}', '')
+                    .replaceAll('[', '')
+                    .replaceAll(']', ''));
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /* Provider.of<AppProvider>(context, listen: false)
             .setUserModel(model);
@@ -118,55 +118,46 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
-  static Future<bool> register(BuildContext context, {
+  static Future<bool> register(
+    BuildContext context, {
     String name,
     String mobile,
     String email,
@@ -175,7 +166,7 @@ class HttpService {
     await SessionManagerUtil.getInstance();
     String url = baseUrl + '/register';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     var map = Map<String, dynamic>();
     map['name'] = name;
@@ -185,7 +176,7 @@ class HttpService {
     print(map);
     try {
       http.Response response =
-      await http.post(Uri.parse(url), headers: null, body: map);
+          await http.post(Uri.parse(url), headers: null, body: map);
       print(response.statusCode.toString());
       print(response.body.toString());
       var jsonResponse = convert.jsonDecode(response.body);
@@ -199,9 +190,7 @@ class HttpService {
             .setTempMobileNumber(mobile);
         _navigateRoute(context, RegisterOTPScreen.routeName);
         _showResponseSnackBar(
-            context, '${AppLocalizations
-            .of(context)
-            .otpSent}');
+            context, '${AppLocalizations.of(context).otpSent}');
         print(jsonResponse);
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /* Provider.of<AppProvider>(context, listen: false)
@@ -213,68 +202,59 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
-  static Future<bool> forgetPassword(BuildContext context, {
+  static Future<bool> forgetPassword(
+    BuildContext context, {
     String mobile,
   }) async {
     await SessionManagerUtil.getInstance();
     String url = baseUrl + '/forget-password';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     var map = Map<String, dynamic>();
     map['mobile'] = mobile;
     print(map);
     try {
       http.Response response =
-      await http.post(Uri.parse(url), headers: null, body: map);
+          await http.post(Uri.parse(url), headers: null, body: map);
       print(response.statusCode.toString());
       print(response.body.toString());
       var jsonResponse = convert.jsonDecode(response.body);
@@ -288,9 +268,7 @@ class HttpService {
             .setTempMobileNumber(mobile);
         _navigateRoute(context, OTPScreen.routeName);
         _showResponseSnackBar(
-            context, '${AppLocalizations
-            .of(context)
-            .otpSent}');
+            context, '${AppLocalizations.of(context).otpSent}');
         print(jsonResponse);
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /* Provider.of<AppProvider>(context, listen: false)
@@ -302,49 +280,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -355,7 +323,7 @@ class HttpService {
     await SessionManagerUtil.getInstance();
     String url = baseUrl + '/otp-verify-password-change';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     var map = Map<String, dynamic>();
     map['mobile'] = mobile;
@@ -363,7 +331,7 @@ class HttpService {
     print(map);
     try {
       http.Response response =
-      await http.post(Uri.parse(url), headers: null, body: map);
+          await http.post(Uri.parse(url), headers: null, body: map);
       print(response.statusCode.toString());
       print(response.body.toString());
       var jsonResponse = convert.jsonDecode(response.body);
@@ -377,9 +345,7 @@ class HttpService {
             .setTempMobileNumber(mobile);
         _navigateRoute(context, ChangePasswordScreen.routeName);
         _showResponseSnackBar(
-            context, '${AppLocalizations
-            .of(context)
-            .otpValid}');
+            context, '${AppLocalizations.of(context).otpValid}');
         print(jsonResponse);
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /* Provider.of<AppProvider>(context, listen: false)
@@ -391,49 +357,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -444,7 +400,7 @@ class HttpService {
     await SessionManagerUtil.getInstance();
     String url = baseUrl + '/password-change';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     var map = Map<String, dynamic>();
     map['mobile'] = mobile;
@@ -452,7 +408,7 @@ class HttpService {
     print(map);
     try {
       http.Response response =
-      await http.post(Uri.parse(url), headers: null, body: map);
+          await http.post(Uri.parse(url), headers: null, body: map);
       print(response.statusCode.toString());
       print(response.body.toString());
       var jsonResponse = convert.jsonDecode(response.body);
@@ -466,9 +422,7 @@ class HttpService {
             .setTempMobileNumber(mobile);
         _navigateRoute(context, LoginScreen.routeName);
         _showResponseSnackBar(
-            context, '${AppLocalizations
-            .of(context)
-            .passwordUpdated}');
+            context, '${AppLocalizations.of(context).passwordUpdated}');
         print(jsonResponse);
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /* Provider.of<AppProvider>(context, listen: false)
@@ -480,49 +434,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -533,7 +477,7 @@ class HttpService {
     await SessionManagerUtil.getInstance();
     String url = baseUrl + '/otp-verify-register';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     var map = Map<String, dynamic>();
     map['mobile'] = mobile;
@@ -541,7 +485,7 @@ class HttpService {
     print(map);
     try {
       http.Response response =
-      await http.post(Uri.parse(url), headers: null, body: map);
+          await http.post(Uri.parse(url), headers: null, body: map);
       print(response.statusCode.toString());
       var jsonResponse = convert.jsonDecode(response.body);
       if (jsonResponse['success'].toString() == 'true') {
@@ -556,31 +500,30 @@ class HttpService {
         Provider.of<AppProvider>(context, listen: false)
             .setTempMobileNumber(mobile);
         await myDetails(context);
-        if (Provider
-            .of<AppProvider>(context, listen: false)
+        if (Provider.of<AppProvider>(context, listen: false)
             .getIsFreshLoggingIn) {
           Navigator.of(context).pushNamedAndRemoveUntil(
               ParentScreen.routeName, (Route<dynamic> route) => false);
         } else {
           Navigator.of(context).pop();
         }
-        Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        Provider.of<AppProvider>(context, listen: false).getIsEnglish
+            ? _showResponseSnackBar(
+                context,
+                jsonResponse['message']['en']
+                    .toString()
+                    .replaceAll('{', '')
+                    .replaceAll('}', '')
+                    .replaceAll('[', '')
+                    .replaceAll(']', ''))
+            : _showResponseSnackBar(
+                context,
+                jsonResponse['message']['ar']
+                    .toString()
+                    .replaceAll('{', '')
+                    .replaceAll('}', '')
+                    .replaceAll('[', '')
+                    .replaceAll(']', ''));
         print(jsonResponse);
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /* Provider.of<AppProvider>(context, listen: false)
@@ -592,49 +535,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -643,7 +576,7 @@ class HttpService {
   static Future<bool> myDetails(BuildContext context) async {
     String url = baseUrl + '/me';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
 
     await SessionManagerUtil.getInstance();
     String accessToken = await SessionManagerUtil.getString('accessToken');
@@ -667,49 +600,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -720,7 +643,7 @@ class HttpService {
     await SessionManagerUtil.getInstance();
     String url = baseUrl + '/update-password';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     await SessionManagerUtil.getInstance();
     String accessToken = await SessionManagerUtil.getString('accessToken');
     print(url);
@@ -743,9 +666,7 @@ class HttpService {
           await getProfile(context);*/
 
         _showResponseSnackBar(
-            context, '${AppLocalizations
-            .of(context)
-            .passwordUpdated}');
+            context, '${AppLocalizations.of(context).passwordUpdated}');
         print(jsonResponse);
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /* Provider.of<AppProvider>(context, listen: false)
@@ -757,49 +678,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -810,7 +721,7 @@ class HttpService {
     await SessionManagerUtil.getInstance();
     String url = baseUrl + '/update-profile';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     await SessionManagerUtil.getInstance();
     String accessToken = await SessionManagerUtil.getString('accessToken');
     print(url);
@@ -834,23 +745,23 @@ class HttpService {
               'token', jsonResponse['token'].toString());
           await getProfile(context);*/
 
-        Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        Provider.of<AppProvider>(context, listen: false).getIsEnglish
+            ? _showResponseSnackBar(
+                context,
+                jsonResponse['message']['en']
+                    .toString()
+                    .replaceAll('{', '')
+                    .replaceAll('}', '')
+                    .replaceAll('[', '')
+                    .replaceAll(']', ''))
+            : _showResponseSnackBar(
+                context,
+                jsonResponse['message']['ar']
+                    .toString()
+                    .replaceAll('{', '')
+                    .replaceAll('}', '')
+                    .replaceAll('[', '')
+                    .replaceAll(']', ''));
         print(jsonResponse);
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /* Provider.of<AppProvider>(context, listen: false)
@@ -862,49 +773,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -913,7 +814,7 @@ class HttpService {
   static Future<bool> getBanners(BuildContext context) async {
     String url = baseUrl + '/banners';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -940,58 +841,50 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
   static Future<bool> getLeaseFeaturedVehicles(BuildContext context) async {
-    String url = baseUrl + '/featured-vehicles?vehicle_type=lease_cars';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/featured-vehicles?vehicle_type=lease_cars';
+
     print(url);
     try {
       http.Response response = await http.get(
@@ -1018,58 +911,50 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
   static Future<bool> getUsedFeaturedVehicles(BuildContext context) async {
-    String url = baseUrl + '/featured-vehicles?vehicle_type=used_cars';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/featured-vehicles?vehicle_type=used_cars';
+
     print(url);
     try {
       http.Response response = await http.get(
@@ -1096,49 +981,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -1146,8 +1021,9 @@ class HttpService {
 
   static Future<bool> getLeaseVehicles(BuildContext context) async {
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
-    String url = baseUrl + '/lease-vehicle?filter_by_brand=&per_page=5&page=1';
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/lease-vehicle?filter_by_brand=&per_page=5&page=1';
     print(url);
     try {
       http.Response response = await http.get(
@@ -1174,66 +1050,50 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
-  static Future<bool> getLeaseVehiclesWithFilter(BuildContext context,
-      FilterVehicleModel model) async {
+  static Future<bool> getLeaseVehiclesWithFilter(
+      BuildContext context, FilterVehicleModel model) async {
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     String url = baseUrl +
-        '/filter-lease-vehicles?brand_name=${model.brand ??
-            ''}&model_name=${model.model?.model ?? ''}&sub_model=${model
-            .subModel ?? ''}&year=${model.year ?? ''}&period=${model
-            .leasePeriod ?? ''}&min_price=${model.minPrice ??
-            ''}&max_price=${model.maxPrice ??
-            ''}&per_page=5&page=${_accountProvider.leaseScreenPageInfo
-            .currentPage}';
+        '/filter-lease-vehicles?language=${_accountProvider.getIsEnglish ? 'en' : 'ar'}&brand_name=${model.brand ?? ''}&model_name=${model.model?.model ?? ''}&sub_model=${model.subModel ?? ''}&year=${model.year ?? ''}&period=${model.leasePeriod ?? ''}&min_price=${model.minPrice ?? ''}&max_price=${model.maxPrice ?? ''}&per_page=5&page=${_accountProvider.leaseScreenPageInfo.currentPage}';
     print(url);
     try {
       http.Response response = await http.get(
@@ -1245,7 +1105,7 @@ class HttpService {
       var jsonResponse = convert.jsonDecode(response.body);
       if (jsonResponse['success'].toString() == 'true') {
         PageInfoModel leasePageInfo =
-        PageInfoModel.fromJson(jsonResponse['data']);
+            PageInfoModel.fromJson(jsonResponse['data']);
         Provider.of<AppProvider>(context, listen: false)
             .setLeasePageInfo(leasePageInfo);
         List<VehicleModel> leaseVehicleList = [];
@@ -1253,10 +1113,9 @@ class HttpService {
           leaseVehicleList.add(VehicleModel.fromJson(i));
         }
 
-        if (Provider
-            .of<AppProvider>(context, listen: false)
-            .leaseScreenPageInfo
-            .currentPage ==
+        if (Provider.of<AppProvider>(context, listen: false)
+                .leaseScreenPageInfo
+                .currentPage ==
             1) {
           Provider.of<AppProvider>(context, listen: false)
               .setLeaseVehicleList(leaseVehicleList);
@@ -1275,49 +1134,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -1326,12 +1175,9 @@ class HttpService {
   static Future<bool> getLeaseVehiclesByFilter(BuildContext context,
       {List<String> ids}) async {
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     String url = baseUrl +
-        '/lease-vehicle?filter_by_brand=${ids.toString()
-            .replaceAll('[', '')
-            .replaceAll(']', '')}&per_page=5&page=${_accountProvider
-            .leaseScreenPageInfo.currentPage}';
+        '/lease-vehicle?language=${_accountProvider.getIsEnglish ? 'en' : 'ar'}&filter_by_brand=${ids.toString().replaceAll('[', '').replaceAll(']', '')}&per_page=5&page=${_accountProvider.leaseScreenPageInfo.currentPage}';
     print(url);
     try {
       http.Response response = await http.get(
@@ -1343,7 +1189,7 @@ class HttpService {
       var jsonResponse = convert.jsonDecode(response.body);
       if (jsonResponse['success'].toString() == 'true') {
         PageInfoModel leasePageInfo =
-        PageInfoModel.fromJson(jsonResponse['data']);
+            PageInfoModel.fromJson(jsonResponse['data']);
         Provider.of<AppProvider>(context, listen: false)
             .setLeasePageInfo(leasePageInfo);
         List<VehicleModel> leaseVehicleList = [];
@@ -1351,10 +1197,9 @@ class HttpService {
           leaseVehicleList.add(VehicleModel.fromJson(i));
         }
 
-        if (Provider
-            .of<AppProvider>(context, listen: false)
-            .leaseScreenPageInfo
-            .currentPage ==
+        if (Provider.of<AppProvider>(context, listen: false)
+                .leaseScreenPageInfo
+                .currentPage ==
             1) {
           Provider.of<AppProvider>(context, listen: false)
               .setLeaseVehicleList(leaseVehicleList);
@@ -1374,49 +1219,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -1425,10 +1260,9 @@ class HttpService {
   static Future<bool> getLeaseVehiclesBySearch(BuildContext context,
       {String key}) async {
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     String url = baseUrl +
-        '/lease-vehicle?search=$key&per_page=5&page=${_accountProvider
-            .leaseScreenPageInfo.currentPage}';
+        '/lease-vehicle?language=${_accountProvider.getIsEnglish ? 'en' : 'ar'}&search=$key&per_page=5&page=${_accountProvider.leaseScreenPageInfo.currentPage}';
 
     print(url);
     try {
@@ -1441,7 +1275,7 @@ class HttpService {
       var jsonResponse = convert.jsonDecode(response.body);
       if (jsonResponse['success'].toString() == 'true') {
         PageInfoModel leasePageInfo =
-        PageInfoModel.fromJson(jsonResponse['data']);
+            PageInfoModel.fromJson(jsonResponse['data']);
         Provider.of<AppProvider>(context, listen: false)
             .setLeasePageInfo(leasePageInfo);
         List<VehicleModel> leaseVehicleList = [];
@@ -1449,10 +1283,9 @@ class HttpService {
           leaseVehicleList.add(VehicleModel.fromJson(i));
         }
 
-        if (Provider
-            .of<AppProvider>(context, listen: false)
-            .leaseScreenPageInfo
-            .currentPage ==
+        if (Provider.of<AppProvider>(context, listen: false)
+                .leaseScreenPageInfo
+                .currentPage ==
             1) {
           Provider.of<AppProvider>(context, listen: false)
               .setLeaseVehicleList(leaseVehicleList);
@@ -1471,49 +1304,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -1522,7 +1345,7 @@ class HttpService {
   static Future<bool> getAboutUs(BuildContext context) async {
     String url = baseUrl + '/static-content/about-us';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -1545,49 +1368,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -1596,7 +1409,7 @@ class HttpService {
   static Future<bool> getContactUs(BuildContext context) async {
     String url = baseUrl + '/static-content/contact-us';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -1621,49 +1434,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -1671,12 +1474,11 @@ class HttpService {
 
   static Future<bool> getAddLeaseVehiclesByFilter(BuildContext context,
       {List<String> ids}) async {
-    String url = baseUrl +
-        '/lease-vehicle?filter_by_brand=${ids.toString()
-            .replaceAll('[', '')
-            .replaceAll(']', '')}&per_page=5&page=1';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/lease-vehicle?language=${_accountProvider.getIsEnglish ? 'en' : 'ar'}&filter_by_brand=${ids.toString().replaceAll('[', '').replaceAll(']', '')}&per_page=5&page=1';
+
     print(url);
     try {
       http.Response response = await http.get(
@@ -1703,49 +1505,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -1753,9 +1545,11 @@ class HttpService {
 
   static Future<bool> getAddLeaseVehiclesBySearch(BuildContext context,
       {String key}) async {
-    String url = baseUrl + '/lease-vehicle?search=$key&per_page=5&page=1';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/lease-vehicle?language=${_accountProvider.getIsEnglish ? 'en' : 'ar'}&search=$key&per_page=5&page=1';
+
     print(url);
     try {
       http.Response response = await http.get(
@@ -1782,58 +1576,50 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
   static Future<bool> getMostSearchedLeaseVehicles(BuildContext context) async {
-    String url = baseUrl + '/most-search-vehicle/1';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/most-search-vehicle/1';
+
     print(url);
     try {
       http.Response response = await http.get(
@@ -1860,49 +1646,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -1910,9 +1686,11 @@ class HttpService {
 
   static Future<bool> getMostRecentSearchedLeaseVehicles(
       BuildContext context) async {
-    String url = baseUrl + '/most-recent-search/1';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/most-recent-search/1?';
+
     print(url);
     await SessionManagerUtil.getInstance();
     String accessToken = await SessionManagerUtil.getString('accessToken');
@@ -1941,58 +1719,50 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
   static Future<bool> getUsedVehicles(BuildContext context) async {
-    String url = baseUrl + '/used-vehicle?filter_by_brand=&per_page=5&page=1';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/used-vehicle?filter_by_brand=&per_page=5&page=1';
+
     print(url);
     try {
       http.Response response = await http.get(
@@ -2019,65 +1789,50 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
-  static Future<bool> getUsedVehiclesWithFilter(BuildContext context,
-      FilterVehicleModel model) async {
+  static Future<bool> getUsedVehiclesWithFilter(
+      BuildContext context, FilterVehicleModel model) async {
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     String url = baseUrl +
-        '/filter-used-vehicles?brand_name=${model.brand ??
-            ''}&model_name=${model.model?.model ?? ''}&sub_model=${model
-            .subModel ?? ''}&year=${model.year ?? ''}&min_price=${model
-            .minPrice ?? ''}&max_price=${model.maxPrice ??
-            ''}&per_page=5&page=${_accountProvider.usedScreenPageInfo
-            .currentPage}';
+        '/filter-used-vehicles?language=${_accountProvider.getIsEnglish ? 'en' : 'ar'}&brand_name=${model.brand ?? ''}&model_name=${model.model?.model ?? ''}&sub_model=${model.subModel ?? ''}&year=${model.year ?? ''}&min_price=${model.minPrice ?? ''}&max_price=${model.maxPrice ?? ''}&per_page=5&page=${_accountProvider.usedScreenPageInfo.currentPage}';
     print(url);
     try {
       http.Response response = await http.get(
@@ -2089,17 +1844,16 @@ class HttpService {
       var jsonResponse = convert.jsonDecode(response.body);
       if (jsonResponse['success'].toString() == 'true') {
         PageInfoModel usedPageInfo =
-        PageInfoModel.fromJson(jsonResponse['data']);
+            PageInfoModel.fromJson(jsonResponse['data']);
         Provider.of<AppProvider>(context, listen: false)
             .setUsedPageInfo(usedPageInfo);
         List<VehicleModel> usedVehicleList = [];
         for (Map i in jsonResponse['data']['data']) {
           usedVehicleList.add(VehicleModel.fromJson(i));
         }
-        if (Provider
-            .of<AppProvider>(context, listen: false)
-            .usedScreenPageInfo
-            .currentPage ==
+        if (Provider.of<AppProvider>(context, listen: false)
+                .usedScreenPageInfo
+                .currentPage ==
             1) {
           Provider.of<AppProvider>(context, listen: false)
               .setUsedVehicleList(usedVehicleList);
@@ -2117,49 +1871,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -2168,12 +1912,9 @@ class HttpService {
   static Future<bool> getUsedVehiclesByFilter(BuildContext context,
       {List<String> ids}) async {
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     String url = baseUrl +
-        '/used-vehicle?filter_by_brand=${ids.toString()
-            .replaceAll('[', '')
-            .replaceAll(']', '')}&per_page=5&page=${_accountProvider
-            .usedScreenPageInfo.currentPage}';
+        '/used-vehicle?language=${_accountProvider.getIsEnglish ? 'en' : 'ar'}&filter_by_brand=${ids.toString().replaceAll('[', '').replaceAll(']', '')}&per_page=5&page=${_accountProvider.usedScreenPageInfo.currentPage}';
     print(url);
     try {
       http.Response response = await http.get(
@@ -2185,7 +1926,7 @@ class HttpService {
       var jsonResponse = convert.jsonDecode(response.body);
       if (jsonResponse['success'].toString() == 'true') {
         PageInfoModel usedPageInfo =
-        PageInfoModel.fromJson(jsonResponse['data']);
+            PageInfoModel.fromJson(jsonResponse['data']);
         Provider.of<AppProvider>(context, listen: false)
             .setUsedPageInfo(usedPageInfo);
         List<VehicleModel> usedVehicleList = [];
@@ -2193,10 +1934,9 @@ class HttpService {
           usedVehicleList.add(VehicleModel.fromJson(i));
         }
 
-        if (Provider
-            .of<AppProvider>(context, listen: false)
-            .usedScreenPageInfo
-            .currentPage ==
+        if (Provider.of<AppProvider>(context, listen: false)
+                .usedScreenPageInfo
+                .currentPage ==
             1) {
           Provider.of<AppProvider>(context, listen: false)
               .setUsedVehicleList(usedVehicleList);
@@ -2215,49 +1955,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -2266,10 +1996,9 @@ class HttpService {
   static Future<bool> getUsedVehiclesBySearch(BuildContext context,
       {String key}) async {
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     String url = baseUrl +
-        '/used-vehicle?search=$key&per_page=5&page=${_accountProvider
-            .usedScreenPageInfo.currentPage}';
+        '/used-vehicle?language=${_accountProvider.getIsEnglish ? 'en' : 'ar'}&search=$key&per_page=5&page=${_accountProvider.usedScreenPageInfo.currentPage}';
     print(url);
     try {
       http.Response response = await http.get(
@@ -2281,17 +2010,16 @@ class HttpService {
       var jsonResponse = convert.jsonDecode(response.body);
       if (jsonResponse['success'].toString() == 'true') {
         PageInfoModel usedPageInfo =
-        PageInfoModel.fromJson(jsonResponse['data']);
+            PageInfoModel.fromJson(jsonResponse['data']);
         Provider.of<AppProvider>(context, listen: false)
             .setUsedPageInfo(usedPageInfo);
         List<VehicleModel> usedVehicleList = [];
         for (Map i in jsonResponse['data']['data']) {
           usedVehicleList.add(VehicleModel.fromJson(i));
         }
-        if (Provider
-            .of<AppProvider>(context, listen: false)
-            .usedScreenPageInfo
-            .currentPage ==
+        if (Provider.of<AppProvider>(context, listen: false)
+                .usedScreenPageInfo
+                .currentPage ==
             1) {
           Provider.of<AppProvider>(context, listen: false)
               .setUsedVehicleList(usedVehicleList);
@@ -2310,49 +2038,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -2360,12 +2078,11 @@ class HttpService {
 
   static Future<bool> getAddUsedVehiclesByFilter(BuildContext context,
       {List<String> ids}) async {
-    String url = baseUrl +
-        '/used-vehicle?filter_by_brand=${ids.toString()
-            .replaceAll('[', '')
-            .replaceAll(']', '')}&per_page=5&page=1';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/used-vehicle?language=${_accountProvider.getIsEnglish ? 'en' : 'ar'}&filter_by_brand=${ids.toString().replaceAll('[', '').replaceAll(']', '')}&per_page=5&page=1';
+
     print(url);
     try {
       http.Response response = await http.get(
@@ -2392,49 +2109,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -2442,9 +2149,10 @@ class HttpService {
 
   static Future<bool> getAddUsedVehiclesBySearch(BuildContext context,
       {String key}) async {
-    String url = baseUrl + '/used-vehicle?search=$key&per_page=5&page=1';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/used-vehicle?language=${_accountProvider.getIsEnglish ? 'en' : 'ar'}&search=$key&per_page=5&page=1';
     print(url);
     try {
       http.Response response = await http.get(
@@ -2471,58 +2179,50 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
   static Future<bool> getMostSearchedUsedVehicles(BuildContext context) async {
-    String url = baseUrl + '/most-search-vehicle/2';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/most-search-vehicle/2';
+
     print(url);
     try {
       http.Response response = await http.get(
@@ -2549,49 +2249,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -2599,9 +2289,11 @@ class HttpService {
 
   static Future<bool> getMostRecentSearchedUsedVehicles(
       BuildContext context) async {
-    String url = baseUrl + '/most-recent-search/2';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/most-recent-search/2?';
+
     print(url);
     await SessionManagerUtil.getInstance();
     String accessToken = await SessionManagerUtil.getString('accessToken');
@@ -2630,49 +2322,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -2681,7 +2363,7 @@ class HttpService {
   static Future<bool> getHomeNotifications(BuildContext context) async {
     String url = baseUrl + '/onesignal-notification?home_page=true';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -2708,49 +2390,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -2759,7 +2431,7 @@ class HttpService {
   static Future<bool> getNotifications(BuildContext context) async {
     String url = baseUrl + '/onesignal-notification';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -2786,49 +2458,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -2838,7 +2500,7 @@ class HttpService {
       {String notificationId}) async {
     String url = baseUrl + '/onesignal-notification/$notificationId';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -2850,7 +2512,8 @@ class HttpService {
       var jsonResponse = convert.jsonDecode(response.body);
       if (jsonResponse['success'].toString() == 'true') {
         Provider.of<AppProvider>(context, listen: false)
-            .setTempNotificationModel(NotificationModel.fromJson(jsonResponse['data']));
+            .setTempNotificationModel(
+                NotificationModel.fromJson(jsonResponse['data']));
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /*
         SessionManagerUtil.putString('username', model.username);
@@ -2860,49 +2523,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -2911,7 +2564,7 @@ class HttpService {
   static Future<bool> getBrands(BuildContext context) async {
     String url = baseUrl + '/brands';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -2938,49 +2591,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -2989,7 +2632,7 @@ class HttpService {
   static Future<bool> getUsedBrands(BuildContext context) async {
     String url = baseUrl + '/used-car-brands';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -3016,49 +2659,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -3067,7 +2700,7 @@ class HttpService {
   static Future<bool> getTopBrands(BuildContext context) async {
     String url = baseUrl + '/brands?top_brands=8';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -3094,49 +2727,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -3145,7 +2768,7 @@ class HttpService {
   static Future<bool> getTopUsedBrands(BuildContext context) async {
     String url = baseUrl + '/used-car-brands?top_brands=8';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -3172,49 +2795,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -3223,7 +2836,7 @@ class HttpService {
   static Future<bool> getLeaseVehiclePriceRange(BuildContext context) async {
     String url = baseUrl + '/price-range/lease_car';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -3242,9 +2855,7 @@ class HttpService {
         Provider.of<AppProvider>(context, listen: false)
             .setLeaseCarPriceRange(RangeValues(min, max));
         print(
-            '${Provider
-                .of<AppProvider>(context, listen: false)
-                .getLeaseCarPriceRange}');
+            '${Provider.of<AppProvider>(context, listen: false).getLeaseCarPriceRange}');
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /*
         SessionManagerUtil.putString('username', model.username);
@@ -3254,49 +2865,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -3305,7 +2906,7 @@ class HttpService {
   static Future<bool> getUsedVehiclePriceRange(BuildContext context) async {
     String url = baseUrl + '/price-range/used_car';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -3332,59 +2933,49 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
-  static Future<bool> getBrandModels(BuildContext context,
-      String brandName) async {
+  static Future<bool> getBrandModels(
+      BuildContext context, String brandName) async {
     String url = baseUrl + '/filter-model?brand_name=$brandName';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -3411,49 +3002,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -3462,7 +3043,7 @@ class HttpService {
   static Future<bool> getSubModels(BuildContext context, String modelId) async {
     String url = baseUrl + '/filter-sub-model?model_id=$modelId';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -3489,62 +3070,53 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
-  static Future<bool> getYear({BuildContext context,
-    String brandName,
-    String modelName,
-    String subModel}) async {
+  static Future<bool> getYear(
+      {BuildContext context,
+      String brandName,
+      String modelName,
+      String subModel}) async {
     String url = baseUrl +
         '/filter-year?brand_name=$brandName&model_name=$modelName&sub_model=$subModel';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -3570,63 +3142,54 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
-  static Future<bool> getLeasePeriod({BuildContext context,
-    String brandName,
-    String modelName,
-    String subModel,
-    String year}) async {
+  static Future<bool> getLeasePeriod(
+      {BuildContext context,
+      String brandName,
+      String modelName,
+      String subModel,
+      String year}) async {
     String url = baseUrl +
         '/filter-lease-period?brand_name=$brandName&model_name=$modelName&sub_model=$subModel&year=$year';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -3653,59 +3216,49 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
-  static Future<bool> getUsedBrandModels(BuildContext context,
-      String brandName) async {
+  static Future<bool> getUsedBrandModels(
+      BuildContext context, String brandName) async {
     String url = baseUrl + '/used-filter-model?brand_name=$brandName';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -3732,58 +3285,49 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
-  static Future<bool> getUsedSubModels(BuildContext context, String modelId) async {
+  static Future<bool> getUsedSubModels(
+      BuildContext context, String modelId) async {
     String url = baseUrl + '/used-filter-sub-model?model_id=$modelId';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -3810,62 +3354,53 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
-  static Future<bool> getUsedYear({BuildContext context,
-    String brandName,
-    String modelName,
-    String subModel}) async {
+  static Future<bool> getUsedYear(
+      {BuildContext context,
+      String brandName,
+      String modelName,
+      String subModel}) async {
     String url = baseUrl +
         '/used-filter-year?brand_name=$brandName&model_name=$modelName&sub_model=$subModel';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
     print(url);
     try {
       http.Response response = await http.get(
@@ -3891,49 +3426,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -3941,9 +3466,10 @@ class HttpService {
 
   static Future<bool> getSingleLeaseVehicles(BuildContext context,
       {String id}) async {
-    String url = baseUrl + '/lease-vehicle/$id';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/lease-vehicle/$id?language=${_accountProvider.getIsEnglish ? 'en' : 'ar'}';
     print(url);
     await SessionManagerUtil.getInstance();
     String accessToken = await SessionManagerUtil.getString('accessToken');
@@ -3960,55 +3486,45 @@ class HttpService {
       if (jsonResponse['success'].toString() == 'true') {
         Provider.of<AppProvider>(context, listen: false)
             .setTempLeaseVehicleDetail(
-            VehicleDetailModel.fromJson(jsonResponse['data']));
+                VehicleDetailModel.fromJson(jsonResponse['data']));
         if (_accountProvider.getBoolIsLoggedIn) {
           await getMostRecentSearchedLeaseVehicles(context);
         }
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -4016,9 +3532,10 @@ class HttpService {
 
   static Future<bool> getSingleUsedVehicles(BuildContext context,
       {String id}) async {
-    String url = baseUrl + '/used-vehicle/$id';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl +
+        '/used-vehicle/$id?language=${_accountProvider.getIsEnglish ? 'en' : 'ar'}';
     print(url);
     await SessionManagerUtil.getInstance();
     String accessToken = await SessionManagerUtil.getString('accessToken');
@@ -4035,64 +3552,55 @@ class HttpService {
       if (jsonResponse['success'].toString() == 'true') {
         Provider.of<AppProvider>(context, listen: false)
             .setTempUsedVehicleDetail(
-            VehicleDetailModel.fromJson(jsonResponse['data']));
+                VehicleDetailModel.fromJson(jsonResponse['data']));
         if (_accountProvider.getBoolIsLoggedIn) {
           await getMostRecentSearchedUsedVehicles(context);
         }
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
   }
 
   static Future<bool> getLeaseAddOns(BuildContext context) async {
-    String url = baseUrl + '/leasing-addons';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+  Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl + '/leasing-addons?language=${_accountProvider.getIsEnglish ? 'en' : 'ar'}';
+
     print(url);
     try {
       http.Response response = await http.get(
@@ -4134,49 +3642,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -4186,7 +3684,7 @@ class HttpService {
       {String vehicleId, String packageId, String addOnId}) async {
     String url = baseUrl + '/lease-vehicle-user-request';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
 
     await SessionManagerUtil.getInstance();
     String accessToken = await SessionManagerUtil.getString('accessToken');
@@ -4206,23 +3704,23 @@ class HttpService {
       if (jsonResponse['success'].toString() == 'true') {
         Navigator.of(context)
             .popUntil(ModalRoute.withName(ParentScreen.routeName));
-        Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        Provider.of<AppProvider>(context, listen: false).getIsEnglish
+            ? _showResponseSnackBar(
+                context,
+                jsonResponse['message']['en']
+                    .toString()
+                    .replaceAll('{', '')
+                    .replaceAll('}', '')
+                    .replaceAll('[', '')
+                    .replaceAll(']', ''))
+            : _showResponseSnackBar(
+                context,
+                jsonResponse['message']['ar']
+                    .toString()
+                    .replaceAll('{', '')
+                    .replaceAll('}', '')
+                    .replaceAll('[', '')
+                    .replaceAll(']', ''));
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /*
         SessionManagerUtil.putString('username', model.username);
@@ -4232,49 +3730,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -4284,7 +3772,7 @@ class HttpService {
       {String vehicleId}) async {
     String url = baseUrl + '/used-vehicle-user-request';
     AppProvider _accountProvider =
-    Provider.of<AppProvider>(context, listen: false);
+        Provider.of<AppProvider>(context, listen: false);
 
     await SessionManagerUtil.getInstance();
     String accessToken = await SessionManagerUtil.getString('accessToken');
@@ -4302,23 +3790,23 @@ class HttpService {
       if (jsonResponse['success'].toString() == 'true') {
         Navigator.of(context)
             .popUntil(ModalRoute.withName(ParentScreen.routeName));
-        Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        Provider.of<AppProvider>(context, listen: false).getIsEnglish
+            ? _showResponseSnackBar(
+                context,
+                jsonResponse['message']['en']
+                    .toString()
+                    .replaceAll('{', '')
+                    .replaceAll('}', '')
+                    .replaceAll('[', '')
+                    .replaceAll(']', ''))
+            : _showResponseSnackBar(
+                context,
+                jsonResponse['message']['ar']
+                    .toString()
+                    .replaceAll('{', '')
+                    .replaceAll('}', '')
+                    .replaceAll('[', '')
+                    .replaceAll(']', ''));
         /*UserModel model = UserModel.fromJson(jsonResponse);*/
         /*
         SessionManagerUtil.putString('username', model.username);
@@ -4328,49 +3816,39 @@ class HttpService {
         _navigateRoute(context, RegisterScreen.routeName);*/
       } else {
         var jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse
-            .toString()
-            .isNotEmpty) {
-          Provider
-              .of<AppProvider>(context, listen: false).getIsEnglish? _showResponseSnackBar(
-              context,
-              jsonResponse['message']['en']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''))
-          :_showResponseSnackBar(
-              context,
-              jsonResponse['message']['ar']
-                  .toString()
-                  .replaceAll('{', '')
-                  .replaceAll('}', '')
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''));
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['en']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''))
+              : _showResponseSnackBar(
+                  context,
+                  jsonResponse['message']['ar']
+                      .toString()
+                      .replaceAll('{', '')
+                      .replaceAll('}', '')
+                      .replaceAll('[', '')
+                      .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
-              '${AppLocalizations
-                  .of(context)
-                  .couldntConnectPleaseTryAgain}');
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
         }
       }
     } on TimeoutException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noInternetConnection}');
+          context, '${AppLocalizations.of(context).noInternetConnection}');
     } on SocketException catch (e) {
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .noConnectionWithServer}');
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
     } on Error catch (e) {
       print(e);
       _showResponseSnackBar(
-          context, '${AppLocalizations
-          .of(context)
-          .somethingWentWrong}');
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
     }
 
     return false;
@@ -4382,16 +3860,12 @@ class HttpService {
           '$message',
           textAlign: TextAlign.center,
           style: TextStyle(
-              color: Theme
-                  .of(context)
-                  .cardColor,
+              color: Theme.of(context).cardColor,
               fontWeight: FontWeight.bold,
               fontFamily: 'Poppins'),
         ),
         duration: Duration(seconds: 2),
-        backgroundColor: Theme
-            .of(context)
-            .primaryColor);
+        backgroundColor: Theme.of(context).primaryColor);
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }

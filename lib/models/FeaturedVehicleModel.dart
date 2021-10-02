@@ -10,19 +10,26 @@ class FeaturedVehicleModel {
   final String deletedAt;
   final String imageName;
   final String brand;
+  final String altBrand;
   final String year;
   final String model;
+  final String altModel;
   final String price;
   final String carName;
+  final String altCarName;
 
-  FeaturedVehicleModel( {
+  FeaturedVehicleModel({
     this.id,
     this.vehicleType,
     this.leaseCar,
-    this.usedCar, this.brand,
+    this.usedCar,
+    this.brand,
+    this.altBrand,
     this.year,
     this.model,
+    this.altModel,
     this.carName,
+    this.altCarName,
     this.price,
     this.imageName,
     this.createdAt,
@@ -31,7 +38,6 @@ class FeaturedVehicleModel {
   });
 
   factory FeaturedVehicleModel.fromJson(Map<String, dynamic> json) {
-
     return FeaturedVehicleModel(
       id: json['id'].toString(),
       vehicleType: json['vehicle_type'].toString(),
@@ -39,7 +45,18 @@ class FeaturedVehicleModel {
       usedCar: json['used_car'].toString(),
       brand: json['brand'].toString(),
       model: json['model'].toString(),
-      carName: json['brand'].toString()+' '+json['model'].toString()+' '+json['year'].toString(),
+      altBrand: json['alt_brand'].toString(),
+      altModel: json['alt_model'].toString(),
+      carName: json['brand'].toString() +
+          ' ' +
+          json['model'].toString() +
+          ' ' +
+          json['year'].toString(),
+      altCarName: json['alt_brand'].toString() +
+          ' ' +
+          json['alt_model'].toString() +
+          ' ' +
+          json['year'].toString(),
       year: json['year'].toString(),
       price: json['price'].toString(),
       imageName: json['image_name'].toString(),

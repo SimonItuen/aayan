@@ -23,7 +23,7 @@ class BrandModel {
     return BrandModel(
       id: json['id'].toString(),
       title: json['title'].toString(),
-      arTitle: json['ar_title'].toString(),
+      arTitle: json['alt_title'].toString(),
       status: json['status'].toString(),
       deletedAt: json['deleted_at'].toString(),
       createdAt: json['created_at'].toString(),

@@ -431,10 +431,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                               .getLeaseFeaturedVehicleList())
                                         HomeVehicleNormalTile(
                                           imageUrl: vehicle.imageName,
-                                          name: vehicle.carName,
+                                          name: _appProvider.getIsEnglish
+                                              ? vehicle.carName
+                                              : vehicle.altCarName,
                                           year: vehicle.year,
-                                          brand: vehicle.brand,
-                                          model: vehicle.model,
+                                          brand: _appProvider.getIsEnglish
+                                              ? vehicle.brand
+                                              : vehicle.altBrand,
+                                          model: _appProvider.getIsEnglish
+                                              ? vehicle.model
+                                              : vehicle.altModel,
                                           price: 'KD ${vehicle.price}',
                                           onPressed: () {
                                             Provider.of<AppProvider>(context,
@@ -442,10 +448,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .setTempLeaseVehicle(
                                                     VehicleModel(
                                               id: vehicle.id,
-                                              brand: vehicle.brand,
-                                              model: vehicle.model,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? vehicle.brand
+                                                  : vehicle.altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? vehicle.model
+                                                  : vehicle.model,
                                               imageName: vehicle.imageName,
-                                              carName: vehicle.carName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? vehicle.carName
+                                                  : vehicle.altCarName,
                                               price: vehicle.price,
                                               year: vehicle.year,
                                               createdAt: vehicle.createdAt,
@@ -457,10 +469,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .setTempLeaseVehicleDetail(
                                                     VehicleDetailModel(
                                               id: vehicle.id,
-                                              brand: vehicle.brand,
-                                              model: vehicle.model,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? vehicle.brand
+                                                  : vehicle.altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? vehicle.model
+                                                  : vehicle.model,
                                               imageName: vehicle.imageName,
-                                              carName: vehicle.carName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? vehicle.carName
+                                                  : vehicle.altCarName,
                                               price: vehicle.price,
                                               year: vehicle.year,
                                               createdAt: vehicle.createdAt,
@@ -481,10 +499,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                               .getUsedFeaturedVehicleList())
                                         HomeVehicleNormalTile(
                                           imageUrl: vehicle.imageName,
-                                          name: vehicle.carName,
+                                          name: _appProvider.getIsEnglish
+                                              ? vehicle.carName
+                                              : vehicle.altCarName,
                                           year: vehicle.year,
-                                          brand: vehicle.brand,
-                                          model: vehicle.model,
+                                          brand: _appProvider.getIsEnglish
+                                              ? vehicle.brand
+                                              : vehicle.altBrand,
+                                          model: _appProvider.getIsEnglish
+                                              ? vehicle.model
+                                              : vehicle.altModel,
                                           price: 'KD ${vehicle.price}',
                                           onPressed: () {
                                             Provider.of<AppProvider>(context,
@@ -492,10 +516,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .setTempUsedVehicle(
                                                     VehicleModel(
                                               id: vehicle.id,
-                                              brand: vehicle.brand,
-                                              model: vehicle.model,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? vehicle.brand
+                                                  : vehicle.altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? vehicle.model
+                                                  : vehicle.model,
                                               imageName: vehicle.imageName,
-                                              carName: vehicle.carName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? vehicle.carName
+                                                  : vehicle.altCarName,
                                               price: vehicle.price,
                                               year: vehicle.year,
                                               createdAt: vehicle.createdAt,
@@ -507,10 +537,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .setTempUsedVehicleDetail(
                                                     VehicleDetailModel(
                                               id: vehicle.id,
-                                              brand: vehicle.brand,
-                                              model: vehicle.model,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? vehicle.brand
+                                                  : vehicle.altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? vehicle.model
+                                                  : vehicle.model,
                                               imageName: vehicle.imageName,
-                                              carName: vehicle.carName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? vehicle.carName
+                                                  : vehicle.altCarName,
                                               price: vehicle.price,
                                               year: vehicle.year,
                                               createdAt: vehicle.createdAt,
@@ -608,18 +644,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                           imageUrl: _appProvider
                                               .getHomeLeaseVehicleList()[i]
                                               .imageName,
-                                          name: _appProvider
-                                              .getHomeLeaseVehicleList()[i]
-                                              .carName,
+                                          name: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .carName
+                                              : _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .altCarName,
                                           year: _appProvider
                                               .getHomeLeaseVehicleList()[i]
                                               .year,
-                                          brand: _appProvider
-                                              .getHomeLeaseVehicleList()[i]
-                                              .brand,
-                                          model: _appProvider
-                                              .getHomeLeaseVehicleList()[i]
-                                              .model,
+                                          brand: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .brand
+                                              : _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .altBrand,
+                                          model: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .model
+                                              : _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .altModel,
                                           price:
                                               'KD ${_appProvider.getHomeLeaseVehicleList()[i].price}',
                                           onPressed: () {
@@ -630,18 +678,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                               id: _appProvider
                                                   .getHomeLeaseVehicleList()[i]
                                                   .id,
-                                              brand: _appProvider
-                                                  .getHomeLeaseVehicleList()[i]
-                                                  .brand,
-                                              model: _appProvider
-                                                  .getHomeLeaseVehicleList()[i]
-                                                  .model,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .brand
+                                                  : _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .model
+                                                  : _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .altModel,
                                               imageName: _appProvider
                                                   .getHomeLeaseVehicleList()[i]
                                                   .imageName,
-                                              carName: _appProvider
-                                                  .getHomeLeaseVehicleList()[i]
-                                                  .carName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .carName
+                                                  : _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .altCarName,
                                               price: _appProvider
                                                   .getHomeLeaseVehicleList()[i]
                                                   .price,
@@ -674,18 +740,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                               id: _appProvider
                                                   .getHomeLeaseVehicleList()[i]
                                                   .id,
-                                              brand: _appProvider
-                                                  .getHomeLeaseVehicleList()[i]
-                                                  .brand,
-                                              model: _appProvider
-                                                  .getHomeLeaseVehicleList()[i]
-                                                  .model,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .brand
+                                                  : _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .model
+                                                  : _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .altModel,
                                               imageName: _appProvider
                                                   .getHomeLeaseVehicleList()[i]
                                                   .imageName,
-                                              carName: _appProvider
-                                                  .getHomeLeaseVehicleList()[i]
-                                                  .carName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .carName
+                                                  : _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .altCarName,
                                               price: _appProvider
                                                   .getHomeLeaseVehicleList()[i]
                                                   .price,
@@ -732,18 +816,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                           imageUrl: _appProvider
                                               .getHomeUsedVehicleList()[i]
                                               .imageName,
-                                          name: _appProvider
-                                              .getHomeUsedVehicleList()[i]
-                                              .carName,
+                                          name: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .carName
+                                              : _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .altCarName,
                                           year: _appProvider
                                               .getHomeUsedVehicleList()[i]
                                               .year,
-                                          brand: _appProvider
-                                              .getHomeUsedVehicleList()[i]
-                                              .brand,
-                                          model: _appProvider
-                                              .getHomeUsedVehicleList()[i]
-                                              .model,
+                                          brand: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .brand
+                                              : _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .altBrand,
+                                          model: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .model
+                                              : _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .altModel,
                                           price:
                                               'KD ${_appProvider.getHomeUsedVehicleList()[i].price}',
                                           onPressed: () {
@@ -754,18 +850,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                               id: _appProvider
                                                   .getHomeUsedVehicleList()[i]
                                                   .id,
-                                              brand: _appProvider
-                                                  .getHomeUsedVehicleList()[i]
-                                                  .brand,
-                                              model: _appProvider
-                                                  .getHomeUsedVehicleList()[i]
-                                                  .model,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .brand
+                                                  : _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .model
+                                                  : _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .altModel,
                                               imageName: _appProvider
                                                   .getHomeUsedVehicleList()[i]
                                                   .imageName,
-                                              carName: _appProvider
-                                                  .getHomeUsedVehicleList()[i]
-                                                  .carName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .carName
+                                                  : _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .altCarName,
                                               price: _appProvider
                                                   .getHomeUsedVehicleList()[i]
                                                   .price,
@@ -798,18 +912,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                               id: _appProvider
                                                   .getHomeUsedVehicleList()[i]
                                                   .id,
-                                              brand: _appProvider
-                                                  .getHomeUsedVehicleList()[i]
-                                                  .brand,
-                                              model: _appProvider
-                                                  .getHomeUsedVehicleList()[i]
-                                                  .model,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .brand
+                                                  : _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .model
+                                                  : _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .altModel,
                                               imageName: _appProvider
                                                   .getHomeUsedVehicleList()[i]
                                                   .imageName,
-                                              carName: _appProvider
-                                                  .getHomeUsedVehicleList()[i]
-                                                  .carName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .carName
+                                                  : _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .altCarName,
                                               price: _appProvider
                                                   .getHomeUsedVehicleList()[i]
                                                   .price,
@@ -1042,10 +1174,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .getMostSearchedLeaseVehicleList())
                                         HomeVehicleNormalTile(
                                           imageUrl: vehicle.imageName,
-                                          name: vehicle.carName,
+                                          name: _appProvider.getIsEnglish
+                                              ? vehicle.carName
+                                              : vehicle.altCarName,
                                           year: vehicle.year,
-                                          brand: vehicle.brand,
-                                          model: vehicle.model,
+                                          brand: _appProvider.getIsEnglish
+                                              ? vehicle.brand
+                                              : vehicle.altBrand,
+                                          model: _appProvider.getIsEnglish
+                                              ? vehicle.model
+                                              : vehicle.altModel,
                                           price: 'KD ${vehicle.price}',
                                           onPressed: () {
                                             Provider.of<AppProvider>(context,
@@ -1053,10 +1191,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .setTempLeaseVehicle(
                                                     VehicleModel(
                                               id: vehicle.id,
-                                              brand: vehicle.brand,
-                                              model: vehicle.model,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? vehicle.brand
+                                                  : vehicle.altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? vehicle.model
+                                                  : vehicle.altModel,
                                               imageName: vehicle.imageName,
-                                              carName: vehicle.carName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? vehicle.carName
+                                                  : vehicle.altCarName,
                                               price: vehicle.price,
                                               year: vehicle.year,
                                               feature: vehicle.feature,
@@ -1071,10 +1215,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .setTempLeaseVehicleDetail(
                                                     VehicleDetailModel(
                                               id: vehicle.id,
-                                              brand: vehicle.brand,
-                                              model: vehicle.model,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? vehicle.brand
+                                                  : vehicle.altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? vehicle.model
+                                                  : vehicle.altModel,
                                               imageName: vehicle.imageName,
-                                              carName: vehicle.carName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? vehicle.carName
+                                                  : vehicle.altCarName,
                                               price: vehicle.price,
                                               year: vehicle.year,
                                               feature: vehicle.feature,
@@ -1097,10 +1247,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .getMostSearchedUsedVehicleList())
                                         HomeVehicleNormalTile(
                                           imageUrl: vehicle.imageName,
-                                          name: vehicle.carName,
+                                          name: _appProvider.getIsEnglish
+                                              ? vehicle.carName
+                                              : vehicle.altCarName,
                                           year: vehicle.year,
-                                          brand: vehicle.brand,
-                                          model: vehicle.model,
+                                          brand: _appProvider.getIsEnglish
+                                              ? vehicle.brand
+                                              : vehicle.altBrand,
+                                          model: _appProvider.getIsEnglish
+                                              ? vehicle.model
+                                              : vehicle.altModel,
                                           price: 'KD ${vehicle.price}',
                                           onPressed: () {
                                             Provider.of<AppProvider>(context,
@@ -1108,10 +1264,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .setTempUsedVehicle(
                                                     VehicleModel(
                                               id: vehicle.id,
-                                              brand: vehicle.brand,
-                                              model: vehicle.model,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? vehicle.brand
+                                                  : vehicle.altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? vehicle.model
+                                                  : vehicle.altModel,
                                               imageName: vehicle.imageName,
-                                              carName: vehicle.carName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? vehicle.carName
+                                                  : vehicle.altCarName,
                                               price: vehicle.price,
                                               year: vehicle.year,
                                               feature: vehicle.feature,
@@ -1126,10 +1288,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .setTempUsedVehicleDetail(
                                                     VehicleDetailModel(
                                               id: vehicle.id,
-                                              brand: vehicle.brand,
-                                              model: vehicle.model,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? vehicle.brand
+                                                  : vehicle.altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? vehicle.model
+                                                  : vehicle.altModel,
                                               imageName: vehicle.imageName,
-                                              carName: vehicle.carName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? vehicle.carName
+                                                  : vehicle.altCarName,
                                               price: vehicle.price,
                                               year: vehicle.year,
                                               feature: vehicle.feature,
@@ -1180,10 +1348,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                             .getMostRecentSearchedLeaseVehicleList())
                                           HomeVehicleNormalTile(
                                             imageUrl: vehicle.imageName,
-                                            name: vehicle.carName,
+                                            name: _appProvider.getIsEnglish
+                                                ? vehicle.carName
+                                                : vehicle.altCarName,
                                             year: vehicle.year,
-                                            brand: vehicle.brand,
-                                            model: vehicle.model,
+                                            brand: _appProvider.getIsEnglish
+                                                ? vehicle.brand
+                                                : vehicle.altBrand,
+                                            model: _appProvider.getIsEnglish
+                                                ? vehicle.model
+                                                : vehicle.altModel,
                                             price: 'KD ${vehicle.price}',
                                             onPressed: () {
                                               Provider.of<AppProvider>(context,
@@ -1191,10 +1365,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .setTempLeaseVehicle(
                                                       VehicleModel(
                                                 id: vehicle.id,
-                                                brand: vehicle.brand,
-                                                model: vehicle.model,
+                                                brand: _appProvider.getIsEnglish
+                                                    ? vehicle.brand
+                                                    : vehicle.altBrand,
+                                                model: _appProvider.getIsEnglish
+                                                    ? vehicle.model
+                                                    : vehicle.altModel,
                                                 imageName: vehicle.imageName,
-                                                carName: vehicle.carName,
+                                                carName:
+                                                    _appProvider.getIsEnglish
+                                                        ? vehicle.carName
+                                                        : vehicle.altCarName,
                                                 price: vehicle.price,
                                                 year: vehicle.year,
                                                 feature: vehicle.feature,
@@ -1209,10 +1390,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .setTempLeaseVehicleDetail(
                                                       VehicleDetailModel(
                                                 id: vehicle.id,
-                                                brand: vehicle.brand,
-                                                model: vehicle.model,
+                                                brand: _appProvider.getIsEnglish
+                                                    ? vehicle.brand
+                                                    : vehicle.altBrand,
+                                                model: _appProvider.getIsEnglish
+                                                    ? vehicle.model
+                                                    : vehicle.altModel,
                                                 imageName: vehicle.imageName,
-                                                carName: vehicle.carName,
+                                                carName:
+                                                    _appProvider.getIsEnglish
+                                                        ? vehicle.carName
+                                                        : vehicle.altCarName,
                                                 price: vehicle.price,
                                                 year: vehicle.year,
                                                 feature: vehicle.feature,
@@ -1235,10 +1423,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                             .getMostRecentSearchedUsedVehicleList())
                                           HomeVehicleNormalTile(
                                             imageUrl: vehicle.imageName,
-                                            name: vehicle.carName,
+                                            name: _appProvider.getIsEnglish
+                                                ? vehicle.carName
+                                                : vehicle.altCarName,
                                             year: vehicle.year,
-                                            brand: vehicle.brand,
-                                            model: vehicle.model,
+                                            brand: _appProvider.getIsEnglish
+                                                ? vehicle.brand
+                                                : vehicle.altBrand,
+                                            model: _appProvider.getIsEnglish
+                                                ? vehicle.model
+                                                : vehicle.altModel,
                                             price: 'KD ${vehicle.price}',
                                             onPressed: () {
                                               Provider.of<AppProvider>(context,
@@ -1246,10 +1440,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .setTempUsedVehicle(
                                                       VehicleModel(
                                                 id: vehicle.id,
-                                                brand: vehicle.brand,
-                                                model: vehicle.model,
+                                                brand: _appProvider.getIsEnglish
+                                                    ? vehicle.brand
+                                                    : vehicle.altBrand,
+                                                model: _appProvider.getIsEnglish
+                                                    ? vehicle.model
+                                                    : vehicle.altModel,
                                                 imageName: vehicle.imageName,
-                                                carName: vehicle.carName,
+                                                carName:
+                                                    _appProvider.getIsEnglish
+                                                        ? vehicle.carName
+                                                        : vehicle.altCarName,
                                                 price: vehicle.price,
                                                 year: vehicle.year,
                                                 feature: vehicle.feature,
@@ -1264,10 +1465,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .setTempUsedVehicleDetail(
                                                       VehicleDetailModel(
                                                 id: vehicle.id,
-                                                brand: vehicle.brand,
-                                                model: vehicle.model,
+                                                brand: _appProvider.getIsEnglish
+                                                    ? vehicle.brand
+                                                    : vehicle.altBrand,
+                                                model: _appProvider.getIsEnglish
+                                                    ? vehicle.model
+                                                    : vehicle.altModel,
                                                 imageName: vehicle.imageName,
-                                                carName: vehicle.carName,
+                                                carName:
+                                                    _appProvider.getIsEnglish
+                                                        ? vehicle.carName
+                                                        : vehicle.altCarName,
                                                 price: vehicle.price,
                                                 year: vehicle.year,
                                                 feature: vehicle.feature,

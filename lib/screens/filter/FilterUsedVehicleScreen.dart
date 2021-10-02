@@ -88,18 +88,31 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
           .getUsedFilterVehicleModel
           .maxPrice = _currentRangeValues.end.round().toString();
       brandEditingController.text =
-          Provider.of<AppProvider>(context, listen: false)
-              .getUsedFilterVehicleModel
-              .brand;
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? Provider.of<AppProvider>(context, listen: false)
+                  .getUsedFilterVehicleModel
+                  .brand
+              : Provider.of<AppProvider>(context, listen: false)
+                  .getUsedFilterVehicleModel
+                  .arBrand;
       modelEditingController.text =
-          Provider.of<AppProvider>(context, listen: false)
-              .getUsedFilterVehicleModel
-              .model
-              ?.model;
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? Provider.of<AppProvider>(context, listen: false)
+                  .getUsedFilterVehicleModel
+                  .model
+                  ?.model
+              : Provider.of<AppProvider>(context, listen: false)
+                  .getUsedFilterVehicleModel
+                  .model
+                  ?.altModel;
       subModelEditingController.text =
-          Provider.of<AppProvider>(context, listen: false)
-              .getUsedFilterVehicleModel
-              .subModel;
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? Provider.of<AppProvider>(context, listen: false)
+                  .getUsedFilterVehicleModel
+                  .subModel
+              : Provider.of<AppProvider>(context, listen: false)
+                  .getUsedFilterVehicleModel
+                  .subModel;
       yearEditingController.text =
           Provider.of<AppProvider>(context, listen: false)
               .getUsedFilterVehicleModel
@@ -148,14 +161,15 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                       FocusScope.of(context).requestFocus(FocusNode());
                       await Navigator.of(context)
                           .pushNamed(BrandUsedVehicleScreen.routeName);
-                      brandEditingController.text =
-                          _appProvider.getUsedFilterVehicleModel.brand;
+                      brandEditingController.text = _appProvider.getIsEnglish
+                          ? _appProvider.getUsedFilterVehicleModel.brand
+                          : _appProvider.getUsedFilterVehicleModel.arBrand;
                       modelEditingController.text = '';
                       subModelEditingController.text = '';
                       yearEditingController.text = '';
                       setState(() {});
                     },
-                    onChanged: (val){
+                    onChanged: (val) {
                       isButtonPressed = false;
                       if (isError) {
                         formKey.currentState.validate();
@@ -175,7 +189,8 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      hintText: '${AppLocalizations.of(context).select.capitalize()}',
+                      hintText:
+                          '${AppLocalizations.of(context).select.capitalize()}',
                       hintStyle: TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 14,
@@ -221,19 +236,21 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                       FocusScope.of(context).requestFocus(FocusNode());
                       await Navigator.of(context)
                           .pushNamed(ModelUsedVehicleScreen.routeName);
-                      modelEditingController.text =
-                          _appProvider.getUsedFilterVehicleModel.model.model;
+                      modelEditingController.text = _appProvider.getIsEnglish
+                          ?
+                          _appProvider.getUsedFilterVehicleModel.model.model:_appProvider.getUsedFilterVehicleModel.model.altModel;
                       _appProvider.getUsedFilterVehicleModel.subModel = null;
                       _appProvider.getUsedFilterVehicleModel.year = null;
                       subModelEditingController.text = '';
                       yearEditingController.text = '';
                       setState(() {});
-                    },onChanged: (val){
-                    isButtonPressed = false;
-                    if (isError) {
-                      formKey.currentState.validate();
-                    }
-                  },
+                    },
+                    onChanged: (val) {
+                      isButtonPressed = false;
+                      if (isError) {
+                        formKey.currentState.validate();
+                      }
+                    },
                     validator: (val) {
                       if (!isButtonPressed) {
                         return null;
@@ -248,7 +265,8 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      hintText: '${AppLocalizations.of(context).select.capitalize()}',
+                      hintText:
+                          '${AppLocalizations.of(context).select.capitalize()}',
                       hintStyle: TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 14,
@@ -300,7 +318,7 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                       yearEditingController.text = '';
                       setState(() {});
                     },
-                    onChanged: (val){
+                    onChanged: (val) {
                       isButtonPressed = false;
                       if (isError) {
                         formKey.currentState.validate();
@@ -320,7 +338,8 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      hintText: '${AppLocalizations.of(context).select.capitalize()}',
+                      hintText:
+                          '${AppLocalizations.of(context).select.capitalize()}',
                       hintStyle: TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 14,
@@ -370,7 +389,7 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                           _appProvider.getUsedFilterVehicleModel.year;
                       setState(() {});
                     },
-                    onChanged: (val){
+                    onChanged: (val) {
                       isButtonPressed = false;
                       if (isError) {
                         formKey.currentState.validate();
@@ -390,7 +409,8 @@ class _FilterUsedVehicleScreenState extends State<FilterUsedVehicleScreen> {
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                      hintText: '${AppLocalizations.of(context).select.capitalize()}',
+                      hintText:
+                          '${AppLocalizations.of(context).select.capitalize()}',
                       hintStyle: TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 14,

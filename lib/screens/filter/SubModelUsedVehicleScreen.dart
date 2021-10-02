@@ -65,7 +65,7 @@ class _SubModelUsedVehicleScreenState
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
         title: Text(
-          'Sub ${AppLocalizations.of(context).model.capitalize()}s',
+          '${AppLocalizations.of(context).subCategory.capitalize()}s',
           style: TextStyle(color: Colors.black),
         ),
       ),
@@ -123,12 +123,14 @@ class _SubModelUsedVehicleScreenState
                       FilterBrandTile(
                         noImage: true,
                         imageUrl: subModelList[j].image,
-                        name: subModelList[j].subModel,
+                        name:  _appProvider.getIsEnglish
+                            ?subModelList[j].subModel:subModelList[j].altSubModel,
                         isChecked: false,
                         onPressed: () {
                           Provider.of<AppProvider>(context, listen: false)
                               .getUsedFilterVehicleModel
-                              .subModel = subModelList[j].subModel;
+                              .subModel =  _appProvider.getIsEnglish
+                              ?subModelList[j].subModel:subModelList[j].altSubModel;
                           Navigator.of(context).pop();
                         },
                       ),

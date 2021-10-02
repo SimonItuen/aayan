@@ -52,8 +52,6 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
         Provider.of<AppProvider>(context, listen: false).getLeaseCarPriceRange;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     Future.delayed(Duration.zero, () async {
-      print(
-          'Kalyn ${Provider.of<AppProvider>(context, listen: false).getLeaseFilterVehicleModel.minPrice}-${Provider.of<AppProvider>(context, listen: false).getLeaseFilterVehicleModel.maxPrice}');
       if (Provider.of<AppProvider>(context, listen: false)
               .getLeaseFilterVehicleModel
               .minPrice !=
@@ -91,16 +89,27 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
           .getLeaseFilterVehicleModel
           .maxPrice = _currentRangeValues.end.round().toString();
       brandEditingController.text =
-          Provider.of<AppProvider>(context, listen: false)
-              .getLeaseFilterVehicleModel
-              .brand;
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? Provider.of<AppProvider>(context, listen: false)
+                  .getLeaseFilterVehicleModel
+                  .brand
+              : Provider.of<AppProvider>(context, listen: false)
+                  .getLeaseFilterVehicleModel
+                  .arBrand;
       modelEditingController.text =
-          Provider.of<AppProvider>(context, listen: false)
-              .getLeaseFilterVehicleModel
-              .model
-              ?.model;
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? Provider.of<AppProvider>(context, listen: false)
+                  .getLeaseFilterVehicleModel
+                  .model
+                  ?.model
+              : Provider.of<AppProvider>(context, listen: false)
+                  .getLeaseFilterVehicleModel
+                  .model
+                  ?.altModel;
       subModelEditingController.text =
-          Provider.of<AppProvider>(context, listen: false)
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish?Provider.of<AppProvider>(context, listen: false)
+              .getLeaseFilterVehicleModel
+              .subModel:Provider.of<AppProvider>(context, listen: false)
               .getLeaseFilterVehicleModel
               .subModel;
       yearEditingController.text =
@@ -155,8 +164,9 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
                       FocusScope.of(context).requestFocus(FocusNode());
                       await Navigator.of(context)
                           .pushNamed(BrandLeaseVehicleScreen.routeName);
-                      brandEditingController.text =
-                          _appProvider.getLeaseFilterVehicleModel.brand;
+                      brandEditingController.text = _appProvider.getIsEnglish
+                          ? _appProvider.getLeaseFilterVehicleModel.brand
+                          : _appProvider.getLeaseFilterVehicleModel.arBrand;
                       modelEditingController.text = '';
                       subModelEditingController.text = '';
                       yearEditingController.text = '';
@@ -230,8 +240,10 @@ class _FilterLeaseVehicleScreenState extends State<FilterLeaseVehicleScreen> {
                       FocusScope.of(context).requestFocus(FocusNode());
                       await Navigator.of(context)
                           .pushNamed(ModelLeaseVehicleScreen.routeName);
-                      modelEditingController.text =
-                          _appProvider.getLeaseFilterVehicleModel.model.model;
+                      modelEditingController.text = _appProvider.getIsEnglish
+                          ? _appProvider.getLeaseFilterVehicleModel.model.model
+                          : _appProvider
+                              .getLeaseFilterVehicleModel.model.altModel;
                       _appProvider.getLeaseFilterVehicleModel.subModel = null;
                       _appProvider.getLeaseFilterVehicleModel.year = null;
                       _appProvider.getLeaseFilterVehicleModel.leasePeriod =

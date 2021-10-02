@@ -110,7 +110,7 @@ class _BrandUsedVehicleScreenState extends State<BrandUsedVehicleScreen> {
                         onPressed: () {
                           Provider.of<AppProvider>(context, listen: false)
                               .setUsedFilterVehicleModel(FilterVehicleModel(
-                                  brand:  _appProvider.getIsEnglish?brandList[j].title:brandList[j].arTitle));
+                              brand: brandList[j].title, arBrand: brandList[j].arTitle));
                           Navigator.of(context).pop();
                         },
                       ),

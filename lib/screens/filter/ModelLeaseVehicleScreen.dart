@@ -124,7 +124,8 @@ class _ModelLeaseVehicleScreenState extends State<ModelLeaseVehicleScreen> {
                           FilterBrandTile(
                             noImage: true,
                             imageUrl: modelList[j].image,
-                            name: modelList[j].model,
+                            name: _appProvider.getIsEnglish
+                                ?modelList[j].model:modelList[j].altModel,
                             isChecked: false,
                             onPressed: () {
                               Provider.of<AppProvider>(context, listen: false)

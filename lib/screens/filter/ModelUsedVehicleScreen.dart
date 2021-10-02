@@ -27,8 +27,7 @@ class ModelUsedVehicleScreen extends StatefulWidget {
   static final String routeName = '/model-used-vehicle';
 
   @override
-  _ModelUsedVehicleScreenState createState() =>
-      _ModelUsedVehicleScreenState();
+  _ModelUsedVehicleScreenState createState() => _ModelUsedVehicleScreenState();
 }
 
 class _ModelUsedVehicleScreenState extends State<ModelUsedVehicleScreen> {
@@ -72,7 +71,8 @@ class _ModelUsedVehicleScreenState extends State<ModelUsedVehicleScreen> {
             )
           : modelList.isEmpty
               ? Center(
-                  child: Text('${AppLocalizations.of(context).noResults}'),)
+                  child: Text('${AppLocalizations.of(context).noResults}'),
+                )
               : SingleChildScrollView(
                   padding:
                       EdgeInsets.only(bottom: 16, left: 16, right: 16, top: 16),
@@ -124,7 +124,9 @@ class _ModelUsedVehicleScreenState extends State<ModelUsedVehicleScreen> {
                           FilterBrandTile(
                             noImage: true,
                             imageUrl: modelList[j].image,
-                            name: modelList[j].model,
+                            name: _appProvider.getIsEnglish
+                                ? modelList[j].model
+                                : modelList[j].altModel,
                             isChecked: false,
                             onPressed: () {
                               Provider.of<AppProvider>(context, listen: false)

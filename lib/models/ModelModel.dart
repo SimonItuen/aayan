@@ -1,6 +1,7 @@
 class ModelModel {
   final String id;
   final String model;
+  final String altModel;
   final String brand;
   final String carModelVariant;
   final String createdAt;
@@ -10,6 +11,7 @@ class ModelModel {
   ModelModel({
     this.model,
     this.brand,
+    this.altModel,
     this.carModelVariant,
     this.id,
     this.createdAt,
@@ -21,6 +23,7 @@ class ModelModel {
     return ModelModel(
       id: json['id'].toString(),
       model: json['model'].toString(),
+      altModel: json['alt_model'].toString(),
       brand: json['brand'].toString(),
       carModelVariant: json['car_model_variant'].toString(),
       createdAt: json['created_at'].toString(),
