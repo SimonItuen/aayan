@@ -98,5 +98,6 @@
   "mileage": "عدد الأميال",
   "duration": "مدة",
   "months": "الشهور",
-  "km":"كم"
+  "km":"كم",
+  "couldNotLaunch": "تعذر الإطلاق"
 }

@@ -125,9 +125,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               }
                               isError = true;
                               if(val.isEmpty){
-                                return '${AppLocalizations.of(context).mobileNumber} cannot be empty';
+                                return '${AppLocalizations.of(context).mobileNumber} ${AppLocalizations.of(context).cannotBeEmpty}';
                               }else if(val.length !=8){
-                                return '${AppLocalizations.of(context).mobileNumber} is invalid';
+                                return '${AppLocalizations.of(context).mobileNumber} ${AppLocalizations.of(context).isInvalid}';
                               }
                               isError = false;
                               return null;

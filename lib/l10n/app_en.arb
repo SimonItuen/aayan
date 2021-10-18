@@ -98,5 +98,6 @@
   "mileage": "Mileage",
   "duration": "Duration",
   "months": "months",
-  "km":"km"
+  "km":"km",
+  "couldNotLaunch": "Could not launch"
 }
