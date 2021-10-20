@@ -21,20 +21,20 @@ class AppDrawer extends StatefulWidget {
 class _AppDrawerState extends State<AppDrawer> {
   List<String> titles = [
     'Home',
-    /*'My Leased Vehicles',
+    'My Leased Vehicles',
     'My Purchased Vehicles',
     'My Servicings',
-    'My Emergency Requests',*/
+    'My Emergency Requests',
     'About Us',
     'Contact Us',
     'العربية'
   ];
   List<IconData> icons = [
     AayanIcons.home,
-    /*AayanIcons.lease,
+    AayanIcons.lease,
     AayanIcons.purchase,
     AayanIcons.servicing,
-    Icons.warning_amber_rounded,*/
+    Icons.warning_amber_rounded,
     Icons.info,
     AayanIcons.contact_us,
     AayanIcons.translate
@@ -45,11 +45,10 @@ class _AppDrawerState extends State<AppDrawer> {
     AppProvider _appProvider = Provider.of<AppProvider>(context, listen: true);
     titles = [
       '${AppLocalizations.of(context).home}',
-      /*
       '${AppLocalizations.of(context).myLeasedVehicles}',
       '${AppLocalizations.of(context).myPurchasedVehicles}',
       '${AppLocalizations.of(context).mySevicings}',
-      '${AppLocalizations.of(context).myEmergencyRequests}',*/
+      '${AppLocalizations.of(context).myEmergencyRequests}',
       '${AppLocalizations.of(context).aboutUs}',
       '${AppLocalizations.of(context).contactUs}',
       _appProvider.getIsEnglish ?'Change language' :'تغيير اللغة'

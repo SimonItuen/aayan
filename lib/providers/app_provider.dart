@@ -7,6 +7,7 @@ import 'package:Aayan/models/LeaseAddonItemModel.dart';
 import 'package:Aayan/models/LeaseAddonModel.dart';
 import 'package:Aayan/models/ModelModel.dart';
 import 'package:Aayan/models/NotificationModel.dart';
+import 'package:Aayan/models/OwnedVehicleModel.dart';
 import 'package:Aayan/models/PageInfoModel.dart';
 import 'package:Aayan/models/SubModelModel.dart';
 import 'package:Aayan/models/VehicleDetailModel.dart';
@@ -62,6 +63,8 @@ class AppProvider with ChangeNotifier {
   List<String> _tempLeasePeriodList = [];
   List<SubModelModel> _tempUsedSubModelList = [];
   List<String> _tempUsedYearList = [];
+  List<OwnedVehicleModel> leaseOwnedVehicleList = [];
+  List<OwnedVehicleModel> usedOwnedVehicleList = [];
   List<FeaturedVehicleModel> leaseFeaturedVehicleList = [];
   List<FeaturedVehicleModel> usedFeaturedVehicleList = [];
   List<VehicleModel> addLeaseVehicleList = [];
@@ -357,6 +360,23 @@ class AppProvider with ChangeNotifier {
     return bannerList;
   }
 
+  void setLeaseOwnedVehicleList(List<OwnedVehicleModel> list) {
+    leaseOwnedVehicleList = list;
+    notifyListeners();
+  }
+
+  List<OwnedVehicleModel> getLeaseOwnedVehicleList() {
+    return leaseOwnedVehicleList;
+  }
+
+  void setUsedOwnedVehicleList(List<OwnedVehicleModel> list) {
+    usedOwnedVehicleList = list;
+    notifyListeners();
+  }
+
+  List<OwnedVehicleModel> getUsedOwnedVehicleList() {
+    return usedOwnedVehicleList;
+  }
   void setLeaseFeaturedVehicleList(List<FeaturedVehicleModel> list) {
     leaseFeaturedVehicleList = list;
     notifyListeners();

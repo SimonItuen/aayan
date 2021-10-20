@@ -9,6 +9,7 @@ import 'package:Aayan/models/FilterVehicleModel.dart';
 import 'package:Aayan/models/LeaseAddonItemModel.dart';
 import 'package:Aayan/models/LeaseAddonModel.dart';
 import 'package:Aayan/models/ModelModel.dart';
+import 'package:Aayan/models/OwnedVehicleModel.dart';
 import 'package:Aayan/models/PageInfoModel.dart';
 import 'package:Aayan/models/SubModelModel.dart';
 import 'package:Aayan/models/VehicleDetailModel.dart';
@@ -3702,6 +3703,7 @@ class HttpService {
       print(response.body.toString());
       var jsonResponse = convert.jsonDecode(response.body);
       if (jsonResponse['success'].toString() == 'true') {
+        await getOwnedLeaseVehicle(context);
         Navigator.of(context)
             .popUntil(ModalRoute.withName(ParentScreen.routeName));
         Provider.of<AppProvider>(context, listen: false).getIsEnglish
@@ -3788,6 +3790,7 @@ class HttpService {
       print(response.body.toString());
       var jsonResponse = convert.jsonDecode(response.body);
       if (jsonResponse['success'].toString() == 'true') {
+        await getOwnedUsedVehicle(context);
         Navigator.of(context)
             .popUntil(ModalRoute.withName(ParentScreen.routeName));
         Provider.of<AppProvider>(context, listen: false).getIsEnglish
@@ -3834,6 +3837,146 @@ class HttpService {
                       .replaceAll('}', '')
                       .replaceAll('[', '')
                       .replaceAll(']', ''));
+        } else {
+          _showResponseSnackBar(context,
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
+        }
+      }
+    } on TimeoutException catch (e) {
+      _showResponseSnackBar(
+          context, '${AppLocalizations.of(context).noInternetConnection}');
+    } on SocketException catch (e) {
+      _showResponseSnackBar(
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
+    } on Error catch (e) {
+      print(e);
+      _showResponseSnackBar(
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
+    }
+
+    return false;
+  }
+
+  static Future<bool> getOwnedLeaseVehicle(BuildContext context) async {
+    AppProvider _accountProvider =
+    Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl + '/user-lease-vehicle';
+
+
+    await SessionManagerUtil.getInstance();
+    String accessToken = await SessionManagerUtil.getString('accessToken');
+    print(url);
+    try {
+      http.Response response = await http.get(Uri.parse(url),
+          headers: {HttpHeaders.authorizationHeader: 'Bearer $accessToken'});
+      print(response.statusCode.toString());
+      print(response.body.toString());
+      var jsonResponse = convert.jsonDecode(response.body);
+      if (jsonResponse['success'].toString() == 'true') {
+        List<OwnedVehicleModel> ownedVehicleList = [];
+        for (Map i in jsonResponse['data']) {
+          ownedVehicleList.add(OwnedVehicleModel.fromJson(i));
+        }
+
+        Provider.of<AppProvider>(context, listen: false)
+            .setLeaseOwnedVehicleList(ownedVehicleList);
+        /*UserModel model = UserModel.fromJson(jsonResponse);*/
+        /*
+        SessionManagerUtil.putString('username', model.username);
+        SessionManagerUtil.putString('email', model.email);
+        SessionManagerUtil.putString('token', model.token);
+        SessionManagerUtil.putString('id', model.id);
+        _navigateRoute(context, RegisterScreen.routeName);*/
+      } else {
+        var jsonResponse = convert.jsonDecode(response.body);
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+              context,
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+              : _showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''));
+        } else {
+          _showResponseSnackBar(context,
+              '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');
+        }
+      }
+    } on TimeoutException catch (e) {
+      _showResponseSnackBar(
+          context, '${AppLocalizations.of(context).noInternetConnection}');
+    } on SocketException catch (e) {
+      _showResponseSnackBar(
+          context, '${AppLocalizations.of(context).noConnectionWithServer}');
+    } on Error catch (e) {
+      print(e);
+      _showResponseSnackBar(
+          context, '${AppLocalizations.of(context).somethingWentWrong}');
+    }
+
+    return false;
+  }
+
+  static Future<bool> getOwnedUsedVehicle(BuildContext context) async {
+    AppProvider _accountProvider =
+    Provider.of<AppProvider>(context, listen: false);
+    String url = baseUrl + '/user-used-vehicle';
+
+
+    await SessionManagerUtil.getInstance();
+    String accessToken = await SessionManagerUtil.getString('accessToken');
+    print(url);
+    try {
+      http.Response response = await http.get(Uri.parse(url),
+          headers: {HttpHeaders.authorizationHeader: 'Bearer $accessToken'});
+      print(response.statusCode.toString());
+      print(response.body.toString());
+      var jsonResponse = convert.jsonDecode(response.body);
+      if (jsonResponse['success'].toString() == 'true') {
+        List<OwnedVehicleModel> ownedVehicleList = [];
+        for (Map i in jsonResponse['data']) {
+          ownedVehicleList.add(OwnedVehicleModel.fromJson(i));
+        }
+
+        Provider.of<AppProvider>(context, listen: false)
+            .setUsedOwnedVehicleList(ownedVehicleList);
+        /*UserModel model = UserModel.fromJson(jsonResponse);*/
+        /*
+        SessionManagerUtil.putString('username', model.username);
+        SessionManagerUtil.putString('email', model.email);
+        SessionManagerUtil.putString('token', model.token);
+        SessionManagerUtil.putString('id', model.id);
+        _navigateRoute(context, RegisterScreen.routeName);*/
+      } else {
+        var jsonResponse = convert.jsonDecode(response.body);
+        if (jsonResponse.toString().isNotEmpty) {
+          Provider.of<AppProvider>(context, listen: false).getIsEnglish
+              ? _showResponseSnackBar(
+              context,
+              jsonResponse['message']['en']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''))
+              : _showResponseSnackBar(
+              context,
+              jsonResponse['message']['ar']
+                  .toString()
+                  .replaceAll('{', '')
+                  .replaceAll('}', '')
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''));
         } else {
           _showResponseSnackBar(context,
               '${AppLocalizations.of(context).couldntConnectPleaseTryAgain}');

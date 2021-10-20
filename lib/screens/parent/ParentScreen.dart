@@ -1,6 +1,10 @@
 import 'package:Aayan/providers/app_provider.dart';
 import 'package:Aayan/screens/about_us/AboutUsScreen.dart';
 import 'package:Aayan/screens/home/HomeScreen.dart';
+import 'package:Aayan/screens/my_emergency_request/MyEmergencyRequestScreen.dart';
+import 'package:Aayan/screens/my_leased_vehicle/MyLeasedVehicleScreen.dart';
+import 'package:Aayan/screens/my_purchased_vehicle/MyPurchasedVehicleScreen.dart';
+import 'package:Aayan/screens/my_servicing/MyServicingScreen.dart';
 import 'package:Aayan/screens/notifications/NotificationsScreen.dart';
 import 'package:Aayan/screens/parent/AppDrawer.dart';
 import 'package:Aayan/services/HttpService.dart';
@@ -32,8 +36,14 @@ class _ParentScreenState extends State<ParentScreen> {
     // return
   }
 
+  List<String> titles=[];
+
   List<Widget> children = [
     HomeScreen(),
+    MyLeasedVehicleScreen(),
+    MyPurchasedVehicleScreen(),
+    MyServicingScreen(),
+    MyEmergencyRequestScreen(),
     AboutUsScreen(),
   ];
 
@@ -90,6 +100,16 @@ class _ParentScreenState extends State<ParentScreen> {
   @override
   Widget build(BuildContext context) {
     AppProvider _appProvider = Provider.of<AppProvider>(context, listen: true);
+    titles = [
+      '${AppLocalizations.of(context).home}',
+      '${AppLocalizations.of(context).myLeasedVehicles}',
+      '${AppLocalizations.of(context).myPurchasedVehicles}',
+      '${AppLocalizations.of(context).mySevicings}',
+      '${AppLocalizations.of(context).myEmergencyRequests}',
+      '${AppLocalizations.of(context).aboutUs}',
+      '${AppLocalizations.of(context).contactUs}',
+      _appProvider.getIsEnglish ?'Change language' :'تغيير اللغة'
+    ];
     return WillPopScope(
       onWillPop: _willPopCallback,
       child: Row(
@@ -149,11 +169,11 @@ class _ParentScreenState extends State<ParentScreen> {
                 width: MediaQuery.of(context).size.width,
                 child: Scaffold(
                     appBar: AppBar(
-                      title: _appProvider.getCurrentPage==1? Text('${AppLocalizations.of(context).aboutUs}', style: TextStyle(color: Colors.black),):Container(),
+                      title: _appProvider.getCurrentPage!=0? Text('${titles[ _appProvider.getCurrentPage]}', style: TextStyle(color: Colors.black),):Container(),
                       backgroundColor: Colors.white,
                       foregroundColor: Colors.black,
                       iconTheme: IconThemeData(color: Colors.black),
-                      leading: IconButton(
+                      leading: _appProvider.getCurrentPage==0?IconButton(
                           icon: Icon(
                             Icons.menu,
                             color: Colors.black,
@@ -161,14 +181,26 @@ class _ParentScreenState extends State<ParentScreen> {
                           onPressed: () {
                             Provider.of<AppProvider>(context, listen: false)
                                 .toggleNavOpen();
+                          }):IconButton(
+                          icon: Icon(
+                            Icons.arrow_back_sharp,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            Provider.of<AppProvider>(context, listen: false)
+                                .setCurrentPage(0);
                           }),
                       actions: [
-                        /*IconButton(
+                        if(_appProvider.getCurrentPage==0)IconButton(
                             icon: Icon(
                               Icons.stars_rounded,
                               color: Color(0xFFF9A602),
                             ),
-                            onPressed: () {}),*/
+                            onPressed: () {}),
+                        if(_appProvider.getCurrentPage==0)IconButton(
+                            icon: Icon(Icons.search),
+                            onPressed: () {
+                            }),
                       ],
                     ),
                     body: GestureDetector(

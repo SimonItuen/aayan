@@ -86,6 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
               HttpService.getHomeNotifications(context),
               HttpService.getMostRecentSearchedLeaseVehicles(context),
               HttpService.getMostRecentSearchedUsedVehicles(context),
+              HttpService.getOwnedLeaseVehicle(context),
+              HttpService.getOwnedUsedVehicle(context),
             ])
           : await Future.wait([
               HttpService.getBanners(context),
@@ -144,6 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         HttpService.getHomeNotifications(context),
                         HttpService.getMostRecentSearchedLeaseVehicles(context),
                         HttpService.getMostRecentSearchedUsedVehicles(context),
+                        HttpService.getOwnedLeaseVehicle(context),
+                        HttpService.getOwnedUsedVehicle(context),
                       ])
                     : await Future.wait([
                         HttpService.getBanners(context),
@@ -289,7 +293,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           Visibility(
-                            visible: _appProvider.isLoggedIn && false,
+                            visible: _appProvider.isLoggedIn&&
+                                (currentCarsPage == 0
+                                    ? _appProvider
+                                    .getLeaseOwnedVehicleList()
+                                    .isNotEmpty
+                                    : _appProvider
+                                    .getUsedOwnedVehicleList()
+                                    .isNotEmpty),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
@@ -307,44 +318,285 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   padding: EdgeInsets.symmetric(horizontal: 8),
-                                  child: Row(
+                                  child:currentCarsPage == 0
+                                      ? Row(
                                     children: [
-                                      HomeOwnedVehicleTile(
-                                        imageUrl:
-                                            'assets/images/dummy/car-6.png',
-                                        name: 'Mercedes-Benz A-Class',
-                                        year: '2021',
-                                        brand: 'Mercedes',
-                                        model: 'Benz A-Class',
-                                        price: 'KD 5000',
-                                      ),
-                                      HomeOwnedVehicleTile(
-                                        imageUrl:
-                                            'assets/images/dummy/car-6.png',
-                                        name: 'Mercedes-Benz A-Class',
-                                        year: '2021',
-                                        brand: 'Mercedes',
-                                        model: 'Benz A-Class',
-                                        price: 'KD 5000',
-                                      ),
-                                      HomeOwnedVehicleTile(
-                                        imageUrl:
-                                            'assets/images/dummy/car-6.png',
-                                        name: 'Mercedes-Benz A-Class',
-                                        year: '2021',
-                                        brand: 'Mercedes',
-                                        model: 'Benz A-Class',
-                                        price: 'KD 5000',
-                                      ),
-                                      HomeOwnedVehicleTile(
-                                        imageUrl:
-                                            'assets/images/dummy/car-6.png',
-                                        name: 'Mercedes-Benz A-Class',
-                                        year: '2021',
-                                        brand: 'Mercedes',
-                                        model: 'Benz A-Class',
-                                        price: 'KD 5000',
-                                      ),
+                                      for (int i = 0;
+                                      i <
+                                          _appProvider
+                                              .getLeaseOwnedVehicleList()
+                                              .length;
+                                      i++)
+                                        HomeOwnedVehicleTile(
+                                          imageUrl: _appProvider
+                                              .getLeaseOwnedVehicleList()[i]
+                                              .imageName,
+                                          name: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                              .getLeaseOwnedVehicleList()[i]
+                                              .carName
+                                              : _appProvider
+                                              .getLeaseOwnedVehicleList()[i]
+                                              .altCarName,
+                                          year: _appProvider
+                                              .getLeaseOwnedVehicleList()[i]
+                                              .year,
+                                          brand: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                              .getLeaseOwnedVehicleList()[i]
+                                              .brand
+                                              : _appProvider
+                                              .getLeaseOwnedVehicleList()[i]
+                                              .altBrand,
+                                          model: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                              .getLeaseOwnedVehicleList()[i]
+                                              .model
+                                              : _appProvider
+                                              .getLeaseOwnedVehicleList()[i]
+                                              .altModel,
+                                          price:
+                                          'KD ${_appProvider.getLeaseOwnedVehicleList()[i].price}',
+                                          onPressed: () {
+                                            Provider.of<AppProvider>(context,
+                                                listen: false)
+                                                .setTempLeaseVehicle(
+                                                VehicleModel(
+                                                  id: _appProvider
+                                                      .getLeaseOwnedVehicleList()[i]
+                                                      .id,
+                                                  brand: _appProvider.getIsEnglish
+                                                      ? _appProvider
+                                                      .getLeaseOwnedVehicleList()[
+                                                  i]
+                                                      .brand
+                                                      : _appProvider
+                                                      .getLeaseOwnedVehicleList()[
+                                                  i]
+                                                      .altBrand,
+                                                  model: _appProvider.getIsEnglish
+                                                      ? _appProvider
+                                                      .getLeaseOwnedVehicleList()[
+                                                  i]
+                                                      .model
+                                                      : _appProvider
+                                                      .getLeaseOwnedVehicleList()[
+                                                  i]
+                                                      .altModel,
+                                                  imageName: _appProvider
+                                                      .getLeaseOwnedVehicleList()[i]
+                                                      .imageName,
+                                                  carName: _appProvider.getIsEnglish
+                                                      ? _appProvider
+                                                      .getLeaseOwnedVehicleList()[
+                                                  i]
+                                                      .carName
+                                                      : _appProvider
+                                                      .getLeaseOwnedVehicleList()[
+                                                  i]
+                                                      .altCarName,
+                                                  price: _appProvider
+                                                      .getLeaseOwnedVehicleList()[i]
+                                                      .price,
+                                                  year: _appProvider
+                                                      .getLeaseOwnedVehicleList()[i]
+                                                      .year,
+                                                  status: _appProvider
+                                                      .getLeaseOwnedVehicleList()[i]
+                                                      .status,
+                                                ));
+                                            Provider.of<AppProvider>(context,
+                                                listen: false)
+                                                .setTempLeaseVehicleDetail(
+                                                VehicleDetailModel(
+                                                  id: _appProvider
+                                                      .getLeaseOwnedVehicleList()[i]
+                                                      .id,
+                                                  brand: _appProvider.getIsEnglish
+                                                      ? _appProvider
+                                                      .getLeaseOwnedVehicleList()[
+                                                  i]
+                                                      .brand
+                                                      : _appProvider
+                                                      .getLeaseOwnedVehicleList()[
+                                                  i]
+                                                      .altBrand,
+                                                  model: _appProvider.getIsEnglish
+                                                      ? _appProvider
+                                                      .getLeaseOwnedVehicleList()[
+                                                  i]
+                                                      .model
+                                                      : _appProvider
+                                                      .getLeaseOwnedVehicleList()[
+                                                  i]
+                                                      .altModel,
+                                                  imageName: _appProvider
+                                                      .getLeaseOwnedVehicleList()[i]
+                                                      .imageName,
+                                                  carName: _appProvider.getIsEnglish
+                                                      ? _appProvider
+                                                      .getLeaseOwnedVehicleList()[
+                                                  i]
+                                                      .carName
+                                                      : _appProvider
+                                                      .getLeaseOwnedVehicleList()[
+                                                  i]
+                                                      .altCarName,
+                                                  price: _appProvider
+                                                      .getLeaseOwnedVehicleList()[i]
+                                                      .price,
+                                                  year: _appProvider
+                                                      .getLeaseOwnedVehicleList()[i]
+                                                      .year,
+                                                  status: _appProvider
+                                                      .getLeaseOwnedVehicleList()[i]
+                                                      .status,
+                                                ));
+                                            Navigator.of(context).pushNamed(
+                                                LeaseVehicleDetailsScreen
+                                                    .routeName);
+                                          },
+                                        )
+                                    ],
+                                  )
+                                      : Row(
+                                    children: [
+                                      for (int i = 0;
+                                      i <
+                                          _appProvider
+                                              .getUsedOwnedVehicleList()
+                                              .length;
+                                      i++)
+                                        HomeOwnedVehicleTile(
+                                          imageUrl: _appProvider
+                                              .getUsedOwnedVehicleList()[i]
+                                              .imageName,
+                                          name: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                              .getUsedOwnedVehicleList()[i]
+                                              .carName
+                                              : _appProvider
+                                              .getUsedOwnedVehicleList()[i]
+                                              .altCarName,
+                                          year: _appProvider
+                                              .getUsedOwnedVehicleList()[i]
+                                              .year,
+                                          brand: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                              .getUsedOwnedVehicleList()[i]
+                                              .brand
+                                              : _appProvider
+                                              .getUsedOwnedVehicleList()[i]
+                                              .altBrand,
+                                          model: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                              .getUsedOwnedVehicleList()[i]
+                                              .model
+                                              : _appProvider
+                                              .getUsedOwnedVehicleList()[i]
+                                              .altModel,
+                                          price:
+                                          'KD ${_appProvider.getUsedOwnedVehicleList()[i].price}',
+                                          onPressed: () {
+                                            Provider.of<AppProvider>(context,
+                                                listen: false)
+                                                .setTempUsedVehicle(
+                                                VehicleModel(
+                                                  id: _appProvider
+                                                      .getUsedOwnedVehicleList()[i]
+                                                      .id,
+                                                  brand: _appProvider.getIsEnglish
+                                                      ? _appProvider
+                                                      .getUsedOwnedVehicleList()[
+                                                  i]
+                                                      .brand
+                                                      : _appProvider
+                                                      .getUsedOwnedVehicleList()[
+                                                  i]
+                                                      .altBrand,
+                                                  model: _appProvider.getIsEnglish
+                                                      ? _appProvider
+                                                      .getUsedOwnedVehicleList()[
+                                                  i]
+                                                      .model
+                                                      : _appProvider
+                                                      .getUsedOwnedVehicleList()[
+                                                  i]
+                                                      .altModel,
+                                                  imageName: _appProvider
+                                                      .getUsedOwnedVehicleList()[i]
+                                                      .imageName,
+                                                  carName: _appProvider.getIsEnglish
+                                                      ? _appProvider
+                                                      .getUsedOwnedVehicleList()[
+                                                  i]
+                                                      .carName
+                                                      : _appProvider
+                                                      .getUsedOwnedVehicleList()[
+                                                  i]
+                                                      .altCarName,
+                                                  price: _appProvider
+                                                      .getUsedOwnedVehicleList()[i]
+                                                      .price,
+                                                  year: _appProvider
+                                                      .getUsedOwnedVehicleList()[i]
+                                                      .year,
+                                                  status: _appProvider
+                                                      .getUsedOwnedVehicleList()[i]
+                                                      .status,
+                                                ));
+                                            Provider.of<AppProvider>(context,
+                                                listen: false)
+                                                .setTempUsedVehicleDetail(
+                                                VehicleDetailModel(
+                                                  id: _appProvider
+                                                      .getUsedOwnedVehicleList()[i]
+                                                      .id,
+                                                  brand: _appProvider.getIsEnglish
+                                                      ? _appProvider
+                                                      .getUsedOwnedVehicleList()[
+                                                  i]
+                                                      .brand
+                                                      : _appProvider
+                                                      .getUsedOwnedVehicleList()[
+                                                  i]
+                                                      .altBrand,
+                                                  model: _appProvider.getIsEnglish
+                                                      ? _appProvider
+                                                      .getUsedOwnedVehicleList()[
+                                                  i]
+                                                      .model
+                                                      : _appProvider
+                                                      .getUsedOwnedVehicleList()[
+                                                  i]
+                                                      .altModel,
+                                                  imageName: _appProvider
+                                                      .getUsedOwnedVehicleList()[i]
+                                                      .imageName,
+                                                  carName: _appProvider.getIsEnglish
+                                                      ? _appProvider
+                                                      .getUsedOwnedVehicleList()[
+                                                  i]
+                                                      .carName
+                                                      : _appProvider
+                                                      .getUsedOwnedVehicleList()[
+                                                  i]
+                                                      .altCarName,
+                                                  price: _appProvider
+                                                      .getUsedOwnedVehicleList()[i]
+                                                      .price,
+                                                  year: _appProvider
+                                                      .getUsedOwnedVehicleList()[i]
+                                                      .year,
+                                                  status: _appProvider
+                                                      .getUsedOwnedVehicleList()[i]
+                                                      .status,
+                                                ));
+                                            Navigator.of(context).pushNamed(
+                                                UsedVehicleDetailsScreen
+                                                    .routeName);
+                                          },
+                                        )
                                     ],
                                   ),
                                 ),
@@ -360,6 +612,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             'assets/images/emergency_backdrop.png',
                                         title:
                                             '${AppLocalizations.of(context).emergencyRequest}',
+                                        onPressed:(){
+                                          Provider.of<AppProvider>(context, listen: false)
+                                              .setCurrentPage(4);
+                                        }
                                       ),
                                       HomeRequestTile(
                                         icon: Icons.build_rounded,
@@ -367,6 +623,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             'assets/images/servicing_backdrop.png',
                                         title:
                                             '${AppLocalizations.of(context).servicingRequest}',
+                                          onPressed:(){
+                                            Provider.of<AppProvider>(context, listen: false)
+                                                .setCurrentPage(3);
+                                          }
                                       )
                                     ],
                                   ),
@@ -415,45 +675,46 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: InkWell(
                               onTap: currentCarsPage == 0
                                   ? () {
-                                Provider.of<AppProvider>(context,
-                                    listen: false)
-                                    .getLeaseVehicleList()
-                                    .clear();
-                                Provider.of<AppProvider>(context,
-                                    listen: false)
-                                    .getCompareLeaseVehicleList()
-                                    .clear();
-                                Provider.of<AppProvider>(context,
-                                    listen: false)
-                                    .setLeaseVehicleSelectedIds([]);
-                                Provider.of<AppProvider>(context,
-                                    listen: false)
-                                    .setLeaseFilterVehicleModel(
-                                    FilterVehicleModel());
-                                Navigator.of(context).pushNamed(
-                                    LeaseVehicleScreen.routeName);
-                              }
+                                      Provider.of<AppProvider>(context,
+                                              listen: false)
+                                          .getLeaseVehicleList()
+                                          .clear();
+                                      Provider.of<AppProvider>(context,
+                                              listen: false)
+                                          .getCompareLeaseVehicleList()
+                                          .clear();
+                                      Provider.of<AppProvider>(context,
+                                              listen: false)
+                                          .setLeaseVehicleSelectedIds([]);
+                                      Provider.of<AppProvider>(context,
+                                              listen: false)
+                                          .setLeaseFilterVehicleModel(
+                                              FilterVehicleModel());
+                                      Navigator.of(context).pushNamed(
+                                          LeaseVehicleScreen.routeName);
+                                    }
                                   : () {
-                                Provider.of<AppProvider>(context,
-                                    listen: false)
-                                    .getUsedVehicleList()
-                                    .clear();
-                                Provider.of<AppProvider>(context,
-                                    listen: false)
-                                    .getCompareUsedVehicleList()
-                                    .clear();
-                                Provider.of<AppProvider>(context,
-                                    listen: false)
-                                    .setUsedVehicleSelectedIds([]);
-                                Provider.of<AppProvider>(context,
-                                    listen: false)
-                                    .setUsedFilterVehicleModel(
-                                    FilterVehicleModel());
-                                Navigator.of(context).pushNamed(
-                                    UsedVehicleScreen.routeName);
-                              },
+                                      Provider.of<AppProvider>(context,
+                                              listen: false)
+                                          .getUsedVehicleList()
+                                          .clear();
+                                      Provider.of<AppProvider>(context,
+                                              listen: false)
+                                          .getCompareUsedVehicleList()
+                                          .clear();
+                                      Provider.of<AppProvider>(context,
+                                              listen: false)
+                                          .setUsedVehicleSelectedIds([]);
+                                      Provider.of<AppProvider>(context,
+                                              listen: false)
+                                          .setUsedFilterVehicleModel(
+                                              FilterVehicleModel());
+                                      Navigator.of(context).pushNamed(
+                                          UsedVehicleScreen.routeName);
+                                    },
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     currentCarsPage == 0
@@ -482,347 +743,347 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: EdgeInsets.symmetric(horizontal: 8),
                             child: currentCarsPage == 0
                                 ? Row(
-                              children: [
-                                for (int i = 0;
-                                i <
-                                    _appProvider
-                                        .getHomeLeaseVehicleList()
-                                        .length;
-                                i++)
-                                  HomeVehicleNormalTile(
-                                    imageUrl: _appProvider
-                                        .getHomeLeaseVehicleList()[i]
-                                        .imageName,
-                                    name: _appProvider.getIsEnglish
-                                        ? _appProvider
-                                        .getHomeLeaseVehicleList()[i]
-                                        .carName
-                                        : _appProvider
-                                        .getHomeLeaseVehicleList()[i]
-                                        .altCarName,
-                                    year: _appProvider
-                                        .getHomeLeaseVehicleList()[i]
-                                        .year,
-                                    brand: _appProvider.getIsEnglish
-                                        ? _appProvider
-                                        .getHomeLeaseVehicleList()[i]
-                                        .brand
-                                        : _appProvider
-                                        .getHomeLeaseVehicleList()[i]
-                                        .altBrand,
-                                    model: _appProvider.getIsEnglish
-                                        ? _appProvider
-                                        .getHomeLeaseVehicleList()[i]
-                                        .model
-                                        : _appProvider
-                                        .getHomeLeaseVehicleList()[i]
-                                        .altModel,
-                                    price:
-                                    'KD ${_appProvider.getHomeLeaseVehicleList()[i].price}',
-                                    onPressed: () {
-                                      Provider.of<AppProvider>(context,
-                                          listen: false)
-                                          .setTempLeaseVehicle(
-                                          VehicleModel(
-                                            id: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .id,
-                                            brand: _appProvider.getIsEnglish
-                                                ? _appProvider
-                                                .getHomeLeaseVehicleList()[
-                                            i]
-                                                .brand
-                                                : _appProvider
-                                                .getHomeLeaseVehicleList()[
-                                            i]
-                                                .altBrand,
-                                            model: _appProvider.getIsEnglish
-                                                ? _appProvider
-                                                .getHomeLeaseVehicleList()[
-                                            i]
-                                                .model
-                                                : _appProvider
-                                                .getHomeLeaseVehicleList()[
-                                            i]
-                                                .altModel,
-                                            imageName: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .imageName,
-                                            carName: _appProvider.getIsEnglish
-                                                ? _appProvider
-                                                .getHomeLeaseVehicleList()[
-                                            i]
-                                                .carName
-                                                : _appProvider
-                                                .getHomeLeaseVehicleList()[
-                                            i]
-                                                .altCarName,
-                                            price: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .price,
-                                            year: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .year,
-                                            feature: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .feature,
-                                            createdAt: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .createdAt,
-                                            deletedAt: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .deletedAt,
-                                            updatedAt: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .updatedAt,
-                                            mileage: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .mileage,
-                                            status: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .status,
-                                          ));
-                                      Provider.of<AppProvider>(context,
-                                          listen: false)
-                                          .setTempLeaseVehicleDetail(
-                                          VehicleDetailModel(
-                                            id: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .id,
-                                            brand: _appProvider.getIsEnglish
-                                                ? _appProvider
-                                                .getHomeLeaseVehicleList()[
-                                            i]
-                                                .brand
-                                                : _appProvider
-                                                .getHomeLeaseVehicleList()[
-                                            i]
-                                                .altBrand,
-                                            model: _appProvider.getIsEnglish
-                                                ? _appProvider
-                                                .getHomeLeaseVehicleList()[
-                                            i]
-                                                .model
-                                                : _appProvider
-                                                .getHomeLeaseVehicleList()[
-                                            i]
-                                                .altModel,
-                                            imageName: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .imageName,
-                                            carName: _appProvider.getIsEnglish
-                                                ? _appProvider
-                                                .getHomeLeaseVehicleList()[
-                                            i]
-                                                .carName
-                                                : _appProvider
-                                                .getHomeLeaseVehicleList()[
-                                            i]
-                                                .altCarName,
-                                            price: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .price,
-                                            year: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .year,
-                                            feature: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .feature,
-                                            mileage: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .mileage,
-                                            createdAt: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .createdAt,
-                                            deletedAt: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .deletedAt,
-                                            updatedAt: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .updatedAt,
-                                            status: _appProvider
-                                                .getHomeLeaseVehicleList()[i]
-                                                .status,
-                                          ));
-                                      Navigator.of(context).pushNamed(
-                                          LeaseVehicleDetailsScreen
-                                              .routeName);
-                                    },
+                                    children: [
+                                      for (int i = 0;
+                                          i <
+                                              _appProvider
+                                                  .getHomeLeaseVehicleList()
+                                                  .length;
+                                          i++)
+                                        HomeVehicleNormalTile(
+                                          imageUrl: _appProvider
+                                              .getHomeLeaseVehicleList()[i]
+                                              .imageName,
+                                          name: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .carName
+                                              : _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .altCarName,
+                                          year: _appProvider
+                                              .getHomeLeaseVehicleList()[i]
+                                              .year,
+                                          brand: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .brand
+                                              : _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .altBrand,
+                                          model: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .model
+                                              : _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .altModel,
+                                          price:
+                                              'KD ${_appProvider.getHomeLeaseVehicleList()[i].price}',
+                                          onPressed: () {
+                                            Provider.of<AppProvider>(context,
+                                                    listen: false)
+                                                .setTempLeaseVehicle(
+                                                    VehicleModel(
+                                              id: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .id,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .brand
+                                                  : _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .model
+                                                  : _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .altModel,
+                                              imageName: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .imageName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .carName
+                                                  : _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .altCarName,
+                                              price: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .price,
+                                              year: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .year,
+                                              feature: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .feature,
+                                              createdAt: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .createdAt,
+                                              deletedAt: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .deletedAt,
+                                              updatedAt: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .updatedAt,
+                                              mileage: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .mileage,
+                                              status: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .status,
+                                            ));
+                                            Provider.of<AppProvider>(context,
+                                                    listen: false)
+                                                .setTempLeaseVehicleDetail(
+                                                    VehicleDetailModel(
+                                              id: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .id,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .brand
+                                                  : _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .model
+                                                  : _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .altModel,
+                                              imageName: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .imageName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .carName
+                                                  : _appProvider
+                                                      .getHomeLeaseVehicleList()[
+                                                          i]
+                                                      .altCarName,
+                                              price: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .price,
+                                              year: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .year,
+                                              feature: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .feature,
+                                              mileage: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .mileage,
+                                              createdAt: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .createdAt,
+                                              deletedAt: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .deletedAt,
+                                              updatedAt: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .updatedAt,
+                                              status: _appProvider
+                                                  .getHomeLeaseVehicleList()[i]
+                                                  .status,
+                                            ));
+                                            Navigator.of(context).pushNamed(
+                                                LeaseVehicleDetailsScreen
+                                                    .routeName);
+                                          },
+                                        )
+                                    ],
                                   )
-                              ],
-                            )
                                 : Row(
-                              children: [
-                                for (int i = 0;
-                                i <
-                                    Math.min(
-                                        _appProvider
-                                            .getHomeUsedVehicleList()
-                                            .length,
-                                        3);
-                                i++)
-                                  HomeVehicleNormalTile(
-                                    imageUrl: _appProvider
-                                        .getHomeUsedVehicleList()[i]
-                                        .imageName,
-                                    name: _appProvider.getIsEnglish
-                                        ? _appProvider
-                                        .getHomeUsedVehicleList()[i]
-                                        .carName
-                                        : _appProvider
-                                        .getHomeUsedVehicleList()[i]
-                                        .altCarName,
-                                    year: _appProvider
-                                        .getHomeUsedVehicleList()[i]
-                                        .year,
-                                    brand: _appProvider.getIsEnglish
-                                        ? _appProvider
-                                        .getHomeUsedVehicleList()[i]
-                                        .brand
-                                        : _appProvider
-                                        .getHomeUsedVehicleList()[i]
-                                        .altBrand,
-                                    model: _appProvider.getIsEnglish
-                                        ? _appProvider
-                                        .getHomeUsedVehicleList()[i]
-                                        .model
-                                        : _appProvider
-                                        .getHomeUsedVehicleList()[i]
-                                        .altModel,
-                                    price:
-                                    'KD ${_appProvider.getHomeUsedVehicleList()[i].price}',
-                                    onPressed: () {
-                                      Provider.of<AppProvider>(context,
-                                          listen: false)
-                                          .setTempUsedVehicle(
-                                          VehicleModel(
-                                            id: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .id,
-                                            brand: _appProvider.getIsEnglish
-                                                ? _appProvider
-                                                .getHomeUsedVehicleList()[
-                                            i]
-                                                .brand
-                                                : _appProvider
-                                                .getHomeUsedVehicleList()[
-                                            i]
-                                                .altBrand,
-                                            model: _appProvider.getIsEnglish
-                                                ? _appProvider
-                                                .getHomeUsedVehicleList()[
-                                            i]
-                                                .model
-                                                : _appProvider
-                                                .getHomeUsedVehicleList()[
-                                            i]
-                                                .altModel,
-                                            imageName: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .imageName,
-                                            carName: _appProvider.getIsEnglish
-                                                ? _appProvider
-                                                .getHomeUsedVehicleList()[
-                                            i]
-                                                .carName
-                                                : _appProvider
-                                                .getHomeUsedVehicleList()[
-                                            i]
-                                                .altCarName,
-                                            price: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .price,
-                                            year: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .year,
-                                            feature: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .feature,
-                                            createdAt: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .createdAt,
-                                            deletedAt: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .deletedAt,
-                                            updatedAt: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .updatedAt,
-                                            mileage: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .mileage,
-                                            status: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .status,
-                                          ));
-                                      Provider.of<AppProvider>(context,
-                                          listen: false)
-                                          .setTempUsedVehicleDetail(
-                                          VehicleDetailModel(
-                                            id: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .id,
-                                            brand: _appProvider.getIsEnglish
-                                                ? _appProvider
-                                                .getHomeUsedVehicleList()[
-                                            i]
-                                                .brand
-                                                : _appProvider
-                                                .getHomeUsedVehicleList()[
-                                            i]
-                                                .altBrand,
-                                            model: _appProvider.getIsEnglish
-                                                ? _appProvider
-                                                .getHomeUsedVehicleList()[
-                                            i]
-                                                .model
-                                                : _appProvider
-                                                .getHomeUsedVehicleList()[
-                                            i]
-                                                .altModel,
-                                            imageName: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .imageName,
-                                            carName: _appProvider.getIsEnglish
-                                                ? _appProvider
-                                                .getHomeUsedVehicleList()[
-                                            i]
-                                                .carName
-                                                : _appProvider
-                                                .getHomeUsedVehicleList()[
-                                            i]
-                                                .altCarName,
-                                            price: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .price,
-                                            year: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .year,
-                                            feature: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .feature,
-                                            mileage: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .mileage,
-                                            createdAt: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .createdAt,
-                                            deletedAt: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .deletedAt,
-                                            updatedAt: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .updatedAt,
-                                            status: _appProvider
-                                                .getHomeUsedVehicleList()[i]
-                                                .status,
-                                          ));
-                                      Navigator.of(context).pushNamed(
-                                          UsedVehicleDetailsScreen
-                                              .routeName);
-                                    },
-                                  )
-                              ],
-                            ),
+                                    children: [
+                                      for (int i = 0;
+                                          i <
+                                              Math.min(
+                                                  _appProvider
+                                                      .getHomeUsedVehicleList()
+                                                      .length,
+                                                  3);
+                                          i++)
+                                        HomeVehicleNormalTile(
+                                          imageUrl: _appProvider
+                                              .getHomeUsedVehicleList()[i]
+                                              .imageName,
+                                          name: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .carName
+                                              : _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .altCarName,
+                                          year: _appProvider
+                                              .getHomeUsedVehicleList()[i]
+                                              .year,
+                                          brand: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .brand
+                                              : _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .altBrand,
+                                          model: _appProvider.getIsEnglish
+                                              ? _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .model
+                                              : _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .altModel,
+                                          price:
+                                              'KD ${_appProvider.getHomeUsedVehicleList()[i].price}',
+                                          onPressed: () {
+                                            Provider.of<AppProvider>(context,
+                                                    listen: false)
+                                                .setTempUsedVehicle(
+                                                    VehicleModel(
+                                              id: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .id,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .brand
+                                                  : _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .model
+                                                  : _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .altModel,
+                                              imageName: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .imageName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .carName
+                                                  : _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .altCarName,
+                                              price: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .price,
+                                              year: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .year,
+                                              feature: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .feature,
+                                              createdAt: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .createdAt,
+                                              deletedAt: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .deletedAt,
+                                              updatedAt: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .updatedAt,
+                                              mileage: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .mileage,
+                                              status: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .status,
+                                            ));
+                                            Provider.of<AppProvider>(context,
+                                                    listen: false)
+                                                .setTempUsedVehicleDetail(
+                                                    VehicleDetailModel(
+                                              id: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .id,
+                                              brand: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .brand
+                                                  : _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .altBrand,
+                                              model: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .model
+                                                  : _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .altModel,
+                                              imageName: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .imageName,
+                                              carName: _appProvider.getIsEnglish
+                                                  ? _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .carName
+                                                  : _appProvider
+                                                      .getHomeUsedVehicleList()[
+                                                          i]
+                                                      .altCarName,
+                                              price: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .price,
+                                              year: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .year,
+                                              feature: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .feature,
+                                              mileage: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .mileage,
+                                              createdAt: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .createdAt,
+                                              deletedAt: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .deletedAt,
+                                              updatedAt: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .updatedAt,
+                                              status: _appProvider
+                                                  .getHomeUsedVehicleList()[i]
+                                                  .status,
+                                            ));
+                                            Navigator.of(context).pushNamed(
+                                                UsedVehicleDetailsScreen
+                                                    .routeName);
+                                          },
+                                        )
+                                    ],
+                                  ),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
