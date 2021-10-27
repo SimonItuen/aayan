@@ -43,7 +43,7 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     AppProvider _appProvider = Provider.of<AppProvider>(context, listen: true);
-    titles = [
+    titles = _appProvider.getBoolIsLoggedIn?[
       '${AppLocalizations.of(context).home}',
       '${AppLocalizations.of(context).myLeasedVehicles}',
       '${AppLocalizations.of(context).myPurchasedVehicles}',
@@ -52,7 +52,28 @@ class _AppDrawerState extends State<AppDrawer> {
       '${AppLocalizations.of(context).aboutUs}',
       '${AppLocalizations.of(context).contactUs}',
       _appProvider.getIsEnglish ?'Change language' :'تغيير اللغة'
+    ]:[
+      '${AppLocalizations.of(context).home}',
+      '${AppLocalizations.of(context).aboutUs}',
+      '${AppLocalizations.of(context).contactUs}',
+      _appProvider.getIsEnglish ?'Change language' :'تغيير اللغة'
     ];
+    icons = _appProvider.getBoolIsLoggedIn?[
+    AayanIcons.home,
+    AayanIcons.lease,
+    AayanIcons.purchase,
+    AayanIcons.servicing,
+    Icons.warning_amber_rounded,
+    Icons.info,
+    AayanIcons.contact_us,
+    AayanIcons.translate
+    ]:[
+    AayanIcons.home,
+    Icons.info,
+    AayanIcons.contact_us,
+    AayanIcons.translate
+    ];
+
     return Container(
       color: Colors.white,
       child: Drawer(

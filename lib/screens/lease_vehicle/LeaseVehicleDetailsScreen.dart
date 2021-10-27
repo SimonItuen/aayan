@@ -712,7 +712,7 @@ class _LeaseVehicleDetailsScreenState extends State<LeaseVehicleDetailsScreen> {
               ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: AppFilledButton(
-          onPressed: (selectedPackageIds.isNotEmpty && addOnValue != null)
+          onPressed: (selectedPackageIds.isNotEmpty /*&& addOnValue != null*/)
               ? _appProvider.getBoolIsLoggedIn
                   ? () async {
                       setState(() {
@@ -724,7 +724,7 @@ class _LeaseVehicleDetailsScreenState extends State<LeaseVehicleDetailsScreen> {
                           packageId: selectedPackageIds.isNotEmpty
                               ? selectedPackageIds[0]
                               : '',
-                          addOnId: '$addOnValue');
+                          addOnId: '${addOnValue ?? 1}');
                       setState(() {});
                     }
                   : () async {

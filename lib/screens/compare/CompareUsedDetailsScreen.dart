@@ -284,6 +284,41 @@ class _CompareUsedDetailsScreenState extends State<CompareUsedDetailsScreen> {
                   ),
                 ],
               ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4.0),
+                    child: Text(
+                      '${AppLocalizations.of(context).features}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 14,
+                          color: Theme.of(context).primaryColor),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      for (int i = 0;
+                      i < _appProvider.getCompareUsedVehicleList().length;
+                      i++)
+                        Expanded(
+                            child: Text(
+                              '${!_appProvider.getCompareUsedVehicleList()[i].feature.trim().startsWith('null')?_appProvider.getCompareUsedVehicleList()[i].feature:''}',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            )),
+                    ],
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Color(0xFFEEEEEE),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

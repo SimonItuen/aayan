@@ -100,7 +100,7 @@ class _ParentScreenState extends State<ParentScreen> {
   @override
   Widget build(BuildContext context) {
     AppProvider _appProvider = Provider.of<AppProvider>(context, listen: true);
-    titles = [
+    titles = _appProvider.getBoolIsLoggedIn?[
       '${AppLocalizations.of(context).home}',
       '${AppLocalizations.of(context).myLeasedVehicles}',
       '${AppLocalizations.of(context).myPurchasedVehicles}',
@@ -109,6 +109,22 @@ class _ParentScreenState extends State<ParentScreen> {
       '${AppLocalizations.of(context).aboutUs}',
       '${AppLocalizations.of(context).contactUs}',
       _appProvider.getIsEnglish ?'Change language' :'تغيير اللغة'
+    ]:[
+      '${AppLocalizations.of(context).home}',
+      '${AppLocalizations.of(context).aboutUs}',
+      '${AppLocalizations.of(context).contactUs}',
+      _appProvider.getIsEnglish ?'Change language' :'تغيير اللغة'
+    ];
+    children =_appProvider.getBoolIsLoggedIn? [
+      HomeScreen(),
+      MyLeasedVehicleScreen(),
+      MyPurchasedVehicleScreen(),
+      MyServicingScreen(),
+      MyEmergencyRequestScreen(),
+      AboutUsScreen(),
+    ]: [
+      HomeScreen(),
+      AboutUsScreen(),
     ];
     return WillPopScope(
       onWillPop: _willPopCallback,
