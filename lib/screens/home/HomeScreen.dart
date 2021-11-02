@@ -1415,7 +1415,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 )),
                           ),*/
-                          Padding(
+                          if(false)Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 16.0, horizontal: 16),
                             child: Text(
@@ -1426,7 +1426,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
-                          SingleChildScrollView(
+                          if(false)SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             padding: EdgeInsets.symmetric(horizontal: 8),
                             child: currentCarsPage == 0
@@ -1577,7 +1577,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                           ),
-                          Visibility(
+                          if(false)Visibility(
                             visible: _appProvider.isLoggedIn &&
                                 (currentCarsPage == 0
                                     ? _appProvider
@@ -1598,7 +1598,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          Visibility(
+                          if(false)Visibility(
                             visible: _appProvider.isLoggedIn,
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
