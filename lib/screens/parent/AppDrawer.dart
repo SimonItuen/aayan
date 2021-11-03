@@ -31,10 +31,10 @@ class _AppDrawerState extends State<AppDrawer> {
   ];
   List<IconData> icons = [
     AayanIcons.home,
-    AayanIcons.lease,
+    /*AayanIcons.lease,
     AayanIcons.purchase,
     AayanIcons.servicing,
-    Icons.warning_amber_rounded,
+    Icons.warning_amber_rounded,*/
     Icons.info,
     AayanIcons.contact_us,
     AayanIcons.translate
@@ -44,11 +44,11 @@ class _AppDrawerState extends State<AppDrawer> {
   Widget build(BuildContext context) {
     AppProvider _appProvider = Provider.of<AppProvider>(context, listen: true);
     titles = _appProvider.getBoolIsLoggedIn?[
-      '${AppLocalizations.of(context).home}',
+      '${AppLocalizations.of(context).home}',/*
       '${AppLocalizations.of(context).myLeasedVehicles}',
       '${AppLocalizations.of(context).myPurchasedVehicles}',
       '${AppLocalizations.of(context).mySevicings}',
-      '${AppLocalizations.of(context).myEmergencyRequests}',
+      '${AppLocalizations.of(context).myEmergencyRequests}',*/
       '${AppLocalizations.of(context).aboutUs}',
       '${AppLocalizations.of(context).contactUs}',
       _appProvider.getIsEnglish ?'Change language' :'تغيير اللغة'
@@ -59,11 +59,11 @@ class _AppDrawerState extends State<AppDrawer> {
       _appProvider.getIsEnglish ?'Change language' :'تغيير اللغة'
     ];
     icons = _appProvider.getBoolIsLoggedIn?[
-    AayanIcons.home,
+    AayanIcons.home,/*
     AayanIcons.lease,
     AayanIcons.purchase,
     AayanIcons.servicing,
-    Icons.warning_amber_rounded,
+    Icons.warning_amber_rounded,*/
     Icons.info,
     AayanIcons.contact_us,
     AayanIcons.translate

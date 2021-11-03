@@ -39,11 +39,11 @@ class _ParentScreenState extends State<ParentScreen> {
   List<String> titles=[];
 
   List<Widget> children = [
-    HomeScreen(),
+    HomeScreen(),/*
     MyLeasedVehicleScreen(),
     MyPurchasedVehicleScreen(),
     MyServicingScreen(),
-    MyEmergencyRequestScreen(),
+    MyEmergencyRequestScreen(),*/
     AboutUsScreen(),
   ];
 
@@ -116,11 +116,11 @@ class _ParentScreenState extends State<ParentScreen> {
       _appProvider.getIsEnglish ?'Change language' :'تغيير اللغة'
     ];
     children =_appProvider.getBoolIsLoggedIn? [
-      HomeScreen(),
+      HomeScreen(),/*
       MyLeasedVehicleScreen(),
       MyPurchasedVehicleScreen(),
       MyServicingScreen(),
-      MyEmergencyRequestScreen(),
+      MyEmergencyRequestScreen(),*/
       AboutUsScreen(),
     ]: [
       HomeScreen(),
@@ -207,7 +207,7 @@ class _ParentScreenState extends State<ParentScreen> {
                                 .setCurrentPage(0);
                           }),
                       actions: [
-                        if(_appProvider.getCurrentPage==0)IconButton(
+                       /* if(_appProvider.getCurrentPage==0)IconButton(
                             icon: Icon(
                               Icons.stars_rounded,
                               color: Color(0xFFF9A602),
@@ -216,7 +216,7 @@ class _ParentScreenState extends State<ParentScreen> {
                         if(_appProvider.getCurrentPage==0)IconButton(
                             icon: Icon(Icons.search),
                             onPressed: () {
-                            }),
+                            }),*/
                       ],
                     ),
                     body: GestureDetector(
