@@ -38,19 +38,18 @@ class _AddLeaseVehicleScreenState extends State<AddLeaseVehicleScreen> {
     // TODO: implement initState
     super.initState();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    originalLeaseVehicleList =Provider.of<AppProvider>(context, listen: false)
-        .getLeaseVehicleList();
-    scrollController.addListener(() async{
-      if(scrollController.position.pixels >= scrollController.position.maxScrollExtent) {
-        if (Provider
-            .of<AppProvider>(context, listen: false)
-            .getLeasePageInfoModel
-            .currentPage < Provider
-            .of<AppProvider>(context, listen: false)
-            .getLeasePageInfoModel
-            .lastPage) {
-          Provider
-              .of<AppProvider>(context, listen: false)
+    originalLeaseVehicleList =
+        Provider.of<AppProvider>(context, listen: false).getLeaseVehicleList();
+    scrollController.addListener(() async {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
+        if (Provider.of<AppProvider>(context, listen: false)
+                .getLeasePageInfoModel
+                .currentPage <
+            Provider.of<AppProvider>(context, listen: false)
+                .getLeasePageInfoModel
+                .lastPage) {
+          Provider.of<AppProvider>(context, listen: false)
               .getLeasePageInfoModel
               .incrementPageNumber();
           if (selectedIds.isNotEmpty) {
@@ -65,27 +64,33 @@ class _AddLeaseVehicleScreenState extends State<AddLeaseVehicleScreen> {
             });
             isFetching = await HttpService.getLeaseVehiclesBySearch(context,
                 key: searchController.text);
-          } else if (Provider
-              .of<AppProvider>(context, listen: false)
-              .getLeaseFilterVehicleModel
-              .brand != null) {
+          } else if (Provider.of<AppProvider>(context, listen: false)
+                      .getLeaseFilterVehicleModel
+                      .brand !=
+                  null ||
+              Provider.of<AppProvider>(context, listen: false)
+                      .getLeaseFilterVehicleModel
+                      .minPrice !=
+                  null ||
+              Provider.of<AppProvider>(context, listen: false)
+                      .getLeaseFilterVehicleModel
+                      .maxPrice !=
+                  null) {
             setState(() {
               isFetching = true;
             });
-            isFetching = await HttpService.getLeaseVehiclesWithFilter(context,
-                Provider
-                    .of<AppProvider>(context, listen: false)
+            isFetching = await HttpService.getLeaseVehiclesWithFilter(
+                context,
+                Provider.of<AppProvider>(context, listen: false)
                     .getLeaseFilterVehicleModel);
           } else {
             setState(() {
               isFetching = true;
             });
-            isFetching = await HttpService.getLeaseVehiclesByFilter(context,
-                ids: []);
+            isFetching =
+                await HttpService.getLeaseVehiclesByFilter(context, ids: []);
           }
-          setState(() {
-
-          });
+          setState(() {});
         }
       }
     });
@@ -98,8 +103,7 @@ class _AddLeaseVehicleScreenState extends State<AddLeaseVehicleScreen> {
                 .getLeaseVehicleSelectedIds());
         selectedIds = Provider.of<AppProvider>(context, listen: false)
             .getLeaseVehicleSelectedIds();
-        setState(() {
-        });
+        setState(() {});
       } else {
         setState(() {
           isLoading = false;
@@ -129,7 +133,8 @@ class _AddLeaseVehicleScreenState extends State<AddLeaseVehicleScreen> {
       Provider.of<AppProvider>(context, listen: false)
           .setLeaseVehicleList(originalLeaseVehicleList);
       Provider.of<AppProvider>(context, listen: false)
-          .getLeasePageInfoModel.currentPage =(originalLeaseVehicleList.length/5).round();
+          .getLeasePageInfoModel
+          .currentPage = (originalLeaseVehicleList.length / 5).round();
       return true;
     }
     // return
@@ -154,7 +159,10 @@ class _AddLeaseVehicleScreenState extends State<AddLeaseVehicleScreen> {
                   IconButton(
                       icon: Icon(
                         AayanIcons.filter,
-                        color: _appProvider.getLeaseFilterVehicleModel.brand==null?null:Theme.of(context).primaryColor,
+                        color: _appProvider.getLeaseFilterVehicleModel.brand ==
+                                null
+                            ? null
+                            : Theme.of(context).primaryColor,
                         size: 20,
                       ),
                       onPressed: () {
@@ -233,14 +241,19 @@ class _AddLeaseVehicleScreenState extends State<AddLeaseVehicleScreen> {
                           physics: AlwaysScrollableScrollPhysics(),
                           padding: EdgeInsets.only(
                               left: 16, right: 16, top: 16, bottom: 64),
-                          itemCount: isFetching?_appProvider.getLeaseVehicleList().length+1: _appProvider.getLeaseVehicleList().length,
+                          itemCount: isFetching
+                              ? _appProvider.getLeaseVehicleList().length + 1
+                              : _appProvider.getLeaseVehicleList().length,
                           itemBuilder: (context, index) {
-                            if(index>=_appProvider.getLeaseVehicleList().length){
+                            if (index >=
+                                _appProvider.getLeaseVehicleList().length) {
                               return Padding(
                                 padding: const EdgeInsets.only(top: 8.0),
-                                child: Center(child: SizedBox(height: 25,
-                                    width: 25,
-                                    child: CircularProgressIndicator())),
+                                child: Center(
+                                    child: SizedBox(
+                                        height: 25,
+                                        width: 25,
+                                        child: CircularProgressIndicator())),
                               );
                             }
                             VehicleModel vehicle =
@@ -261,26 +274,35 @@ class _AddLeaseVehicleScreenState extends State<AddLeaseVehicleScreen> {
                                         .getCompareLeaseVehicleList()
                                         .add(vehicle);
                                     Provider.of<AppProvider>(context,
-                                        listen: false)
+                                            listen: false)
                                         .setCompareLeaseVehicleList(_appProvider
-                                        .getCompareLeaseVehicleList());
+                                            .getCompareLeaseVehicleList());
                                     Navigator.of(context).pop();
                                   },
                                 ),
                                 Visibility(
-                                    visible: _appProvider.compareLeaseVehicleList.any((element) => element.id==vehicle.id),
+                                    visible: _appProvider
+                                        .compareLeaseVehicleList
+                                        .any((element) =>
+                                            element.id == vehicle.id),
                                     child: Positioned.fill(
                                         child: AbsorbPointer(
-                                          absorbing: true,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .surface
-                                                    .withOpacity(0.75)),
-
-                                            child: Icon(Icons.check_circle_outline_rounded, color: Theme.of(context).primaryColor.withOpacity(0.75), size: 64,),),
-                                        )))
+                                      absorbing: true,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .surface
+                                                .withOpacity(0.75)),
+                                        child: Icon(
+                                          Icons.check_circle_outline_rounded,
+                                          color: Theme.of(context)
+                                              .primaryColor
+                                              .withOpacity(0.75),
+                                          size: 64,
+                                        ),
+                                      ),
+                                    )))
                               ],
                             );
                           },
@@ -419,8 +441,8 @@ class _AddLeaseVehicleScreenState extends State<AddLeaseVehicleScreen> {
     setState(() {
       isLoading = true;
     });
-    isLoading = await HttpService.getLeaseVehiclesByFilter(context,
-        ids: selectedIds);
+    isLoading =
+        await HttpService.getLeaseVehiclesByFilter(context, ids: selectedIds);
     setState(() {});
   }
 

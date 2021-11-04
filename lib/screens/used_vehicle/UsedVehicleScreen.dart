@@ -66,9 +66,17 @@ class _UsedVehicleScreenState extends State<UsedVehicleScreen> {
             isFetching = await HttpService.getUsedVehiclesBySearch(context,
                 key: searchController.text);
           } else if (Provider.of<AppProvider>(context, listen: false)
-                  .getUsedFilterVehicleModel
-                  .brand !=
-              null) {
+                      .getUsedFilterVehicleModel
+                      .brand !=
+                  null ||
+              Provider.of<AppProvider>(context, listen: false)
+                      .getUsedFilterVehicleModel
+                      .minPrice !=
+                  null ||
+              Provider.of<AppProvider>(context, listen: false)
+                      .getUsedFilterVehicleModel
+                      .maxPrice !=
+                  null) {
             setState(() {
               isFetching = true;
             });
@@ -145,9 +153,9 @@ class _UsedVehicleScreenState extends State<UsedVehicleScreen> {
                       icon: Icon(
                         AayanIcons.filter,
                         color:
-                            _appProvider.getUsedFilterVehicleModel.brand == null
-                                ? null
-                                : Theme.of(context).primaryColor,
+                            _appProvider.getUsedFilterVehicleModel.brand != null||_appProvider.getUsedFilterVehicleModel.minPrice != null||_appProvider.getUsedFilterVehicleModel.maxPrice != null
+                                ? Theme.of(context).primaryColor
+                                : null,
                         size: 20,
                       ),
                       onPressed: () {

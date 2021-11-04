@@ -69,7 +69,13 @@ class _LeaseVehicleScreenState extends State<LeaseVehicleScreen> {
           } else if (Provider
               .of<AppProvider>(context, listen: false)
               .getLeaseFilterVehicleModel
-              .brand != null) {
+              .brand != null || Provider
+              .of<AppProvider>(context, listen: false)
+              .getLeaseFilterVehicleModel
+              .minPrice != null|| Provider
+              .of<AppProvider>(context, listen: false)
+              .getLeaseFilterVehicleModel
+              .maxPrice != null) {
             setState(() {
               isFetching = true;
             });
@@ -145,7 +151,9 @@ class _LeaseVehicleScreenState extends State<LeaseVehicleScreen> {
                   IconButton(
                       icon: Icon(
                         AayanIcons.filter,
-                        color: _appProvider.getLeaseFilterVehicleModel.brand==null?null:Theme.of(context).primaryColor,
+                        color: _appProvider.getLeaseFilterVehicleModel.brand != null||_appProvider.getLeaseFilterVehicleModel.minPrice != null||_appProvider.getLeaseFilterVehicleModel.maxPrice != null
+                            ? Theme.of(context).primaryColor
+                            : null,
                         size: 20,
                       ),
                       onPressed: () {

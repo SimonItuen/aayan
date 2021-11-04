@@ -68,7 +68,13 @@ class _AddUsedVehicleScreenState extends State<AddUsedVehicleScreen> {
           } else if (Provider
               .of<AppProvider>(context, listen: false)
               .getUsedFilterVehicleModel
-              .brand != null) {
+              .brand != null||Provider
+              .of<AppProvider>(context, listen: false)
+              .getUsedFilterVehicleModel
+              .minPrice != null||Provider
+              .of<AppProvider>(context, listen: false)
+              .getUsedFilterVehicleModel
+              .maxPrice != null) {
             setState(() {
               isFetching = true;
             });
